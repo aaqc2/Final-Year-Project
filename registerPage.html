@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register </title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <link rel="stylesheet" href="">
+  <style>
+  body{
+    background: #f2f2f2;
+  }
+  .header {
+    padding: 2.5%;
+    text-align: center;
+    background: #000000;
+    color: #FF0000;
+
+  }
+
+  .header h5{
+    color: #FFFFFF;
+  }
+
+  #form{
+    margin: 0 auto;
+    border-radius: 4px;
+    width: 75%;
+    max-width: 900px;
+    padding: 10px;
+    padding-top: 20px;
+  }
+
+</style>
+</head>
+
+<body>
+  <header class="header">
+    <h1>NetLens</h1>
+    <h5>personalised movie recommendations</h5>
+  </header>
+
+  <div id="form">
+    <h1 id="title">Register</h1>
+    <p id="description">
+      Create an account to get personalised movie recommendations
+    </p>
+    <form id="register-form" method="POST" action="test_form.php">
+      <div class="labels">
+        <label id="email-label" for="email">* Email: </label>
+      </div>
+      <div class="inputs">
+        <input type="email" name="email" id="email" class="input-field" required placeholder="Enter your Email">
+      </div>
+      <br>
+      <div class="labels">
+        <label id="username-label" for="username">* Username: </label>
+        <div class="">
+          <input autofocus type="text" name="username" id="username" class="input-field" placeholder="Enter your username"  required>
+        </div>
+      </div>
+      <br>
+
+      <div class="labels">
+        <label id="password-label" for="password">* Password: </label>
+      </div>
+      <div class="inputs">
+        <input type="password" name="password" minlength="6" id="password" placeholder="Password" required>
+      </div>
+      <br>
+
+      <div class="labels">
+        <label id="retypePassword-label" for="retypePasswordpassword">* Retype Password: </label>
+      </div>
+      <div class="inputs">
+        <input type="password" name="retypePasswordpassword" minlength="6" id="retypePasswordpassword" placeholder=" Retype your Password" required>
+      </div>
+      <br>
+      <div class="labels">
+        <label id="city-label" for="city">* Current city: </label>
+      </div>
+      <div class="inputs">
+        <input autofocus type="text" name="city" id="city" class="input-field" placeholder="Enter your current city" required>
+      </div>
+      <br>
+      <div class ="input">
+        <input type="checkbox" name="TnC" value="accepted"> I agree to the NetLens <a href="#" target="_blank">Terms of Use and Privacy Policy </a>
+      </div>
+      <br>
+      <button id="submit" type="submit">Register</button>
+    </form>
+    <p> Already have an account? <a href= "#"> Sign in</a>
+  </div>
+</body>
+
+</html>
