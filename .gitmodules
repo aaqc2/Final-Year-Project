@@ -1,0 +1,3 @@
+[submodule "MovieRec/frontend"]
+	path = MovieRec/frontend
+	url = https://github.com/facebook/create-react-app.git
