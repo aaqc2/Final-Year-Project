@@ -30,8 +30,15 @@
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;
     width: 50%; /* Could be more or less, depending on screen size */
-
   }
+
+  @media screen and (max-width: 800px) {
+    .container {
+      width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
+    }
+  }
+
+
   input{
     width: 100%
   }
@@ -69,16 +76,16 @@
       <h2 id= "signin">Sign in</h2>
       <h4> Don't have an account? <a href="#registerpage.html"> Register here</a></h4>
       <form action="/action_page.php">
-        <div class = "labels">
-          <label for="username"><b>Username or email:</b></label>
-        </div>
-        <div class = "input">
-          <input type="text" placeholder="Enter Username or Email" name="undername" required>
+      <!--  <div class = "labels">
+          <!--<label for="username"><b>Username or email:</b></label>
+        </div>-->
+          <div class = "input">
+        <input type="text" placeholder="Enter Username or Email" name="undername" required>
         </div>
         <br>
-        <div class = "labels">
+      <!--  <div class = "labels">
           <label for="password"><b>Password: </b></label>
-        </div>
+        </div>-->
         <div class = "inputs">
           <input type="password" placeholder="Enter Password" name="password" required>
         </div>
@@ -93,7 +100,7 @@
   <p> Stuggle to find a movie you will enjoy? NetLens helps you find movies you will like. Simply provide ratings for movies,  then NetLens recommends you movies which you will enjoy to watch :)</p>
 </div>
  <div class = "col-md-12">
-<img src="NetLens homescreen.png" alt="homescreen">
+<img src="/Users/direna/Desktop/final year/final year project/NetLens homescreen.png" alt="homescreen">
 </div>
 
 </body>
