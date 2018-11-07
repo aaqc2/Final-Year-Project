@@ -1,0 +1,21 @@
+
+Logo navigation
+https://startbootstrap.com/template-overviews/logo-nav/
+
+Search bar
+https://bootsnipp.com/snippets/featured/bootstrap-4-search-bar
+
+Cards - horizontal
+https://bootsnipp.com/snippets/4MAg3
+
+Star rating
+https://bootsnipp.com/snippets/lVqo2
+
+Comments
+https://bootsnipp.com/snippets/lV3pj
+
+User profile
+https://bootsnipp.com/snippets/E1nNa
+
+Footer
+https://bootsnipp.com/snippets/bxDBA
