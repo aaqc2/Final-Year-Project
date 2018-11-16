@@ -20,3 +20,12 @@ class RatingsSerializer(serializers.ModelSerializer):
             'avg_rating',
         )
         model = Titles
+
+
+class SearchSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'title',
+            'genres',
+        )
+        model = Titles

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+        crossorigin="anonymous">
+    <title>Movie Information</title>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="images/netlens_logo.png" alt="">
+                <p style="font-size:16px">Personalised movie recommendations</p>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">User profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Settings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search bar -->
+    <div id="search_container" class="container-fluid bg-dark">
+        <br /><br /><br />
+        <div class="row justify-content-center">
+            <div class="col-14 col-md-12 col-lg-10">
+                <form class="card card-sm" style="height:4rem;">
+                    <div class="card-body row no-gutters align-items-center" style="padding:10px;">
+                        <div class="col-auto">
+                            <i class="fas fa-search h4 text-body"></i>
+                        </div>
+                        <!--end of col-->
+                        <div class="col">
+                            <input class="form-control form-control-lg form-control-borderless" type="search"
+                                placeholder="Search movies or keywords">
+                        </div>
+                        <!--end of col-->
+                        <div class="col-auto" style="padding-left:10px;">
+                            <button class="btn btn-lg btn-success" type="submit">Search</button>
+                        </div>
+                        <!--end of col-->
+                    </div>
+                </form>
+            </div>
+            <!--end of col-->
+        </div>
+    </div>
+
+    <!-- Movie information -->
+    <div class="container">
+        <br />
+        <div class="row">
+            <div class="card col-md-10 p-3">
+                <div class="row ">
+                    <div class="col-md-4">
+                        <img class="w-100" src="images/poster_darkknight.jpg">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-block">
+                            <h2 class="card-title">The Dark Knight</h2>
+                            <input id="input-1" name="input-1" class="rating rating-loading" data-min="0" data-max="5"
+                                data-step="0.1" value="2">
+                            <p><b>Release date: July 24, 2008 <br />
+                                    Category: 12A Theatrical <br />
+                                    Language: English<br />
+                                    Runtime: 2h 32m</b></p>
+                            <p class="card-text text-justify">
+                                Batman raises the stakes in his war on crime. With the help of Lt. Jim Gordon and
+                                District Attorney Harvey Dent, Batman sets out to dismantle the remaining criminal
+                                organizations that plague the streets. The partnership proves to be effective, but they
+                                soon find themselves prey to a reign of chaos unleashed by a rising criminal mastermind
+                                known to the terrified citizens of Gotham as the Joker.</p>
+                            <a href="https://www.youtube.com/watch?v=EXeTwQWrcwY" class="btn btn-primary">Watch Trailer</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comment section -->
+    <div class='container'>
+        <div class="card col-md-10 p-3">
+            <h3>Comments<br /></h3>
+            <div class="media comment-box">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">krazycrukids</h4>
+                    <p>Im just gonna start off by saying I LOVE this movie.Its one of my favorites of all time. I
+                        honestly
+                        cant think of too much wrong with this movie other than its a little long and Batmans by now
+                        infamous voice. But everything else is top notch. The acting,story,atmosphere,and actions
+                        scenesare all amazing.</p>
+                </div>
+            </div>
+            <div class="media comment-box">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">filmquestint</h4>
+                    <p>I couldn't believe "The Dark knight" could live up to the hype. That's perhaps the biggest
+                        surprise. The secret, I believe, is a stunning, mature, intelligent script. That makes it the
+                        best superhero movie ever made. As if that wasn't enough, Heath Ledger. He, the newest of the
+                        tragic modern icons present us with a preview of something we'll never see. A fearless,
+                        extraordinary actor capable to fill up with humanity even the most grotesque of villains. His
+                        performance is a master class. Fortunately, Christian Bale's Batman is almost a supporting
+                        character. Bale is good but there is something around his mouth that stops him from being
+                        great. "The Dark Knight" is visually stunning, powerful and moving. What else could anyone
+                        want.</p>
+                </div>
+            </div>
+            <h4>Add a comment<br /></h4>
+            <div class="media comment-box">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                    </a>
+                </div>
+                <form>
+                    <div class="form-group">
+                        <textarea id="comment_text" name="comment_text" cols="70" rows="5" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button name="submit" type="submit" class="btn btn-primary">Submit comment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <ul class="foote_bottom_ul_amrc">
+                <li><a href="http://kalarikendramdelhi.com">Home</a></li>
+                <li><a href="http://kalarikendramdelhi.com">About</a></li>
+                <li><a href="http://kalarikendramdelhi.com">Privacy policy</a></li>
+                <li><a href="http://kalarikendramdelhi.com">Settings</a></li>
+                <li><a href="http://kalarikendramdelhi.com">Contact</a></li>
+            </ul>
+            <p class="text-center">Copyright @2018 | <a href="#">NetLens</a></p>
+        </div>
+    </footer>
+
+    <!-- Optional JavaScript (fixed order) - jQuery, Popper.js, Bootstrap JS -->
+    <!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+
+</html>
