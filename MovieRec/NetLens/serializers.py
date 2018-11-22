@@ -29,3 +29,13 @@ class SearchSerializer(serializers.ModelSerializer):
             'genres',
         )
         model = Titles
+
+class RatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'userid',
+            'movieid',
+            'rating',
+            'timestamp',
+        )
+        model = Ratings
