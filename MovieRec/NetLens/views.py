@@ -47,3 +47,20 @@ def registerNewUser(self):
     queryset = str(Users.objects.values('userid').last().get("userid"))
     uid = int(queryset) + 1
     Users.objects.create(userid=str(uid), username="user", password="pass", email="email")
+
+@api_view(['GET'])
+def rate(request, m, u, r):
+    movieId = Titles.objects.get(pk=m)
+    userId= Users.objects.get(pk=u)
+    rating = r
+
+    if Ratings.objects.filter(userid=userId, movieid=movieId).exists():
+        Ratings.objects.filter(userid=userId, movieid=movieId).update(rating=rating, timestamp=datetime.now().timestamp())
+    else:
+        testrating = Ratings(userid=userId, movieid=movieId, rating=rating, timestamp=datetime.now().timestamp())
+        testrating.save(force_insert=True)
+
+
+    queryset = Ratings.objects.filter(movieid=movieId).order_by('userid')
+    serializer_class = RatingSerializer(queryset, many=True)
+    return Response(serializer_class.data)

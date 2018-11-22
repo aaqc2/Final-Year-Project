@@ -10,4 +10,5 @@ urlpatterns = [
     path('search/', views.showSearch),
     path('page/', views.paginationTest),
     path('register/', views.registerNewUser),
+    path('rate/<int:m>/<int:u>/<int:r>/', views.rate),
 ]
