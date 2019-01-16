@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import generics
-from .models import Titles, Ratings, Users
+from .models import Titles, Ratings, Users, Links
 from .serializers import TitlesSerializer, RatingsSerializer, SearchSerializer, RatingSerializer
 from rest_framework.decorators import api_view
 from django.db.models import Avg, F, Sum
@@ -23,7 +23,8 @@ class ShowGenres(generics.RetrieveUpdateDestroyAPIView):
 
 @api_view(['GET'])
 def showTopRated(request):
-    queryset = Titles.objects.values('title').annotate(avg_rating=Avg('ratings__rating')).annotate(sum_rating=Sum('ratings__rating')).order_by(F('sum_rating').desc(nulls_last=True))[:10]
+    getMID = Titles.objects.values_list('movieid', flat=True).annotate(avg_rating=Avg('ratings__rating')).annotate(sum_rating=Sum('ratings__rating')).order_by(F('sum_rating').desc(nulls_last=True))[:10]
+    queryset = Links.objects.filter(movieid__in=list(getMID)).values('tmdbid')
     serializer = RatingsSerializer(queryset, many=True)
     return Response(serializer.data)
 

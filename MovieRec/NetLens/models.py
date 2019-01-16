@@ -119,7 +119,7 @@ class DjangoSession(models.Model):
 
 
 class Links(models.Model):
-    movieid = models.IntegerField(primary_key=True)
+    movieid = models.ForeignKey('Titles', db_column='movieid', primary_key=True, on_delete=models.CASCADE)
     imdbid = models.IntegerField(blank=True, null=True)
     tmdbid = models.IntegerField(blank=True, null=True)
 

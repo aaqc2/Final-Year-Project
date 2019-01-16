@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Titles, Ratings
+from .models import Titles, Ratings, Links
 
 
 class TitlesSerializer(serializers.ModelSerializer):
@@ -13,13 +13,11 @@ class TitlesSerializer(serializers.ModelSerializer):
 
 
 class RatingsSerializer(serializers.ModelSerializer):
-    avg_rating = serializers.FloatField()
     class Meta:
         fields = (
-            'title',
-            'avg_rating',
+            'tmdbid',
         )
-        model = Titles
+        model = Links
 
 
 class SearchSerializer(serializers.ModelSerializer):
