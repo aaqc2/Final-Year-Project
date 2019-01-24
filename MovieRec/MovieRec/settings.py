@@ -110,7 +110,7 @@ DATABASES = {
         'NAME': 'NetLensDB',
         'USER': 'stc',
         'PASSWORD': 'pla%boy',
-        'HOST': 'aa1gizz4xdw0w66.c0ocrcqfkgqi.eu-west-2.rds.amazonaws.com',
+        'HOST': 'netlensdb.c0ocrcqfkgqi.eu-west-2.rds.amazonaws.com',
         'PORT': '5432',
 
    }
