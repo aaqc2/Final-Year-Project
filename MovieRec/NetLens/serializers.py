@@ -44,3 +44,11 @@ class UserRating(serializers.ModelSerializer):
             'rating',
         )
         model = Ratings
+
+class AverageRatingSerializer(serializers.ModelSerializer):
+    avg_rating = serializers.FloatField()
+    class Meta:
+        fields = (
+            'avg_rating',
+        )
+        model = Ratings

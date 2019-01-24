@@ -13,4 +13,5 @@ urlpatterns = [
     path('rate/<int:m>/<int:u>/<int:r>/', views.rate),
     path('getUser/<int:u>/', views.getUser),
     path('getUser/<int:u>/<int:tmdbId>', views.getUserRating),
+    path('avgrate/<int:tmdbid>', views.AverageRating),
 ]
