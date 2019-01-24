@@ -82,5 +82,7 @@ def getUserRating(request, u, tmdbId):
     userId = Users.objects.get(pk=u)
     tMovie = Links.objects.get(tmdbid=tmdbId)
     queryset = Ratings.objects.filter(userid=userId, movieid=tMovie.movieid)
+    if queryset.exists()==False:
+
     serializer_class = UserRating(queryset, many=True)
     return Response(serializer_class.data)
