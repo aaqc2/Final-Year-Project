@@ -7,7 +7,8 @@ from rest_framework.decorators import api_view
 from django.db.models import Avg, F, Sum, Q
 from rest_framework.pagination import PageNumberPagination
 from datetime import datetime
-import json
+from django.http import JsonResponse
+
 
 # Create your views here.
 class ListTitles(generics.ListCreateAPIView):
