@@ -1,3 +1,4 @@
+
 let apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
 let baseURL = 'https://api.themoviedb.org/3/';
 let configData = null;
@@ -8,6 +9,7 @@ let getConfig = function () {
     let url = "".concat(baseURL, 'configuration?api_key=', apiKey, '&query=The+Dark+Knight'); //change to movie_id parameter
     fetch(url)
         .then((result) => {
+            //console.log(result);
             return result.json();
         })
         .then((data) => {
@@ -15,6 +17,7 @@ let getConfig = function () {
             configData = data.images;
             //console.log('config:', data);
             console.log('config fetched');
+            console.log(document.getElementById('tmdbid'));
             loadData()
         })
         .catch(function (err) {
@@ -23,7 +26,7 @@ let getConfig = function () {
 }
 
 let loadData = function () {
-    let url = "".concat(baseURL, 'movie/155?api_key=', apiKey);
+    let url = "".concat(baseURL, 'movie/', document.getElementsByClassName('tmdbid')[0].id, '?api_key=', apiKey);
     fetch(url)
         .then((result) => {
             return result.json();
@@ -66,6 +69,7 @@ let loadData = function () {
 }
 
 document.addEventListener('DOMContentLoaded', getConfig);
+
 
 
 // class MovieInfo extends React.Component {

@@ -22,9 +22,10 @@ class MovieInfo extends Component {
                                                 </div>
                                                 <div className="col-md-8">
                                                     <div className="card-block">
+                                                        <div className="tmdbid" id={this.props.match.params.id}> </div>
                                                         <h2 id="movie_title" className="card-title">title</h2>
                                                         
-                                                        <StarRating />
+                                                        <StarRating tmdbid={this.props.match.params.id}/>
                                                         <b>
                                                             <p id="release" className="big"></p>
 
