@@ -8,7 +8,7 @@ class StarRating extends Component {
 
         this.state = {
             rating_avg: [],
-            rating_user: 0,
+            rating_user:[],
         };
     }
 
@@ -16,8 +16,12 @@ class StarRating extends Component {
       try {
           const res = await fetch(`http://127.0.0.1:8000/api/avgrate/${this.props.tmdbid}`);
           const avg = await res.json();
+
+          const user = await fetch(`http://127.0.0.1:8000/api/getUser/1/${this.props.tmdbid}`);
+          const userRating = await user.json();
           this.setState({
-              rating_avg: avg
+              rating_avg: avg,
+              rating_user: userRating
           });
       }
       catch (e) {
@@ -73,31 +77,34 @@ class StarRating extends Component {
                             }} />
                     </div>
                 ))}
-                <h5>Your rating: {rating_user}</h5>
-                <div style={{ fontSize: 24 }}>
-                    <StarRatingComponent
-                        name="rating_user"
-                        starColor="#ffb400"
-                        emptyStarColor="#ffb400"
-                        value={this.state.rating_user}
-                        onStarClick={this.onStarClickHalfStar.bind(this)}
-                        editing={true}
-                        renderStarIcon={(index, value) => {
-                            return (
-                                <span>
+                {rating_user.map(item => (
+                    <div style={{ fontSize: 24 }}>
+                        <h5>Your rating: {item.rating}</h5>
+
+                        <StarRatingComponent
+                            name="rating_user"
+                            starColor="#ffb400"
+                            emptyStarColor="#ffb400"
+                            value={item.rating}
+                            onStarClick={this.onStarClickHalfStar.bind(this)}
+                            editing={true}
+                            renderStarIcon={(index, value) => {
+                                return (
+                                    <span>
                                     <i className={index <= value ? 'fas fa-star' : 'far fa-star'} />
                                 </span>
-                            );
-                        }}
-                        renderStarIconHalf={() => {
-                            return (
-                                <span>
+                                );
+                            }}
+                            renderStarIconHalf={() => {
+                                return (
+                                    <span>
                                     <span style={{ position: 'absolute' }}><i className="far fa-star" /></span>
                                     <span><i className="fas fa-star-half" /></span>
                                 </span>
-                            );
-                        }} />
-                </div>
+                                );
+                            }} />
+                    </div>
+                ))}
             </div>
         );
     }
