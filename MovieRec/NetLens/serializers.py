@@ -7,7 +7,7 @@ class TitlesSerializer(serializers.ModelSerializer):
         fields = (
             'movieid',
             'title',
-            'genres',
+            'genre',
         )
         model = Titles
 
@@ -24,7 +24,7 @@ class SearchSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
             'title',
-            'genres',
+            'genre',
         )
         model = Titles
 
