@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Titles, Ratings, Links
+from .models import Titles, Ratings, Links, Users
 
 
 class TitlesSerializer(serializers.ModelSerializer):
@@ -35,5 +35,12 @@ class RatingSerializer(serializers.ModelSerializer):
             'movieid',
             'rating',
             'timestamp',
+        )
+        model = Ratings
+
+class UserRating(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'rating',
         )
         model = Ratings

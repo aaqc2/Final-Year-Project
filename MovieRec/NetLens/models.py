@@ -142,7 +142,7 @@ class Posts(models.Model):
 
 class Ratings(models.Model):
     userid = models.ForeignKey('Users', models.DO_NOTHING, db_column='userid', primary_key=True)
-    movieid = models.ForeignKey('Titles', on_delete=models.CASCADE, db_column='movieid',related_name='ratings')
+    movieid = models.ForeignKey('Titles', on_delete=models.CASCADE, db_column='movieid', related_name='ratings')
     rating = models.FloatField(blank=True, null=True)
     timestamp = models.IntegerField(blank=True, null=True)
 

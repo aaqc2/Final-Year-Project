@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5d826ec7-1110-4e22-9044-a62694c9568c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/MovieRec/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/MovieRec/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MovieRec/MovieRec/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/MovieRec/MovieRec/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MovieRec/NetLens/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/MovieRec/NetLens/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MovieRec/NetLens/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/MovieRec/NetLens/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MovieRec/NetLens/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/MovieRec/NetLens/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MovieRec/NetLens/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/MovieRec/NetLens/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,9 +25,100 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="-1797753216">
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="py" value="17" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Python" value="17" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="py" value="3655" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Python" value="3655" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MovieRec/NetLens/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-757">
+              <caret line="121" column="68" lean-forward="true" selection-start-line="121" selection-start-column="68" selection-end-line="121" selection-end-column="68" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MovieRec/NetLens/serializers.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="263">
+              <caret line="40" column="34" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/MovieRec/MovieRec/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="243">
+              <caret line="101" column="22" selection-start-line="101" selection-start-column="22" selection-end-line="101" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MovieRec/NetLens/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="266">
+              <caret line="81" column="45" selection-start-line="81" selection-start-column="45" selection-end-line="81" selection-end-column="45" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MovieRec/NetLens/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/MovieRec/NetLens/models.py" />
+        <option value="$PROJECT_DIR$/MovieRec/NetLens/urls.py" />
+        <option value="$PROJECT_DIR$/MovieRec/NetLens/serializers.py" />
+        <option value="$PROJECT_DIR$/MovieRec/NetLens/views.py" />
+        <option value="$PROJECT_DIR$/MovieRec/MovieRec/settings.py" />
+      </list>
+    </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
@@ -164,7 +260,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/acorn-dynamic-import/node_modules/acorn/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/acorn-dynamic-import/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/acorn-globals/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/acorn-jsx/node_modules/acorn/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/acorn-jsx/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/acorn-walk/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/acorn/package.json" />
@@ -389,8 +484,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/compression/node_modules/ms/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/compression/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/concat-map/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/concat-stream/node_modules/readable-stream/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/concat-stream/node_modules/string_decoder/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/concat-stream/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/confusing-browser-globals/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/connect-history-api-fallback/package.json" />
@@ -494,8 +587,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/dotenv-expand/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/dotenv/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/duplexer/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/duplexify/node_modules/readable-stream/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/duplexify/node_modules/string_decoder/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/duplexify/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/ecc-jsbn/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/ee-first/package.json" />
@@ -544,14 +635,10 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/eslint-scope/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/eslint-utils/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/eslint-visitor-keys/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/eslint/node_modules/ajv/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/eslint/node_modules/ansi-regex/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/eslint/node_modules/eslint-scope/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/eslint/node_modules/fast-deep-equal/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/eslint/node_modules/json-schema-traverse/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/eslint/node_modules/strip-ansi/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/eslint/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/espree/node_modules/acorn/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/espree/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/esprima/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/esquery/package.json" />
@@ -603,8 +690,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/find-up/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/flat-cache/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/flatten/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/flush-write-stream/node_modules/readable-stream/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/flush-write-stream/node_modules/string_decoder/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/flush-write-stream/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/follow-redirects/node_modules/debug/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/follow-redirects/node_modules/ms/package.json" />
@@ -616,80 +701,10 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/forwarded/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fragment-cache/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fresh/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/from2/node_modules/readable-stream/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/from2/node_modules/string_decoder/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/from2/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fs-extra/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fs-write-stream-atomic/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fs.realpath/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/abbrev/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/ansi-regex/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/aproba/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/are-we-there-yet/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/balanced-match/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/brace-expansion/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/chownr/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/code-point-at/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/concat-map/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/console-control-strings/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/core-util-is/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/debug/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/deep-extend/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/delegates/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/detect-libc/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/fs-minipass/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/fs.realpath/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/gauge/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/glob/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/has-unicode/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/iconv-lite/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/ignore-walk/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/inflight/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/inherits/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/ini/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/is-fullwidth-code-point/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/isarray/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/minimatch/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/minimist/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/minipass/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/minizlib/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/mkdirp/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/ms/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/needle/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/node-pre-gyp/lib/util/nw-pre-gyp/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/node-pre-gyp/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/nopt/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/npm-bundled/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/npm-packlist/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/npmlog/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/number-is-nan/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/object-assign/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/once/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/os-homedir/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/os-tmpdir/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/osenv/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/path-is-absolute/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/process-nextick-args/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/rc/node_modules/minimist/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/rc/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/readable-stream/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/rimraf/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/safe-buffer/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/safer-buffer/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/sax/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/semver/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/set-blocking/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/signal-exit/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/string-width/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/string_decoder/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/strip-ansi/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/strip-json-comments/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/tar/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/util-deprecate/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/wide-align/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/wrappy/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/node_modules/yallist/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/fsevents/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/function-bind/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/functional-red-black-tree/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/get-caller-file/package.json" />
@@ -739,8 +754,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/homedir-polyfill/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/hoopy/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/hosted-git-info/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/hpack.js/node_modules/readable-stream/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/hpack.js/node_modules/string_decoder/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/hpack.js/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/hsl-regex/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/hsla-regex/package.json" />
@@ -796,7 +809,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/iferr/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/ignore/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/import-cwd/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/import-from/node_modules/resolve-from/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/import-from/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/import-local/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/imurmurhash/package.json" />
@@ -906,7 +918,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/jest-runtime/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/jest-serializer/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/jest-snapshot/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/jest-util/node_modules/callsites/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/jest-util/node_modules/source-map/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/jest-util/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/jest-validate/package.json" />
@@ -980,13 +991,9 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/mdn-data/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/media-typer/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/mem/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/memory-fs/node_modules/readable-stream/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/memory-fs/node_modules/string_decoder/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/memory-fs/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/merge-deep/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/merge-descriptors/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/merge-stream/node_modules/readable-stream/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/merge-stream/node_modules/string_decoder/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/merge-stream/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/merge/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/methods/package.json" />
@@ -1012,8 +1019,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/multicast-dns-service-types/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/multicast-dns/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/mute-stream/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/nan/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/nan/tools/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/nanomatch/node_modules/arr-diff/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/nanomatch/node_modules/array-unique/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/nanomatch/node_modules/kind-of/package.json" />
@@ -1026,8 +1031,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/node-forge/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/node-int64/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/node-libs-browser/node_modules/punycode/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/node-libs-browser/node_modules/readable-stream/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/node-libs-browser/node_modules/string_decoder/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/node-libs-browser/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/node-notifier/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/node-releases/package.json" />
@@ -1075,8 +1078,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/p-map/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/p-try/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/pako/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/parallel-transform/node_modules/readable-stream/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/parallel-transform/node_modules/string_decoder/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/parallel-transform/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/param-case/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/parse-asn1/package.json" />
@@ -1286,19 +1287,7 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-selector-not/node_modules/postcss/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-selector-not/node_modules/source-map/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-selector-not/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-selector-parser/node_modules/@babel/code-frame/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-selector-parser/node_modules/@babel/generator/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-selector-parser/node_modules/@babel/helper-function-name/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-selector-parser/node_modules/@babel/helper-get-function-arity/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-selector-parser/node_modules/@babel/helper-split-export-declaration/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-selector-parser/node_modules/@babel/highlight/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-selector-parser/node_modules/@babel/template/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-selector-parser/node_modules/@babel/traverse/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-selector-parser/node_modules/@babel/types/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-selector-parser/node_modules/babel-eslint/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-selector-parser/node_modules/babylon/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-selector-parser/node_modules/cssesc/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-selector-parser/node_modules/js-tokens/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-selector-parser/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-svgo/node_modules/postcss/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/postcss-svgo/node_modules/source-map/package.json" />
@@ -1366,7 +1355,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/read-pkg-up/node_modules/path-exists/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/read-pkg-up/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/read-pkg/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/readable-stream/node_modules/isarray/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/readable-stream/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/readdirp/node_modules/arr-diff/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/readdirp/node_modules/array-unique/package.json" />
@@ -1395,8 +1383,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/readdirp/node_modules/kind-of/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/readdirp/node_modules/micromatch/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/readdirp/node_modules/ms/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/readdirp/node_modules/readable-stream/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/readdirp/node_modules/string_decoder/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/readdirp/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/realpath-native/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/recursive-readdir/package.json" />
@@ -1427,7 +1413,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/require-main-filename/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/require-uncached/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/requires-port/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/resolve-cwd/node_modules/resolve-from/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/resolve-cwd/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/resolve-dir/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/resolve-from/package.json" />
@@ -1488,7 +1473,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/sane/node_modules/is-number/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/sane/node_modules/kind-of/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/sane/node_modules/micromatch/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/sane/node_modules/minimist/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/sane/node_modules/ms/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/sane/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/sass-loader/node_modules/clone-deep/package.json" />
@@ -1501,9 +1485,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/sax/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/saxes/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/scheduler/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/schema-utils/node_modules/ajv/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/schema-utils/node_modules/fast-deep-equal/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/schema-utils/node_modules/json-schema-traverse/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/schema-utils/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/select-hose/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/selfsigned/package.json" />
@@ -1568,13 +1549,8 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/spdx-exceptions/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/spdx-expression-parse/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/spdx-license-ids/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/spdy-transport/node_modules/debug/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/spdy-transport/node_modules/ms/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/spdy-transport/node_modules/readable-stream/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/spdy-transport/node_modules/string_decoder/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/spdy-transport/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/spdy/node_modules/debug/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/spdy/node_modules/ms/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/spdy/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/split-string/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/sprintf-js/package.json" />
@@ -1586,12 +1562,8 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/static-extend/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/statuses/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/stealthy-require/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/stream-browserify/node_modules/readable-stream/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/stream-browserify/node_modules/string_decoder/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/stream-browserify/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/stream-each/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/stream-http/node_modules/readable-stream/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/stream-http/node_modules/string_decoder/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/stream-http/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/stream-http/test/browser/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/stream-shift/package.json" />
@@ -1608,9 +1580,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/strip-comments/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/strip-eof/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/strip-json-comments/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/style-loader/node_modules/ajv/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/style-loader/node_modules/fast-deep-equal/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/style-loader/node_modules/json-schema-traverse/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/style-loader/node_modules/schema-utils/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/style-loader/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/stylehacks/node_modules/postcss-selector-parser/package.json" />
@@ -1620,9 +1589,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/supports-color/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/svgo/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/symbol-tree/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/table/node_modules/ajv/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/table/node_modules/fast-deep-equal/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/table/node_modules/json-schema-traverse/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/table/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/tapable/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/terser-webpack-plugin/node_modules/find-cache-dir/package.json" />
@@ -1642,8 +1608,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/text-table/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/throat/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/through/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/through2/node_modules/readable-stream/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/through2/node_modules/string_decoder/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/through2/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/thunky/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/timers-browserify/package.json" />
@@ -1657,7 +1621,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/to-regex-range/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/to-regex/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/topo/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/tough-cookie/node_modules/punycode/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/tough-cookie/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/tr46/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/trim-right/package.json" />
@@ -1672,11 +1635,8 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/uglify-js/node_modules/commander/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/uglify-js/node_modules/source-map/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/uglify-js/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/uglifyjs-webpack-plugin/node_modules/ajv/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/uglifyjs-webpack-plugin/node_modules/cacache/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/uglifyjs-webpack-plugin/node_modules/commander/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/uglifyjs-webpack-plugin/node_modules/fast-deep-equal/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/uglifyjs-webpack-plugin/node_modules/json-schema-traverse/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/uglifyjs-webpack-plugin/node_modules/mississippi/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/uglifyjs-webpack-plugin/node_modules/pump/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/uglifyjs-webpack-plugin/node_modules/schema-utils/package.json" />
@@ -1725,7 +1685,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/vm-browserify/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/w3c-hr-time/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/walker/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/watch/node_modules/minimist/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/watch/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/watchpack/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/wbuf/package.json" />
@@ -1733,11 +1692,8 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-dev-middleware/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-dev-server/node_modules/camelcase/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-dev-server/node_modules/decamelize/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-dev-server/node_modules/del/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-dev-server/node_modules/execa/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-dev-server/node_modules/find-up/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-dev-server/node_modules/globby/node_modules/pify/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-dev-server/node_modules/globby/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-dev-server/node_modules/import-local/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-dev-server/node_modules/invert-kv/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-dev-server/node_modules/lcid/package.json" />
@@ -1747,7 +1703,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-dev-server/node_modules/p-limit/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-dev-server/node_modules/p-locate/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-dev-server/node_modules/p-try/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-dev-server/node_modules/pify/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-dev-server/node_modules/pkg-dir/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-dev-server/node_modules/yargs-parser/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-dev-server/node_modules/yargs/package.json" />
@@ -1757,7 +1712,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-sources/node_modules/source-map/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack-sources/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/acorn/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/ajv/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/arr-diff/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/array-unique/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/braces/node_modules/extend-shallow/package.json" />
@@ -1776,7 +1730,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/extglob/node_modules/define-property/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/extglob/node_modules/extend-shallow/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/extglob/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/fast-deep-equal/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/fill-range/node_modules/extend-shallow/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/fill-range/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/is-accessor-descriptor/package.json" />
@@ -1784,7 +1737,6 @@
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/is-descriptor/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/is-number/node_modules/kind-of/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/is-number/package.json" />
-      <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/json-schema-traverse/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/kind-of/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/micromatch/package.json" />
       <path value="$PROJECT_DIR$/MovieRec/frontend/node_modules/webpack/node_modules/ms/package.json" />
@@ -1836,9 +1788,10 @@
       <path value="$PROJECT_DIR$/landingPage/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="width" value="1280" />
-    <option name="height" value="800" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="952" />
+    <option name="width" value="977" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -1857,7 +1810,19 @@
             <path>
               <item name="Final_Year_Project" type="b2602c69:ProjectViewProjectNode" />
               <item name="Final_Year_Project" type="462c0819:PsiDirectoryNode" />
-              <item name="ui mockups" type="462c0819:PsiDirectoryNode" />
+              <item name="MovieRec" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Final_Year_Project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Final_Year_Project" type="462c0819:PsiDirectoryNode" />
+              <item name="MovieRec" type="462c0819:PsiDirectoryNode" />
+              <item name="MovieRec" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Final_Year_Project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Final_Year_Project" type="462c0819:PsiDirectoryNode" />
+              <item name="MovieRec" type="462c0819:PsiDirectoryNode" />
+              <item name="NetLens" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -1898,17 +1863,12 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24959612" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.30097088" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Python Console" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -1916,17 +1876,149 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="SciView" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49932885" visible="true" weight="0.23262411" />
+      <window_info anchor="bottom" id="Python Console" order="11" />
+      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.50067115" side_tool="true" weight="0.27943262" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
     </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30097088" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.1276901" />
+      <window_info anchor="bottom" id="Python Console" order="12" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/netlens react/public/MovieInfo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="986">
+          <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
+          <folding>
+            <element signature="n#style#0;n#a#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#span#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/netlens react/src/pages/MovieInfo.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-391">
+          <caret line="25" column="25" lean-forward="true" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MovieRec/NetLens/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MovieRec/NetLens/apps.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MovieRec/NetLens/admin.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MovieRec/NetLens/migrations/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/netlens react/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="12" lean-forward="true" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MovieRec/manage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="12" column="18" lean-forward="true" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/django/db/models/fields/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="722">
+          <caret line="877" selection-start-line="877" selection-end-line="877" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MovieRec/NetLens/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-757">
+          <caret line="121" column="68" lean-forward="true" selection-start-line="121" selection-start-column="68" selection-end-line="121" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MovieRec/NetLens/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MovieRec/NetLens/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="81" column="45" selection-start-line="81" selection-start-column="45" selection-end-line="81" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MovieRec/NetLens/serializers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="40" column="34" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MovieRec/MovieRec/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="101" column="22" selection-start-line="101" selection-start-column="22" selection-end-line="101" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>
