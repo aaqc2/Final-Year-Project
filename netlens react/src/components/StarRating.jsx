@@ -37,7 +37,7 @@ class StarRating extends Component {
         }
 
         console.log('name: %s, nextValue: %s, prevValue: %s', name, nextValue, prevValue);
-        // console.log(e);
+
         this.setState({ rating_user: nextValue });
     }
 
