@@ -1,0 +1,37 @@
+
+Logo navigation
+https://startbootstrap.com/template-overviews/logo-nav/
+
+Search bar
+https://bootsnipp.com/snippets/featured/bootstrap-4-search-bar
+
+New search bar
+https://mdbootstrap.com/docs/jquery/forms/search/
+
+Cards - horizontal
+https://bootsnipp.com/snippets/4MAg3
+
+Star rating
+https://bootsnipp.com/snippets/lVqo2
+https://github.com/Rustem-bayetov/Bootstrap4-StarRating
+https://www.npmjs.com/package/react-star-rating-component --UPDATED
+
+Comments
+https://bootsnipp.com/snippets/lV3pj
+
+User profile
+https://bootsnipp.com/snippets/E1nNa
+https://bootsnipp.com/snippets/4Mm5R --UPDATED
+
+Footer
+https://bootsnipp.com/snippets/bxDBA
+
+
+Sidebar filter panel
+https://bootsnipp.com/snippets/N6pQ6
+
+Sidebar
+https://blackrockdigital.github.io/startbootstrap-simple-sidebar/
+
+Advanced search toggle?
+https://codepen.io/aanjulena/pen/ZLZjzV
