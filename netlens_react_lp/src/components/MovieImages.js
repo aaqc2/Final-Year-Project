@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
  
-
+import StarRating from '../components/StarRating.jsx';
 class MovieImages extends Component {
 
 
@@ -8,6 +8,7 @@ class MovieImages extends Component {
       return (
          <div >
             <img src={this.props.posterUrl} alt="movieimages" className="movie_image"/>
+        <StarRating/>
          </div>
 
       ); 
