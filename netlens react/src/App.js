@@ -14,7 +14,8 @@ class App extends Component {
       <Router>
         <div>
           <Navbar />
-          <Route exact path="/" component={MovieInfo}/>
+          {/*<Route exact path="/:id" render={(props) => (<MovieInfo {...props} isAuthed={true} />)} />*/}
+          <Route exact path="/:id" component={MovieInfo} />
           <Route path="/userprofile" component={UserProfile}/>
           <Route path="/advancedsearch" component={AdvancedSearch}/>
           <Footer />

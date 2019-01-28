@@ -125,7 +125,7 @@ class Links(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'links'
+        db_table = 'link'
 
 
 class Posts(models.Model):
@@ -142,7 +142,7 @@ class Posts(models.Model):
 
 class Ratings(models.Model):
     userid = models.ForeignKey('Users', models.DO_NOTHING, db_column='userid', primary_key=True)
-    movieid = models.ForeignKey('Titles', on_delete=models.CASCADE, db_column='movieid',related_name='ratings')
+    movieid = models.ForeignKey('Titles', on_delete=models.CASCADE, db_column='movieid', related_name='ratings')
     rating = models.FloatField(blank=True, null=True)
     timestamp = models.IntegerField(blank=True, null=True)
 
@@ -167,7 +167,7 @@ class Tags(models.Model):
 class Titles(models.Model):
     movieid = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=255, blank=True, null=True)
-    genres = models.CharField(max_length=255, blank=True, null=True)
+    genre = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False

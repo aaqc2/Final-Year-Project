@@ -2,12 +2,12 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import generics
 from .models import Titles, Ratings, Users, Links
-from .serializers import TitlesSerializer, RatingsSerializer, SearchSerializer, RatingSerializer
+from .serializers import TitlesSerializer, RatingsSerializer, SearchSerializer, RatingSerializer, UserRating, AverageRatingSerializer
 from rest_framework.decorators import api_view
-from django.db.models import Avg, F, Sum
+from django.db.models import Avg, F, Sum, Q
 from rest_framework.pagination import PageNumberPagination
 from datetime import datetime
-
+import json
 
 # Create your views here.
 class ListTitles(generics.ListCreateAPIView):
@@ -63,6 +63,30 @@ def rate(request, m, u, r):
         testrating.save(force_insert=True)
 
 
-    queryset = Ratings.objects.filter(movieid=movieId).order_by('userid')
+    queryset = Ratings.objects.filter(userid=userId)
     serializer_class = RatingSerializer(queryset, many=True)
     return Response(serializer_class.data)
+
+
+@api_view(['GET'])
+def getUser(request, u):
+    userId = Users.objects.get(pk=u)
+    userList = Ratings.objects.values_list('movieid').filter(userid=userId)
+    queryset = Links.objects.filter(movieid__in=list(userList)).values('tmdbid')
+    serializer_class = RatingsSerializer(queryset, many=True)
+    return Response(serializer_class.data)
+
+@api_view(['GET'])
+def getUserRating(request, u, tmdbId):
+    userId = Users.objects.get(pk=u)
+    tMovie = Links.objects.get(tmdbid=tmdbId)
+    queryset = Ratings.objects.filter(userid=userId, movieid=tMovie.movieid)
+    serializer_class = UserRating(queryset, many=True)
+    return Response(serializer_class.data)
+
+@api_view(['GET'])
+def AverageRating(request, tmdbid):
+    movieId = Links.objects.filter(tmdbid=tmdbid).values('movieid')
+    queryset = Ratings.objects.values('movieid').filter(movieid__in=movieId).annotate(avg_rating=Avg('rating'))
+    serializer = AverageRatingSerializer(queryset, many=True)
+    return Response(serializer.data)
