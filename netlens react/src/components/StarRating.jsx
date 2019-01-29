@@ -33,16 +33,17 @@ class StarRating extends Component {
         this.setState({ rating_user: nextValue });
     }
 
-    onStarClickHalfStar(nextValue, prevValue, name, e) {
+    async onStarClickHalfStar(nextValue, prevValue, name, e) {
         const xPos = (e.pageX - e.currentTarget.getBoundingClientRect().left) / e.currentTarget.offsetWidth;
 
         if (xPos <= 0.5) {
             nextValue -= 0.5;
         }
 
-        console.log('name: %s, nextValue: %s, prevValue: %s', name, nextValue, prevValue);
-
-        this.setState({ rating_user: nextValue });
+        console.log('name: %s, nextValue: %s, prevValue: %s', name, nextValue, prevValue); //ADD FUNCTION TO PASS THE STAR RATING HERE
+        const rate = await fetch(`http://127.0.0.1:8000/api/rate/${this.props.tmdbid}/1/${nextValue}`);
+        const newRating = await rate.json();
+        this.setState({ rating_user: newRating });
     }
 
     render() {
