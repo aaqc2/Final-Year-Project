@@ -9,6 +9,7 @@ class MovieImages extends Component {
          <div >
             <img src={this.props.posterUrl} alt="movieimages" className="movie_image"/>
         <StarRating/>
+        {/* <StarRating tmdbid={this.props.match.params.id}/> */}
          </div>
 
       ); 
