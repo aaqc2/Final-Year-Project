@@ -125,7 +125,7 @@ class Links(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'link'
+        db_table = 'links'
 
 
 class Posts(models.Model):
@@ -167,7 +167,7 @@ class Tags(models.Model):
 class Titles(models.Model):
     movieid = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=255, blank=True, null=True)
-    genre = models.CharField(max_length=255, blank=True, null=True)
+    genres = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False

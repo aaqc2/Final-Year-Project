@@ -92,29 +92,29 @@ WSGI_APPLICATION = 'MovieRec.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'NAME': 'ai261',
-#        'USER': 'ai261',
-#        'PASSWORD': 'pla%boy',
-#        'HOST': 'penguin.kent.ac.uk',
-#        'PORT': '5432',
-#
-#   }
-#}
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'NetLensDB',
-        'USER': 'stc',
-        'PASSWORD': 'pla%boy',
-        'HOST': 'netlensdb.c0ocrcqfkgqi.eu-west-2.rds.amazonaws.com',
-        'PORT': '5432',
+   'default': {
+       'ENGINE': 'django.db.backends.postgresql_psycopg2',
+       'NAME': 'ai261',
+       'USER': 'ai261',
+       'PASSWORD': 'pla%boy',
+       'HOST': 'penguin.kent.ac.uk',
+       'PORT': '5432',
 
-   }
+  }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'NetLensDB',
+#         'USER': 'stc',
+#         'PASSWORD': 'pla%boy',
+#         'HOST': 'netlensdb.c0ocrcqfkgqi.eu-west-2.rds.amazonaws.com',
+#         'PORT': '5432',
+#
+#    }
+# }
 
 
 # Password validation

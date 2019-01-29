@@ -7,7 +7,6 @@ from rest_framework.decorators import api_view
 from django.db.models import Avg, F, Sum, Q
 from rest_framework.pagination import PageNumberPagination
 from datetime import datetime
-import json
 
 # Create your views here.
 class ListTitles(generics.ListCreateAPIView):
@@ -52,19 +51,27 @@ def registerNewUser(self):
 
 @api_view(['GET'])
 def rate(request, m, u, r):
-    movieId = Titles.objects.get(pk=m)
+    try:
+        r = float(r);
+    except:
+        return Response(0)
+    tMovie = Links.objects.get(tmdbid=m)
+    #movieId = Titles.objects.get(link.tmdbid=m)
     userId= Users.objects.get(pk=u)
-    rating = r
+    try:
+        rating = float(r)
+    except ValueError:
+        print("invald value")
 
-    if Ratings.objects.filter(userid=userId, movieid=movieId).exists():
-        Ratings.objects.filter(userid=userId, movieid=movieId).update(rating=rating, timestamp=datetime.now().timestamp())
+    if Ratings.objects.filter(userid=userId, movieid=tMovie.movieid).exists():
+        Ratings.objects.filter(userid=userId, movieid=tMovie.movieid).update(rating=rating, timestamp=datetime.now().timestamp())
     else:
-        testrating = Ratings(userid=userId, movieid=movieId, rating=rating, timestamp=datetime.now().timestamp())
+        testrating = Ratings(userid=userId, movieid=tMovie.movieid, rating=rating, timestamp=datetime.now().timestamp())
         testrating.save(force_insert=True)
 
 
-    queryset = Ratings.objects.filter(userid=userId)
-    serializer_class = RatingSerializer(queryset, many=True)
+    queryset = Ratings.objects.filter(userid=userId, movieid=tMovie.movieid)
+    serializer_class =  UserRating(queryset, many=True)
     return Response(serializer_class.data)
 
 

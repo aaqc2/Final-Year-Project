@@ -18,10 +18,17 @@ class StarRating extends Component {
           const avg = await res.json();
 
           const user = await fetch(`http://127.0.0.1:8000/api/getUser/1/${this.props.tmdbid}`);
-          const userRating = await user.json();
+          let rating;
+          //const userRating = await user.json();
+          if (user.length < 0){
+              rating = 0;
+          }
+          else {
+             rating = await user.json();
+          }
           this.setState({
               rating_avg: avg,
-              rating_user: userRating
+              rating_user: rating
           });
       }
       catch (e) {
@@ -33,16 +40,17 @@ class StarRating extends Component {
         this.setState({ rating_user: nextValue });
     }
 
-    onStarClickHalfStar(nextValue, prevValue, name, e) {
+    async onStarClickHalfStar(nextValue, prevValue, name, e) {
         const xPos = (e.pageX - e.currentTarget.getBoundingClientRect().left) / e.currentTarget.offsetWidth;
 
         if (xPos <= 0.5) {
             nextValue -= 0.5;
         }
 
-        console.log('name: %s, nextValue: %s, prevValue: %s', name, nextValue, prevValue);
-
-        this.setState({ rating_user: nextValue });
+        console.log('name: %s, nextValue: %s, prevValue: %s', name, nextValue, prevValue); //ADD FUNCTION TO PASS THE STAR RATING HERE
+        const rate = await fetch(`http://127.0.0.1:8000/api/rate/${this.props.tmdbid}/1/${nextValue}`);
+        const newRating = await rate.json();
+        this.setState({ rating_user: newRating });
     }
 
     render() {
