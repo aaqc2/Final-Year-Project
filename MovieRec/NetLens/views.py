@@ -51,10 +51,6 @@ def registerNewUser(self):
 
 @api_view(['GET'])
 def rate(request, m, u, r):
-    try:
-        r = float(r);
-    except:
-        return Response(0)
     tMovie = Links.objects.get(tmdbid=m)
     #movieId = Titles.objects.get(link.tmdbid=m)
     userId= Users.objects.get(pk=u)
