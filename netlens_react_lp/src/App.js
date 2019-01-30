@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './style.css';
 
 import Navbar from './components/Navbar.jsx';
-// import Footer from './Footer.jsx';
 import MovieInfo from './pages/MovieInfo.jsx';
 import UserProfile from './pages/UserProfile.jsx';
 import AdvancedSearch from './pages/AdvancedSearch';
@@ -16,8 +15,8 @@ class App extends Component {
       <Router>
         <div>
           <Navbar />
-          <Route exact path="/" component={LandingPage}/>
-          {/* <Route exact path="/" component={MovieInfo}/> */}
+          <Route exact path="/LandingPage" component={LandingPage}/>
+           <Route path="/MovieInfo" component={MovieInfo}/> 
           <Route path="/userprofile" component={UserProfile}/>
           <Route path="/advancedsearch" component={AdvancedSearch}/>
           <Footer />
