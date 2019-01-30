@@ -9,6 +9,7 @@ class Navbar extends Component {
             <nav className="navbar navbar-expand-md navbar-dark navbar-fixed-top">
                 <div className="container">
                     <Link className="navbar-brand" to="/">NetLens</Link>
+                      <h5 className="slogan"> personalised movie recommendations</h5> 
 
                     <form className="mx-auto my-auto d-inline w-100">
                         <div className="search-container">

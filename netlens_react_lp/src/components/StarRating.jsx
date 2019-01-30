@@ -7,84 +7,112 @@ class StarRating extends Component {
         super();
 
         this.state = {
-            rating_avg: 4.5,
-            rating_user: 0,
+            rating_avg: [],
+            rating_user:[],
         };
     }
+
+    async componentDidMount() {
+      try {
+          const res = await fetch(`http://127.0.0.1:8000/api/avgrate/${this.props.tmdbid}`);
+          const avg = await res.json();
+
+          const user = await fetch(`http://127.0.0.1:8000/api/getUser/1/${this.props.tmdbid}`);
+          let rating;
+          //const userRating = await user.json();
+          if (user.length < 0){
+              rating = 0;
+          }
+          else {
+             rating = await user.json();
+          }
+          this.setState({
+              rating_avg: avg,
+              rating_user: rating
+          });
+      }
+      catch (e) {
+          console.log(e);
+      }
+  }
 
     onStarClick(nextValue, prevValue, name) {
         this.setState({ rating_user: nextValue });
     }
 
-    onStarClickHalfStar(nextValue, prevValue, name, e) {
+    async onStarClickHalfStar(nextValue, prevValue, name, e) {
         const xPos = (e.pageX - e.currentTarget.getBoundingClientRect().left) / e.currentTarget.offsetWidth;
 
         if (xPos <= 0.5) {
             nextValue -= 0.5;
         }
 
-        console.log('name: %s, nextValue: %s, prevValue: %s', name, nextValue, prevValue);
-        // console.log(e);
-        this.setState({ rating_user: nextValue });
+        console.log('name: %s, nextValue: %s, prevValue: %s', name, nextValue, prevValue); //ADD FUNCTION TO PASS THE STAR RATING HERE
+        const rate = await fetch(`http://127.0.0.1:8000/api/rate/${this.props.tmdbid}/1/${nextValue}`);
+        const newRating = await rate.json();
+        this.setState({ rating_user: newRating });
     }
 
     render() {
         const { rating_avg } = this.state;
         const { rating_user } = this.state;
-
         return (
             <div>
-                
-                <div style={{ fontSize: 24 }}>
-                <h5>Average rating: {rating_avg}</h5>
-                    <StarRatingComponent
-                        name="rating_avg"
-                        starColor="#ffb400"
-                        emptyStarColor="#ffb400"
-                        value={this.state.rating_avg}
-                        onStarClick={this.onStarClickHalfStar.bind(this)}
-                        editing={false}
-                        renderStarIcon={(index, value) => {
-                            return (
-                                <span>
+                {rating_avg.map(item => (
+                    <div style={{ fontSize: 24 }}>
+                        <h5>Average rating: {item.avg_rating} </h5>
+                        <StarRatingComponent
+                            name="rating_avg"
+                            starColor="#ffb400"
+                            emptyStarColor="#ffb400"
+                            value={item.avg_rating}
+                            onStarClick={this.onStarClickHalfStar.bind(this)}
+                            editing={false}
+                            renderStarIcon={(index, value) => {
+                                return (
+                                    <span>
                                     <i className={index <= value ? 'fas fa-star' : 'far fa-star'} />
                                 </span>
-                            );
-                        }}
-                        renderStarIconHalf={() => {
-                            return (
-                                <span>
+                                );
+                            }}
+                            renderStarIconHalf={() => {
+                                return (
+                                    <span>
                                     <span style={{ position: 'absolute' }}><i className="far fa-star" /></span>
                                     <span><i className="fas fa-star-half" /></span>
                                 </span>
-                            );
-                        }} />
-                </div>
-                <h5>Your rating: {rating_user}</h5>
-                <div style={{ fontSize: 24 }}>
-                    <StarRatingComponent
-                        name="rating_user"
-                        starColor="#ffb400"
-                        emptyStarColor="#ffb400"
-                        value={this.state.rating_user}
-                        onStarClick={this.onStarClickHalfStar.bind(this)}
-                        editing={true}
-                        renderStarIcon={(index, value) => {
-                            return (
-                                <span>
+                                );
+                            }} />
+                    </div>
+                ))}
+                {rating_user.map(item => (
+                    <div style={{ fontSize: 24 }}>
+                        <h5>Your rating: {item.rating}</h5>
+
+                        <StarRatingComponent
+                            name="rating_user"
+                            starColor="#ffb400"
+                            emptyStarColor="#ffb400"
+                            value={item.rating}
+                            onStarClick={this.onStarClickHalfStar.bind(this)}
+                            editing={true}
+                            renderStarIcon={(index, value) => {
+                                return (
+                                    <span>
                                     <i className={index <= value ? 'fas fa-star' : 'far fa-star'} />
                                 </span>
-                            );
-                        }}
-                        renderStarIconHalf={() => {
-                            return (
-                                <span>
+                                );
+                            }}
+                            renderStarIconHalf={() => {
+                                return (
+                                    <span>
                                     <span style={{ position: 'absolute' }}><i className="far fa-star" /></span>
                                     <span><i className="fas fa-star-half" /></span>
                                 </span>
-                            );
-                        }} />
-                </div>
+                                );
+                            }} />
+                    </div>
+                ))}
             </div>
         );
     }

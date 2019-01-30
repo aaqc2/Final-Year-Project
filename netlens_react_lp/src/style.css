@@ -23,7 +23,7 @@ p.big {
 
 .navbar-dark .navbar-brand {
     color: #ff0000;
-    font-size: 30px;
+    font-size: 40px;
 }
 
 .search-container {
@@ -48,6 +48,13 @@ p.big {
 #advanced_search {
     position: relative;
     margin-right: 50px;
+}
+
+.slogan{
+    color:white;
+    position: absolute;
+    top: 40px;
+
 }
 
 /* MOVIE INFORMATION */
@@ -222,3 +229,12 @@ p.big {
   
   
   }
+
+  .link{
+      color: #FFFFFF;
+   
+}
+  
+.link:hover{
+    color: #3366ff;
+}

@@ -6,7 +6,7 @@ import Navbar from './components/Navbar.jsx';
 import MovieInfo from './pages/MovieInfo.jsx';
 import UserProfile from './pages/UserProfile.jsx';
 import AdvancedSearch from './pages/AdvancedSearch';
-import LandingPage from './pages/LandingPage.js';
+import LandingPage from './pages/LandingPage.jsx';
 import Footer from './components/Footer.jsx';
 
 class App extends Component {
