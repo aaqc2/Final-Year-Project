@@ -55,7 +55,7 @@ df = mr.withColumn('recommendations', psf.explode('recommendations')).select(
     ).toPandas()
 
 # Create the recommendations table.
-cur.execute("CREATE TABLE IF NOT EXISTS recommendations (userid INT REFERENCES users (userid), movieid INT REFERENCES titles (movieid), rating NUMERIC(4, 3), PRIMARY KEY (userid, movieid));")
+cur.execute("CREATE TABLE IF NOT EXISTS recommendations (userid INT NOT NULL, movieid INT NOT NULL, rating NUMERIC(4,3), PRIMARY KEY (userid, movieid), FOREIGN KEY (userid) REFERENCES users (userid), FOREIGN KEY (movieid) REFERENCES titles (movieid));")
 conn.commit()
 
 # Copy the contents of the dataframe to RDS using SQLAlchemy.
