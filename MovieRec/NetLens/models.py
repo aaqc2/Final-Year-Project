@@ -119,13 +119,13 @@ class DjangoSession(models.Model):
 
 
 class Links(models.Model):
-    movieid = models.ForeignKey('Titles', db_column='movieid', primary_key=True, on_delete=models.CASCADE)
-    imdbid = models.IntegerField(blank=True, null=True)
+    movieid= models.ForeignKey('Titles', db_column='movieid', primary_key=True, on_delete=models.CASCADE)
+    imdbid = models.IntegerField()
     tmdbid = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'links'
+        db_table = 'link'
 
 
 class Posts(models.Model):
@@ -142,13 +142,24 @@ class Posts(models.Model):
 
 class Ratings(models.Model):
     userid = models.ForeignKey('Users', models.DO_NOTHING, db_column='userid', primary_key=True)
-    movieid = models.ForeignKey('Titles', on_delete=models.CASCADE, db_column='movieid', related_name='ratings')
+    movieid = models.ForeignKey('Titles', models.DO_NOTHING, db_column='movieid')
     rating = models.FloatField(blank=True, null=True)
     timestamp = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'ratings'
+        unique_together = (('userid', 'movieid'),)
+
+
+class Recommendations(models.Model):
+    userid = models.ForeignKey('Users', on_delete=models.CASCADE, db_column='userid', primary_key=True)
+    movieid = models.ForeignKey('Titles', db_column='movieid', primary_key=True, on_delete=models.CASCADE)
+    rating = models.FloatField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'recommendations'
         unique_together = (('userid', 'movieid'),)
 
 
@@ -167,7 +178,7 @@ class Tags(models.Model):
 class Titles(models.Model):
     movieid = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=255, blank=True, null=True)
-    genres = models.CharField(max_length=255, blank=True, null=True)
+    genre = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -176,7 +187,7 @@ class Titles(models.Model):
 
 class Users(models.Model):
     userid = models.IntegerField(primary_key=True)
-    username = models.CharField(unique=True, max_length=255, blank=True, null=True)
+    username = models.CharField(max_length=255, blank=True, null=True)
     password = models.CharField(max_length=255, blank=True, null=True)
     email = models.CharField(max_length=255, blank=True, null=True)
 
