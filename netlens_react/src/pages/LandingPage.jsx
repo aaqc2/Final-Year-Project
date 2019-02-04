@@ -44,9 +44,10 @@ class LandingPage extends Component {
           // movieDetailsPage={() => this.getMovieDetails(movie)}
            key={movie.id}
            url={url}
-            posterUrl={movieImageUrl}
+           posterUrl={movieImageUrl}
            movie={movie} />
         movieRows.push(movieComponent);
+//        console.log(movieComponent.key);
        }
     })
     

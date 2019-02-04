@@ -3,6 +3,87 @@ import React, { Component } from 'react';
 import StarRating from '../components/StarRating.jsx';
 
 class MovieInfo extends Component {
+
+    componentWillMount() {
+        this.setState = {info: this.props.match.params.id};
+        console.log("information:" + this.props.match.params.id);
+        this.loadMovieInfo();
+    }
+
+    loadMovieInfo () {
+        let apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
+        let baseURL = 'https://api.themoviedb.org/3/';
+        let baseImageURL = 'http://image.tmdb.org/t/p/';
+        let configData = null;
+        var title, release, revenue, runtime, languages, genres, tagline, overview, str, str_poster;
+
+        let getConfig = function () {
+            let url = "".concat(baseURL, 'configuration?api_key=', apiKey, '&query=The+Dark+Knight'); //change to movie_id parameter
+            fetch(url)
+                .then((result) => {
+                    return result.json();
+                })
+                .then((data) => {
+                    baseImageURL = data.images.secure_base_url;
+                    configData = data.images;
+                    console.log('config fetched');
+                    loadData()
+                })
+                .catch(function (err) {
+                    alert(err);
+                });
+        }
+
+        let loadData = function () {
+            let url = "".concat(baseURL, 'movie/', document.getElementsByClassName('tmdbid')[0].id, '?api_key=', apiKey);
+            fetch(url)
+                .then((result) => {
+                    return result.json();
+                })
+                .then((data) => {
+                    title = data.original_title;
+                    console.log(title);
+                    document.getElementById('movie_title').innerHTML = title;
+
+                    let posterurl = "".concat(baseImageURL, 'w342', data.poster_path);
+                    console.log(posterurl);
+                    str_poster = '<img className="w-100" src='+posterurl+' alt="" />';
+                    document.getElementById('movie_poster').innerHTML = str_poster;
+
+                    release = data.release_date;
+                    document.getElementById('release').innerHTML = "Release date: "+release;
+                    revenue = data.revenue;
+                    document.getElementById('revenue').innerHTML = "Revenue: $"+revenue;
+                    runtime = data.runtime;
+                    document.getElementById('runtime').innerHTML = "Runtime: "+runtime+" minutes";
+                    languages = data.spoken_languages;
+                    var lanspan = document.getElementById('languages');
+                    for(var i = 0; i < languages.length; i++) {
+                        var obj = languages[i].name;
+
+                        str = '<span class="badge badge-dark"><a href="#" style="color:white">'+ obj +'</a></span>   ';
+                        lanspan.insertAdjacentHTML( 'beforeend', str );
+                    }
+
+                    genres = data.genres;
+                    var genspan = document.getElementById('movie_genres');
+                    for(i = 0; i < genres.length; i++) {
+                        obj = genres[i].name;
+
+                        str = '<span class="badge badge-dark"><a href="#" style="color:white">'+ obj +'</a></span>   ';
+                        genspan.insertAdjacentHTML( 'beforeend', str );
+                    }
+
+                    tagline = data.tagline;
+                    document.getElementById('movie_tagline').innerHTML = tagline;
+
+                    overview = data.overview;
+                    document.getElementById('movie_overview').innerHTML = overview;
+                })
+        }
+        getConfig();
+    }
+
     render() {
         return (
             <div className="container">
@@ -15,12 +96,10 @@ class MovieInfo extends Component {
                                 {/* Movie information */}
                                 <div className="container">
                                     <div className="row">
-                                        <div className="card col-md-10 p-3">
-                                            <div className="row ">
-                                                <div className="col-md-4">
-                                                    <img className="w-100" src="https://image.tmdb.org/t/p/w500/1hRoyzDtpgMU7Dz4JF22RANzQO7.jpg" alt="thedarkknight" />
-                                                </div>
-                                                <div className="col-md-8">
+                                        <div className="card col-md-10 p-4">
+                                            <div className="row">
+                                                <div className="col-md-6" id="movie_poster"></div>
+                                                <div className="col-md-6">
                                                     <div className="card-block">
                                                         <div className="tmdbid" id={this.props.match.params.id}> </div>
                                                         <h2 id="movie_title" className="card-title">title</h2>
@@ -116,12 +195,10 @@ class MovieInfo extends Component {
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         );
     }
 }
-
 export default MovieInfo;
