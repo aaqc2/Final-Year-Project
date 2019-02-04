@@ -6,15 +6,15 @@ class MovieImages extends Component {
    render() {
       return (
          <div >
-            <Link to={"/info/"+this.props.movie.id} className= "link">
-            { this.props.movie.title || this.props.movie.name}
-            <img src={this.props.posterUrl} alt="movieimages" className="movie_image"/>
+            <Link to={"/info/"+this.props.id} className= "link">
+            { this.props.info.data.title || this.props.info.data.name}
+            <img src={this.props.poster} alt="movieimages" className="movie_image"/>
             </Link>
         <StarRating/>
         {/* <StarRating tmdbid={this.props.match.params.id}/> */}
          </div>
-      ); 
+      );
    }
 }
 
-export default MovieImages; 
+export default MovieImages;

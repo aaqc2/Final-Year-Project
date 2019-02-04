@@ -22,7 +22,7 @@ class ShowGenres(generics.RetrieveUpdateDestroyAPIView):
 
 @api_view(['GET'])
 def showTopRated(request):
-    getMID = Titles.objects.values_list('movieid', flat=True).annotate(avg_rating=Avg('ratings__rating')).annotate(sum_rating=Sum('ratings__rating')).order_by(F('sum_rating').desc(nulls_last=True))[:10]
+    getMID = Titles.objects.values_list('movieid', flat=True).annotate(avg_rating=Avg('ratings__rating')).annotate(sum_rating=Sum('ratings__rating')).order_by(F('sum_rating').desc(nulls_last=True))[:15]
     queryset = Links.objects.filter(movieid__in=list(getMID)).values('tmdbid')
     serializer = RatingsSerializer(queryset, many=True)
     return Response(serializer.data)
