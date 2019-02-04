@@ -23,7 +23,6 @@ class StarRating extends Component {
           //const userRating = await user.json();
           if (rating.length <= 0){
               rating = [{rating: 0}];
-              console.log("rating here:" + rating);
           }
 
           this.setState({

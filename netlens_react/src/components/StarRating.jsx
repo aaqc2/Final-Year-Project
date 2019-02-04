@@ -18,13 +18,9 @@ class StarRating extends Component {
           const avg = await res.json();
 
           const user = await fetch(`http://127.0.0.1:8000/api/getUser/1/${this.props.tmdbid}`);
-          let rating;
-          //const userRating = await user.json();
-          if (user.length < 0){
-              rating = 0;
-          }
-          else {
-             rating = await user.json();
+          let rating = await user.json();
+          if (rating.length <= 0){
+              rating = [{rating: 0}];
           }
           this.setState({
               rating_avg: avg,

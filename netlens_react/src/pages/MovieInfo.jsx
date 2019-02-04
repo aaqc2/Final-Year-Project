@@ -14,7 +14,7 @@ class MovieInfo extends Component {
         let apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
         let baseURL = 'https://api.themoviedb.org/3/';
         let baseImageURL = 'http://image.tmdb.org/t/p/';
-        let configData = null;
+        // let configData = null;
         var title, release, revenue, runtime, languages, genres, tagline, overview, str, str_poster;
 
         let getConfig = function () {
@@ -25,7 +25,7 @@ class MovieInfo extends Component {
                 })
                 .then((data) => {
                     baseImageURL = data.images.secure_base_url;
-                    configData = data.images;
+                    // configData = data.images;
                     console.log('config fetched');
                     loadData()
                 })
