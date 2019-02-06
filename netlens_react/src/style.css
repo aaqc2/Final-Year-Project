@@ -177,12 +177,13 @@ p.big {
     position: absolute;
      bottom: 0; 
     width: 100%;
-    height: 60px;
+    height: 40px;
     line-height: 40px;
     text-align: center;
     color: white;
     background-color: #221f1f;
     margin-bottom: 0px;
+    position: fixed;
 }
 
  /* movie rows - landing page*/
@@ -280,8 +281,6 @@ p.big {
   
   
   }
-
-
   
   .col-md-12 img {
     height: 50%;
@@ -289,4 +288,40 @@ p.big {
     position: absolute;
 
   }
+
+
+  /* RegisterPage  */
   
+  .register-container{
+    margin: 0 auto;
+    border-radius: 4px;
+    width: 75%;
+    max-width: 900px;
+    padding: 10px;
+    padding-top: 70px;
+  }
+
+  input{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+  }
+  
+  
+  button[type=submit] {
+
+    width: 30%;
+    margin-top: 10px;
+  }
+
+  .col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+  }
+  
+  .register-text{
+      color: white;
+  }
