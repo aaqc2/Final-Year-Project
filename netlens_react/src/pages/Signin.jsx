@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+// import homescreen from '../images/homescreen.png';
 
 class Login extends Component {
 
@@ -47,7 +48,7 @@ class Login extends Component {
             <div className ="col-md-12">
                 <h3> recommendations </h3>
                 <p> Struggle to find a movie you will enjoy? NetLens helps you find movies you will like. Simply provide ratings for movies,  then NetLens recommends you movies which you will enjoy to watch :)</p>
-                <img src="/Users/direna/Desktop/final year/final year project/NetLens homescreen.png" alt="homescreen"/>
+                {/* <img src={homescreen} alt="homescreen"/> */}
             </div>
         </div>
 

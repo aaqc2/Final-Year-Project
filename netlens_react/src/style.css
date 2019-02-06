@@ -248,10 +248,11 @@ p.big {
     background: linear-gradient(90deg, #999999 0%,  #737373 50%, #4A4A4A 100%);;
     height:30%;
     background-size: cover;
-    background-image: url("landingPage.png");
+    background-image: url("./images/landingPage.png");
     background-repeat: no-repeat, repeat;
     width:auto;
     position: relative;
+    padding-top: 70px;
   }
   
   .login-container {
