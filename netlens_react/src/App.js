@@ -7,7 +7,7 @@ import MovieInfo from './pages/MovieInfo.jsx';
 import UserProfile from './pages/UserProfile.jsx';
 import AdvancedSearch from './pages/AdvancedSearch';
 import LandingPage from './pages/LandingPage.jsx';
-// import Signin from './pages/Signin.jsx';
+import Signin from './pages/Signin.jsx';
 import Footer from './components/Footer.jsx';
 
 class App extends Component {
@@ -16,7 +16,7 @@ class App extends Component {
       <Router>
         <div>
           <Navbar />
-          {/* <Route exact path="/" component={Signin}/> */}
+          <Route path="/Signin" component={Signin}/> 
           <Route exact path="/LandingPage" component={LandingPage}/>
           <Route exact path="/info/:id" render={(props) => (<MovieInfo {...props} isAuthed={true} />)} />
           <Route path="/userprofile" component={UserProfile}/>
