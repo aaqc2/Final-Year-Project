@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import axios from '../baseUrl'; 
 import MovieImages from '../components/MovieImages';
+// import StarRating from "../components/StarRating";
 
-//import StarRating from '../components/StarRating.js';
 
 class LandingPage extends Component {
   apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
@@ -88,6 +88,8 @@ class LandingPage extends Component {
           <h1 className="movieRow_heading">Top Rated</h1>
           <div className="movieRow_container">
               {this.state.topRatedRow}
+
+s
           </div>
         </div>
       );

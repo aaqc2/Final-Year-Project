@@ -238,3 +238,49 @@ p.big {
 .link:hover{
     color: #3366ff;
 }
+
+
+/* Sign-in page  */
+  
+  .wrapper{
+    background: linear-gradient(90deg, #999999 0%,  #737373 50%, #4A4A4A 100%);;
+    height:30%;
+    background-size: cover;
+    background-image: url("landingPage.png");
+    background-repeat: no-repeat, repeat;
+    width:auto;
+    position: relative;
+  }
+  
+  .login-container {
+    padding: 25px;
+    background: linear-gradient(90deg, #999999 0%,  #737373 50%, #4A4A4A 100%);
+    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    width: 50%; /* Could be more or less, depending on screen size */
+  }
+  
+  @media screen and (max-width: 800px) {
+    .container {
+      width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
+    }
+  }
+  
+  
+  input{
+    width: 100%
+  }
+  
+  
+  .col-md-12{
+  text-align: center;
+  position: absolute;
+  
+  }
+  
+  .col-md-12 img {
+    height: 50%;
+    width: 50%;
+    position: absolute;
+  }
+  
