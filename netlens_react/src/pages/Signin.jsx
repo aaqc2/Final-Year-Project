@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Link } from 'react-router-dom';
 
 class Login extends Component {
 
@@ -28,7 +28,7 @@ class Login extends Component {
         <div className = "wrapper">
             <div className = "login-container">
                 <h2 id= "signin">Sign in</h2>
-                <h4> Don't have an account? <a href="#registerpage.html">Register here</a></h4>
+                <h4> Don't have an account?  <Link className="register-link" to="/RegisterPage">Register now</Link></h4>
                 <div id = "signinBox">
                     <form onSubmit={this.handleSubmit}>
                         <div className = "input">

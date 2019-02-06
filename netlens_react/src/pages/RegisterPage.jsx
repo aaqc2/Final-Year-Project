@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//  import './App.css';
+import { Link } from 'react-router-dom';
 
 
 class RegisterPage extends Component {
@@ -32,7 +32,7 @@ class RegisterPage extends Component {
             
                 <h2 className = "register-text"> Register </h2>
                 <h3 className = "register-text"> Create an account to get personalised movie recommendation </h3>
-                <h4 className = "register-text"> Already have an account? <a href="#registerpage.html"> Sign in</a></h4>
+                <h4 className = "register-text"> Already have an account?  <Link className="signin-link" to="/Signin">Sign in </Link> </h4>
             
                     <form id="registerForm" onSubmit={this.handleSubmit}>
                         <div className = "input,  col-75">
