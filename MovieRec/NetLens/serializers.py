@@ -15,7 +15,7 @@ class TitlesSerializer(serializers.ModelSerializer):
 class RatingsSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
-            'tmdbid',
+            'movieid',
         )
         model = Links
 

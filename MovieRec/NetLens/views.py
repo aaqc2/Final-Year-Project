@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import generics
-from .models import Titles, Ratings, Users, Links
+from .models import Titles, Ratings, Users, Links, Recommendations
 from .serializers import TitlesSerializer, RatingsSerializer, SearchSerializer, RatingSerializer, UserRating, AverageRatingSerializer
 from rest_framework.decorators import api_view
-from django.db.models import Avg, F, Sum, Q
+from django.db.models import Avg, F, Sum
 from rest_framework.pagination import PageNumberPagination
 from datetime import datetime
 
@@ -22,7 +22,7 @@ class ShowGenres(generics.RetrieveUpdateDestroyAPIView):
 
 @api_view(['GET'])
 def showTopRated(request):
-    getMID = Titles.objects.values_list('movieid', flat=True).annotate(avg_rating=Avg('ratings__rating')).annotate(sum_rating=Sum('ratings__rating')).order_by(F('sum_rating').desc(nulls_last=True))[:10]
+    getMID = Titles.objects.values_list('movieid', flat=True).annotate(avg_rating=Avg('ratings__rating')).annotate(sum_rating=Sum('ratings__rating')).order_by(F('sum_rating').desc(nulls_last=True))[:15]
     queryset = Links.objects.filter(movieid__in=list(getMID)).values('tmdbid')
     serializer = RatingsSerializer(queryset, many=True)
     return Response(serializer.data)
@@ -93,3 +93,11 @@ def AverageRating(request, tmdbid):
     queryset = Ratings.objects.values('movieid').filter(movieid__in=movieId).annotate(avg_rating=Avg('rating'))
     serializer = AverageRatingSerializer(queryset, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def getRecommendation(request, u):
+    userId = Users.objects.get(pk=u)
+    userList = Recommendations.objects.values_list('movieid').filter(userid=userId)
+    queryset = Links.objects.filter(movieid__in=list(userList)).values('tmdbid')
+    serializer_class = RatingsSerializer(queryset, many=True)
+    return Response(serializer_class.data)
