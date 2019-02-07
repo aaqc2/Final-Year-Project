@@ -119,7 +119,7 @@ class DjangoSession(models.Model):
 
 
 class Links(models.Model):
-    movieid= models.ForeignKey('Titles', db_column='movieid', primary_key=True, on_delete=models.CASCADE)
+    movieid = models.ForeignKey('Titles', primary_key=True, on_delete=models.CASCADE, db_column='movieid')
     imdbid = models.IntegerField()
     tmdbid = models.IntegerField(blank=True, null=True)
 
@@ -176,7 +176,7 @@ class Tags(models.Model):
 
 
 class Titles(models.Model):
-    movieid = models.IntegerField(primary_key=True)
+    movieid = models.IntegerField(db_column='movieid', primary_key=True)
     title = models.CharField(max_length=255, blank=True, null=True)
     genre = models.CharField(max_length=255, blank=True, null=True)
 

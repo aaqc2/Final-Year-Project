@@ -97,7 +97,7 @@ def AverageRating(request, tmdbid):
 @api_view(['GET'])
 def getRecommendation(request, u):
     userId = Users.objects.get(pk=u)
-    userList = Recommendations.objects.values_list('movieid').filter(userid=userId)
+    userList = Recommendations.objects.values_list('movieid').filter(userid=userId)[:5]
     queryset = Links.objects.filter(movieid__in=list(userList)).values('tmdbid')
     serializer_class = RatingsSerializer(queryset, many=True)
     return Response(serializer_class.data)
