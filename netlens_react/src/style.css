@@ -165,9 +165,8 @@ p.big {
 /* ADVANCED SEARCH */
 
 .advanced_search {
-    width: 25%;
-    /* padding: 20pt; */
-    align-self: center;
+    width: 200px;
+    align-self: left;
     font-size: 11pt;
 }
 

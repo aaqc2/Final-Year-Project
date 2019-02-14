@@ -2,6 +2,34 @@ import React, { Component } from 'react';
 
 
 class AdvancedSearch extends Component {
+
+    handleChange() {
+        var cbAction = document.getElementById("Action");
+        if (cbAction.checked === true) {
+            console.log(cbAction.id);
+        }
+        var cbComedy = document.getElementById("Comedy");
+        if (cbComedy.checked === true) {
+            console.log(cbComedy.id);
+        }
+        var cbDrama = document.getElementById("Drama");
+        if (cbDrama.checked === true) {
+            console.log(cbDrama.id);
+        }
+        var cbRomance = document.getElementById("Romance");
+        if (cbRomance.checked === true) {
+            console.log(cbRomance.id);
+        }
+        var cbThriller = document.getElementById("Thriller");
+        if (cbThriller.checked === true) {
+            console.log(cbThriller.id);
+        }
+        var cbSciFi = document.getElementById("SciFi");
+        if (cbSciFi.checked === true) {
+            console.log(cbSciFi.id);
+        }
+    }
+
     render() {
         return (
             <div className="container">
@@ -14,28 +42,28 @@ class AdvancedSearch extends Component {
                         <div className="filter-content">
                             <div className="card-body">
                                 <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="Check1" />
-                                    <label className="custom-control-label" htmlFor="Check1">Action</label>
+                                    <input type="checkbox" className="custom-control-input" onChange={this.handleChange} id="Action" />
+                                    <label className="custom-control-label" htmlFor="Action">Action</label>
                                 </div> {/* form-check.// */}
                                 <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="Check2" />
-                                    <label className="custom-control-label" htmlFor="Check2">Comedy</label>
+                                    <input type="checkbox" className="custom-control-input" onChange={this.handleChange} id="Comedy" />
+                                    <label className="custom-control-label" htmlFor="Comedy">Comedy</label>
                                 </div> {/* form-check.// */}
                                 <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="Check3" />
-                                    <label className="custom-control-label" htmlFor="Check3">Drama</label>
+                                    <input type="checkbox" className="custom-control-input" onChange={this.handleChange} id="Drama" />
+                                    <label className="custom-control-label" htmlFor="Drama">Drama</label>
                                 </div> {/* form-check.// */}
                                 <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="Check4" />
-                                    <label className="custom-control-label" htmlFor="Check4">Romance</label>
+                                    <input type="checkbox" className="custom-control-input" onChange={this.handleChange} id="Romance" />
+                                    <label className="custom-control-label" htmlFor="Romance">Romance</label>
                                 </div> {/* form-check.// */}
                                 <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="Check5" />
-                                    <label className="custom-control-label" htmlFor="Check5">Thriller</label>
+                                    <input type="checkbox" className="custom-control-input" onChange={this.handleChange} id="Thriller" />
+                                    <label className="custom-control-label" htmlFor="Thriller">Thriller</label>
                                 </div> {/* form-check.// */}
                                 <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="Check6" />
-                                    <label className="custom-control-label" htmlFor="Check6">Sci-Fi</label>
+                                    <input type="checkbox" className="custom-control-input" onChange={this.handleChange} id="SciFi" />
+                                    <label className="custom-control-label" htmlFor="SciFi">Sci-Fi</label>
                                 </div> {/* form-check.// */}
                             </div> {/* card-body.// */}
                         </div>
@@ -46,8 +74,8 @@ class AdvancedSearch extends Component {
                         </header>
                         <div className="filter-content">
                             <div className="card-body">
-                                <select className="form-control" id="releasedate">
-                                    <option value selected disabled>Select option...</option>
+                                <select className="form-control" id="releasedate" >
+                                    <option defaultValue>Select option...</option>
                                     <option>Your ratings</option>
                                     <option>Average ratings</option>
                                     <option>Highly recommended</option>
@@ -56,19 +84,7 @@ class AdvancedSearch extends Component {
                             </div> {/* card-body.// */}
                         </div>
                     </article> {/* card-group-item.// */}
-                    <article className="card-group-item">
-                        <header className="card-header">
-                            <h5 className="title">Age rating</h5>
-                        </header>
-                        <div className="filter-content">
-                            <div className="card-body">
-                                <label className="btn btn-sm btn-danger">
-                                    <input className type="checkbox" name="myradio" defaultValue />
-                                    <span className="form-check-label">   Include adult movies</span>
-                                </label>
-                            </div> {/* card-body.// */}
-                        </div>
-                    </article> {/* card-group-item.// */}
+
                 </div>
             </div>
         );
