@@ -187,9 +187,9 @@ class Titles(models.Model):
 
 class Users(models.Model):
     userid = models.IntegerField(primary_key=True)
-    username = models.CharField(max_length=255, blank=True, null=True)
-    password = models.CharField(max_length=255, blank=True, null=True)
-    email = models.CharField(max_length=255, blank=True, null=True)
+    username = models.CharField(max_length=255, blank=False, null=False, unique=True)
+    password = models.CharField(max_length=255, blank=False, null=False)
+    email = models.EmailField(max_length=255, blank=False, null=False, unique=True)
 
     class Meta:
         managed = False

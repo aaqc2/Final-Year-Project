@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import SearchBar from './SearchBar.jsx';
 
 import '../style.css';
 
@@ -9,13 +10,12 @@ class Navbar extends Component {
             <nav className="navbar navbar-expand-md navbar-dark navbar-fixed-top">
                 <div className="container">
                     <Link className="navbar-brand" to="/">NetLens</Link>
-                      <h5 className="slogan"> personalised movie recommendations</h5> 
+                      <h6 className="slogan">personalised movie recommendations</h6>
 
-                    <form className="mx-auto my-auto d-inline w-100">
-                        <div className="search-container">
-                            <input type="text" className="form-control form-control-sm border border-right-0" placeholder="Search movies..." />
-                        </div>
-                    </form>
+                    <div className="mx-auto my-auto d-inline w-100">
+                        <SearchBar />
+                    </div>
+
                     <Link className="btn btn-sm btn-primary" to="/advancedsearch" id="advanced_search">Advanced search</Link>
                     
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">

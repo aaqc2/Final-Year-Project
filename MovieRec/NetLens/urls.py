@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-
+from django.conf.urls import url
 from . import views
 
 
@@ -15,4 +15,7 @@ urlpatterns = [
     path('getUser/<int:u>/<int:tmdbId>', views.getUserRating),
     path('avgrate/<int:tmdbid>', views.AverageRating),
     path('recommendation/<int:u>', views.getRecommendation),
+    path('login/', views.login),
+    # url(r'^genres/$', views.getGenres),
+    path('genres/', views.getGenres),
 ]
