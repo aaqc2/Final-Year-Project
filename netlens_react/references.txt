@@ -35,3 +35,13 @@ https://blackrockdigital.github.io/startbootstrap-simple-sidebar/
 
 Advanced search toggle?
 https://codepen.io/aanjulena/pen/ZLZjzV
+
+
+NPM PACKAGES:
+create-react-app
+react-router-dom
+react-star-rating-component
+react-autosuggest
+@material-ui/core
+@material-ui/icons
+axios
