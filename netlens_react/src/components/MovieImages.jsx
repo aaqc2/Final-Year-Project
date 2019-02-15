@@ -11,8 +11,7 @@ class MovieImages extends Component {
             <img src={this.props.poster} alt="movieimages" className="movie_image"/>
             </Link>
              {/*<StarRating/>*/}
-
-         <StarRating tmdbid={this.props.id}/>
+         <StarRating tmdbid={this.props.id} userid={this.props.userid}/>
 
          </div>
       );

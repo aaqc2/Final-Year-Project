@@ -1,8 +1,9 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login
 from rest_framework.response import Response
-from rest_framework import generics
+from rest_framework import generics, status
 from .models import Titles, Ratings, Users, Links, Recommendations
-from .serializers import TitlesSerializer, RatingsSerializer, SearchSerializer, RatingSerializer, UserRating, AverageRatingSerializer
+from .serializers import TitlesSerializer, RatingsSerializer, SearchSerializer, RatingSerializer, UserRating, AverageRatingSerializer, UserLoginSerializer
 from rest_framework.decorators import api_view
 from django.db.models import Avg, F, Sum
 from rest_framework.pagination import PageNumberPagination
@@ -101,3 +102,23 @@ def getRecommendation(request, u):
     queryset = Links.objects.filter(movieid__in=list(userList)).values('tmdbid')
     serializer_class = RatingsSerializer(queryset, many=True)
     return Response(serializer_class.data)
+
+@api_view(['POST'])
+def login(request):
+    if request.method == 'POST':
+        email = request.data.get('email')
+        password = request.data.get('password')
+        queryset = Users.objects.filter(email=email, password=password).values('userid')
+        if Users.objects.filter(email=email, password=password).exists():
+            serializer = UserLoginSerializer(queryset, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response("Invalid email or password", status=status.HTTP_401_UNAUTHORIZED)
+
+@api_view(['GET'])
+def getGenres(request):
+    genres = request.GET.getlist('gen')
+    queryset = Titles.objects.all()
+    queryset = queryset.filter(genre__in=genres)
+    serializer = TitlesSerializer(queryset, many=True)
+    return Response(serializer.data)

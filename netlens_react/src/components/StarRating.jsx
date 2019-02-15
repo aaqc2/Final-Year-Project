@@ -17,7 +17,7 @@ class StarRating extends Component {
           const res = await fetch(`http://127.0.0.1:8000/api/avgrate/${this.props.tmdbid}`);
           const avg = await res.json();
 
-          const user = await fetch(`http://127.0.0.1:8000/api/getUser/1/${this.props.tmdbid}`);
+          const user = await fetch(`http://127.0.0.1:8000/api/getUser/${this.props.userid}/${this.props.tmdbid}`);
           let rating = await user.json();
           if (rating.length <= 0){
               rating = [{rating: 0}];
@@ -44,7 +44,7 @@ class StarRating extends Component {
         }
 
         console.log('name: %s, nextValue: %s, prevValue: %s', name, nextValue, prevValue); //ADD FUNCTION TO PASS THE STAR RATING HERE
-        const rate = await fetch(`http://127.0.0.1:8000/api/rate/${this.props.tmdbid}/1/${nextValue}`);
+        const rate = await fetch(`http://127.0.0.1:8000/api/rate/${this.props.tmdbid}/${this.props.userid}/${nextValue}`);
         const newRating = await rate.json();
         this.setState({ rating_user: newRating });
     }
@@ -56,7 +56,7 @@ class StarRating extends Component {
             <div>
                 {rating_avg.map(item => (
                     <div style={{ fontSize: 24 }}>
-                        <h5>Average rating: {item.avg_rating} </h5>
+                        <h5>Average rating: {(item.avg_rating).toFixed(2)} </h5>
                         <StarRatingComponent
                             name="rating_avg"
                             starColor="#ffb400"

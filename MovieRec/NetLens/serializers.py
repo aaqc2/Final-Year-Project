@@ -52,3 +52,10 @@ class AverageRatingSerializer(serializers.ModelSerializer):
             'avg_rating',
         )
         model = Ratings
+
+class UserLoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'userid',
+        )
+        model = Users

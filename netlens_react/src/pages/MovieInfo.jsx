@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import StarRating from '../components/StarRating.jsx';
+import Navbar from "../components/Navbar";
 
 class MovieInfo extends Component {
 
@@ -92,6 +93,7 @@ class MovieInfo extends Component {
                     <div id="page-content-wrapper">
                         <div className="container-fluid">
                             <div className="container">
+                                <Navbar />
 
                                 {/* Movie information */}
                                 <div className="container">
