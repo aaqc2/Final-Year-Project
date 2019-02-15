@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from '../baseUrl'; 
 import MovieImages from '../components/MovieImages';
+import Navbar from "../components/Navbar";
 // import StarRating from "../components/StarRating";
 
 
@@ -111,7 +112,9 @@ class LandingPage extends Component {
    render() {
 
       return (
+
         <div className="movieRow">
+              <Navbar />
 
           <h1 className="movieRow_heading">Top Rated</h1>
           <div className="movieRow_container">

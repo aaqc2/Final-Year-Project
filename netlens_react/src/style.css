@@ -243,7 +243,17 @@ p.big {
 
 
 /* Sign-in page  */
-  
+    .header {
+    text-align: center;
+    color: #FF0000;
+    vertical-align: text-top;
+
+  }
+
+  .header h5{
+    color: #FFFFFF;
+  }
+
   .wrapper{
     background: linear-gradient(90deg, #999999 0%,  #737373 50%, #4A4A4A 100%);;
     height:30%;

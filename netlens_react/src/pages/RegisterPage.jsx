@@ -28,7 +28,11 @@ class RegisterPage extends Component {
 
   render() {
     return (
-        <div className = "register-container"> 
+        <div className = "register-container">
+             <header className="header">
+                <h1>NetLens</h1>
+                <h5>personalised movie recommendations</h5>
+            </header>
             
                 <h2 className = "register-text"> Register </h2>
                 <h3 className = "register-text"> Create an account to get personalised movie recommendation </h3>

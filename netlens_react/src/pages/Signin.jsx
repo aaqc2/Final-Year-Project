@@ -27,6 +27,10 @@ class Login extends Component {
   render() {
     return (
         <div className = "wrapper">
+            <header className="header">
+                <h1>NetLens</h1>
+                <h5>personalised movie recommendations</h5>
+            </header>
             <div className = "login-container">
                 <h2 id= "signin">Sign in</h2>
                 <h4> Don't have an account?  <Link className="register-link" to="/RegisterPage">Register now</Link></h4>
