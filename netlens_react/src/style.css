@@ -245,6 +245,41 @@ p.big {
     color: red;
 }
 
+
+
+.ratedlist-container {
+       overflow-y: hidden;
+       overflow-x: scroll;
+       display: flex;
+       overflow: -moz-scrollbars-horizontal;
+       /* grid-template-columns: repeat(20, 1fr); */
+       column-gap: 1;
+
+}
+
+
+.ratedlist-container .movielink {
+   color: black;
+
+}
+
+
+.ratedlist-container .movie_image{
+    cursor: pointer;
+    transition: all 450ms;
+    transform: center left;
+    min-height: 0;
+    height: 20rem;
+    width: 15.5rem;
+  }
+
+  .ratedlist-container .movie_image:hover  {
+       transform: scale(1.0);
+       opacity: 1;
+
+    }
+
+
 /* ADVANCED SEARCH */
 
 .advanced_search {
@@ -257,24 +292,25 @@ p.big {
 
 .footer {
     position: absolute;
-     bottom: 0; 
+     /*bottom: 0;*/
     width: 100%;
-    height: 40px;
     line-height: 40px;
     text-align: center;
     color: white;
     background-color: #221f1f;
-    margin-bottom: 0px;
-    position: fixed;
+     padding: 5px;
+    /*margin-bottom: 0px;*/
+    /*position: fixed;*/
 }
 
- /* movie rows - landing page*/
+ /* MOVIE ROW-LANDING PAGE */
 .movieRow {
     background-color:#221f1f;
     /* grid-column: 2 / 13; */
     color: #fff;
     margin-top: 100px;
   }
+
   .movieRow_heading {
        padding-top: rem;
        font-family: Arial, Helvetica, sans-serif;
@@ -292,14 +328,16 @@ p.big {
        /* grid-template-columns: repeat(20, 1fr); */
        column-gap: 1;
   }
-  
-  
+
+
+
+  /* MOVIE IMAGES */
   .movie_image{
     cursor: pointer;
     transition: all 450ms;
     transform: center left;
     min-height: 0;
-    height: 20rem;
+    height: 22rem;
     width: 20.5rem;
   }
     
@@ -308,23 +346,26 @@ p.big {
        opacity: 1;
     }
   
-  .movieRow_container:hover > .movie_image {
-      opacity: .3;
-  
-  
-  }
 
-  .link{
+
+.movielink{
       color: #FFFFFF;
-   
+
 }
   
-.link:hover{
+.movielink:hover{
     color: #3366ff;
 }
 
 
-/* Sign-in page  */
+.movieTitle{
+    height: 55px;
+    padding-right: 10px;
+
+}
+
+
+/* SIGN IN PAGE */
     .header {
     text-align: center;
     color: #FF0000;
@@ -383,7 +424,7 @@ p.big {
   }
 
 
-  /* RegisterPage  */
+  /* REGISTER PAGE  */
   
   .register-container{
     margin: 0 auto;
@@ -418,3 +459,5 @@ p.big {
   .register-text{
       color: white;
   }
+
+

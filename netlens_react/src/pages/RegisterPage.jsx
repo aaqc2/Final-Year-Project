@@ -7,10 +7,11 @@ class RegisterPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+        username: '',
       email: '',
       password: '',
       retypePassword: '',
-      currentCity: '',
+
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -39,6 +40,10 @@ class RegisterPage extends Component {
                 <h4 className = "register-text"> Already have an account?  <Link className="signin-link" to="/Signin">Sign in </Link> </h4>
             
                     <form id="registerForm" onSubmit={this.handleSubmit}>
+                         <div className = "input, col-75">
+                            <input type="text" placeholder="Enter Username"  name="username" onChange={this.handleChange} required/>
+                        </div>
+
                         <div className = "input,  col-75">
                             <input type="text" placeholder="Enter Email" name="email" onChange={this.handleChange} required/>
                         </div>
@@ -54,10 +59,7 @@ class RegisterPage extends Component {
                        
                         <br/>
 
-                        <div className = "input, col-75">
-                            <input type="text" placeholder="Enter your current" city name="city" onChange={this.handleChange} required/>
-                        </div>
-                       
+
                         <br/>
 
                         <button type="submit"value="Submit"> Register</button>
