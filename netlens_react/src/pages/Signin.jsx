@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import MovieImages from "../components/MovieImages";
-import LandingPage from '../pages/LandingPage';
 // import homescreen from '../images/homescreen.png';
 
 class Login extends Component {
@@ -47,6 +45,7 @@ class Login extends Component {
             id = item.userid
             console.log(id);
           });
+
           this.props.history.push({
             pathname: '/LandingPage',
             state: {user: id}
@@ -77,7 +76,7 @@ class Login extends Component {
                     {this.state.msg}
                     <form onSubmit={this.handleSubmit}>
                         <div className = "input">
-                            <input type="email" placeholder="Enter Email" name="email" onChange={this.handleChange} required/>
+                            <input type="text" placeholder="Enter Email" name="email" onChange={this.handleChange} required/>
                         </div>
                         <br/>
                         <div className = "input">

@@ -46,22 +46,6 @@ def paginationTest(request):
     serializer = RatingsSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
 
-@api_view(['POST'])
-def register(request):
-    if request.method == 'POST':
-       email = request.data.get('email')
-       password = request.data.get('password')
-       username = request.data.get('username')
-       if Users.objects.filter(email=email).exists():
-           return Response("Email already in use", status=status.HTTP_406_NOT_ACCEPTABLE)
-       elif Users.objects.filter(username=username).exists():
-           return Response("Username already exist", status=status.HTTP_406_NOT_ACCEPTABLE)
-       else:
-           hashPass = make_password(password, salt=None, hasher='default')
-           queryset = str(Users.objects.values('userid').last().get("userid"))
-           uid = int(queryset) + 1
-           Users.objects.create(userid=str(uid), username=username, password=hashPass, email="email")
-           return Response("success", status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
 def rate(request, m, u, r):
@@ -127,6 +111,25 @@ def login(request):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response("Invalid email or password", status=status.HTTP_401_UNAUTHORIZED)
+
+@api_view(['POST'])
+def register(request):
+    if request.method == 'POST':
+       email = request.data.get('email')
+       password = request.data.get('password')
+       username = request.data.get('username')
+       if Users.objects.filter(email=email).exists():
+           return Response("Email already in use", status=status.HTTP_406_NOT_ACCEPTABLE)
+       elif Users.objects.filter(username=username).exists():
+           return Response("Username already exist", status=status.HTTP_406_NOT_ACCEPTABLE)
+       else:
+           hashPass = make_password(password, salt=None, hasher='default')
+           queryset = str(Users.objects.values('userid').last().get("userid"))
+           uid = int(queryset) + 1
+           Users.objects.create(userid=str(uid), username=username, password=hashPass, email="email")
+           return Response("success", status=status.HTTP_201_CREATED)
+           # serializer = UserLoginSerializer(queryset, many=True)
+           # return Response(serializer.data, status=status.HTTP_200_OK)
 
 # @api_view(['GET'])
 # def getGenres(request):

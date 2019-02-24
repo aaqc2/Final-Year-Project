@@ -8,6 +8,7 @@ import LandingPage from './pages/LandingPage.jsx';
 import Signin from './pages/Signin.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
 import Footer from './components/Footer.jsx';
+import NewUserRatings from "./pages/NewUserRatings";
 
 
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
       <Router>
         <div>
           <Route path="/Signin" component={Signin}/>
+          <Route path="/NewUserRatings" component={NewUserRatings}/>
           <Route path="/RegisterPage" component={RegisterPage}/> 
           <Route exact path="/LandingPage" component={LandingPage}/>
           <Route exact path="/info/:id" render={(props) => (<MovieInfo {...props} isAuthed={true} />)} />
