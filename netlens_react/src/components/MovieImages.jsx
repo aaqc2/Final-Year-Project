@@ -6,8 +6,8 @@ class MovieImages extends Component {
    render() {
       return (
          <div >
-            <Link to={"/info/"+ this.props.id} className= "link">
-            { this.props.info.data.title || this.props.info.data.name}
+            <Link to={"/info/"+ this.props.id} className= "movielink">
+                <div className ="movieTitle"> { this.props.info.data.title || this.props.info.data.name} </div>
             <img src={this.props.poster} alt="movieimages" className="movie_image"/>
             </Link>
              {/*<StarRating/>*/}

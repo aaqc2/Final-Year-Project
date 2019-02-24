@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './style.css';
-
-import Navbar from './components/Navbar.jsx';
 import MovieInfo from './pages/MovieInfo.jsx';
 import UserProfile from './pages/UserProfile.jsx';
 import AdvancedSearch from './pages/AdvancedSearch';
@@ -10,20 +8,21 @@ import LandingPage from './pages/LandingPage.jsx';
 import Signin from './pages/Signin.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
 import Footer from './components/Footer.jsx';
+import Navbar from "./components/Navbar";
 
 class App extends Component {
   render() {
     return (
       <Router>
         <div>
-
-          <Route path="/Signin" component={Signin}/> 
+          <Navbar/>
+          <Route path="/Signin" component={Signin}/>
           <Route path="/RegisterPage" component={RegisterPage}/> 
           <Route exact path="/LandingPage" component={LandingPage}/>
           <Route exact path="/info/:id" render={(props) => (<MovieInfo {...props} isAuthed={true} />)} />
           <Route path="/userprofile" component={UserProfile}/>
           <Route path="/advancedsearch" component={AdvancedSearch}/>
-          <Footer />
+          <Footer/>
         </div>
       </Router>
     );
