@@ -17,11 +17,11 @@ class Navbar extends Component {
                     </div>
 
                     <Link className="btn btn-sm btn-primary" to="/advancedsearch" id="advanced_search">Advanced search</Link>
-                    
+
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    
+
                     <div className="collapse navbar-collapse" id="navbarCollapse">
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item">
@@ -36,9 +36,11 @@ class Navbar extends Component {
                         </ul>
                     </div>
                 </div>
-            </nav>
+             </nav>
         );
     }
 }
 
 export default Navbar;
+
+

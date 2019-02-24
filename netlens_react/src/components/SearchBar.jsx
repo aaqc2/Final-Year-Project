@@ -18,17 +18,6 @@ fetch(api)
       });
     });
 
-// const movies = [
-//   {
-//     title: 'The Dark Knight',
-//     year: 2008
-//   },
-//   {
-//     title: 'The Dark Knight Rises',
-//     year: 2012
-//   }
-// ];
-
 // Calculate suggestions for any given input value
 const getSuggestions = value => {
   const keywords = value.trim().toLowerCase();
@@ -103,3 +92,4 @@ class SearchBar extends Component {
 }
 
 export default SearchBar;
+//>>>>>>> 313fee15057b9198ec8a4b31afdf46e027815558

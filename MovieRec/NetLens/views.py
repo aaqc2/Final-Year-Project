@@ -8,6 +8,7 @@ from rest_framework.decorators import api_view
 from django.db.models import Avg, F, Sum, Q
 from rest_framework.pagination import PageNumberPagination
 from datetime import datetime
+from django.contrib.auth.hashers import make_password
 
 # Create your views here.
 class ListTitles(generics.ListCreateAPIView):
@@ -45,11 +46,22 @@ def paginationTest(request):
     serializer = RatingsSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
 
-
-def registerNewUser(self):
-    queryset = str(Users.objects.values('userid').last().get("userid"))
-    uid = int(queryset) + 1
-    Users.objects.create(userid=str(uid), username="user", password="pass", email="email")
+@api_view(['POST'])
+def register(request):
+    if request.method == 'POST':
+       email = request.data.get('email')
+       password = request.data.get('password')
+       username = request.data.get('username')
+       if Users.objects.filter(email=email).exists():
+           return Response("Email already in use", status=status.HTTP_406_NOT_ACCEPTABLE)
+       elif Users.objects.filter(username=username).exists():
+           return Response("Username already exist", status=status.HTTP_406_NOT_ACCEPTABLE)
+       else:
+           hashPass = make_password(password, salt=None, hasher='default')
+           queryset = str(Users.objects.values('userid').last().get("userid"))
+           uid = int(queryset) + 1
+           Users.objects.create(userid=str(uid), username=username, password=hashPass, email="email")
+           return Response("success", status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
 def rate(request, m, u, r):
@@ -69,7 +81,7 @@ def rate(request, m, u, r):
 
 
     queryset = Ratings.objects.filter(userid=userId, movieid=tMovie.movieid)
-    serializer_class =  UserRating(queryset, many=True)
+    serializer_class = UserRating(queryset, many=True)
     return Response(serializer_class.data)
 
 
@@ -135,3 +147,4 @@ def getGenres(request):
     queryset = Titles.objects.filter(q)
     serializer = TitlesSerializer(queryset, many=True)
     return Response(serializer.data)
+
