@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MovieImages from "../components/MovieImages";
 import axios from "../baseUrl";
+import Navbar from "../components/Navbar";
 
 
 
@@ -10,12 +11,14 @@ class UserProfile extends Component {
 
   /** Hold each genre movie row in an array */
   state = {
-      topRatedRow: [],
+      // topRatedRow: [],
+      ratedList:[]
   }
 
   /** Make all API calls as soon as the MovieGenreRow component mounts. */
   componentWillMount() {
-    this.getTopRated();
+    // this.getTopRated();
+      this.getUserRating();
   }
 
   /** Extract our movie data and pass it to our MovieGenre Component. */
@@ -43,7 +46,7 @@ class UserProfile extends Component {
   /**
    * Send request for movies that are top rated
    */
-  getTopRated = () => {
+  getUserRating= () => {
     let result = [];
     let link = [];
     let count = 0;
@@ -64,7 +67,7 @@ class UserProfile extends Component {
                             link.push(url);
                             if(count >= data.length-1){
                                 const movieRows = this.getMovieRows(result, link, user);
-                                this.setState({ topRatedRow: movieRows });
+                                this.setState({ ratedList: movieRows });
                             }
                             count++;
                         }).catch(error => {
@@ -82,6 +85,7 @@ class UserProfile extends Component {
     render() {
         return (
             <div className="container">
+                      <Navbar/>
             <br /><br /><br />
                 <div className="card">
                     <div className="container user_profile">
@@ -120,7 +124,7 @@ class UserProfile extends Component {
                                 <div className="tab-content">
                                     <div className="tab-pane active" id="tab1">
                                          <div className="ratedlist-container">
-                                                {this.state.topRatedRow}
+                                                {this.state.ratedList}
 
                                             </div>
 

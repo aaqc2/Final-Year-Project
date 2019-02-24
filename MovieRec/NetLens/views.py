@@ -61,11 +61,7 @@ def register(request):
            queryset = str(Users.objects.values('userid').last().get("userid"))
            uid = int(queryset) + 1
            Users.objects.create(userid=str(uid), username=username, password=hashPass, email="email")
-           return Response("sucess", status=status.HTTP_201_CREATED)
-#def registerNewUser(self):
- #   queryset = str(Users.objects.values('userid').last().get("userid"))
- #   uid = int(queryset) + 1
- #   Users.objects.create(userid=str(uid), username="user", password="pass", email="email")
+           return Response("success", status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
 def rate(request, m, u, r):

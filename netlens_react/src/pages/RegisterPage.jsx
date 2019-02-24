@@ -10,8 +10,7 @@ class RegisterPage extends Component {
         username: '',
         email: '',
         password: '',
-        retypePassword: '',
-
+        confirmPassword: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -22,10 +21,15 @@ class RegisterPage extends Component {
     this.setState({[event.target.name]: event.target.value});
   }
 
-  handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.username);
-    event.preventDefault();
-    fetch('http://127.0.0.1:8000/api/register/', {
+  handleSubmit = () => {
+    const { password, confirmPassword } = this.state;
+    console.log(password)
+      console.log(confirmPassword)
+    // perform all neccassary validations
+    if (password !== confirmPassword) {
+        alert("Passwords don't match");
+    } else {
+        fetch('http://127.0.0.1:8000/api/register/', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -61,28 +65,28 @@ class RegisterPage extends Component {
     .catch((error) => {
         console.error(error);
     });
-
+    }
   }
 
-  render() {
+  render(){
     return (
         <div className = "register-container">
              <header className="header">
                 <h1>NetLens</h1>
                 <h5>personalised movie recommendations</h5>
             </header>
-            
+
                 <h2 className = "register-text"> Register </h2>
                 <h3 className = "register-text"> Create an account to get personalised movie recommendation </h3>
                 <h4 className = "register-text"> Already have an account?  <Link className="signin-link" to="/Signin">Sign in </Link> </h4>
-            
+
                     <form id="registerForm" onSubmit={this.handleSubmit}>
                          <div className = "input, col-75">
                             <input type="text" placeholder="Enter Username"  name="username" onChange={this.handleChange} required/>
                         </div>
 
                         <div className = "input,  col-75">
-                            <input type="text" placeholder="Enter Email" name="email" onChange={this.handleChange} required/>
+                            <input type="email"  placeholder="Enter Email" name="email" onChange={this.handleChange} required/>
                         </div>
                         <br/>
                         <div className = "input, col-75">
@@ -91,9 +95,9 @@ class RegisterPage extends Component {
                         <br/>
 
                         <div className = "input, col-75">
-                            <input type="password" placeholder="Retype Password" name="retypePassword" onChange={this.handleChange} required/>
+                            <input type="password" placeholder="Confirm Password" name="confirmPassword" onChange={this.handleChange} required/>
                         </div>
-                       
+
                         <br/>
 
 
@@ -106,7 +110,7 @@ class RegisterPage extends Component {
                         <p className = "register-text"> By registering you are agreeing to the NetLens Terms of Use and Privacy Policy </p>
                     </div>
             </div>
-       
+
 
 
     );
