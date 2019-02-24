@@ -4,30 +4,56 @@ import React, { Component } from 'react';
 class AdvancedSearch extends Component {
 
     handleChange() {
+        let selected = [];
         var cbAction = document.getElementById("Action");
         if (cbAction.checked === true) {
+            selected.push(cbAction.id);
             console.log(cbAction.id);
         }
         var cbComedy = document.getElementById("Comedy");
         if (cbComedy.checked === true) {
+            selected.push(cbComedy.id);
             console.log(cbComedy.id);
         }
         var cbDrama = document.getElementById("Drama");
         if (cbDrama.checked === true) {
+            selected.push(cbDrama.id);
             console.log(cbDrama.id);
         }
         var cbRomance = document.getElementById("Romance");
         if (cbRomance.checked === true) {
+            selected.push(cbRomance.id);
             console.log(cbRomance.id);
         }
         var cbThriller = document.getElementById("Thriller");
         if (cbThriller.checked === true) {
+            selected.push(cbThriller.id);
             console.log(cbThriller.id);
         }
         var cbSciFi = document.getElementById("SciFi");
         if (cbSciFi.checked === true) {
+            selected.push(cbSciFi.id);
             console.log(cbSciFi.id);
         }
+
+        let url = [];
+        selected.map((movies) => {
+            url.push('&gen='+movies);
+        });
+
+        let api = 'http://127.0.0.1:8000/api/genres/?'+url;
+        fetch(api)
+            .then((result) => {
+                return result.json();
+            })
+            .then((data) => {
+                data.map((item) =>{
+                    //add function to display movies
+                    console.log(item.title);
+                });
+            });
+
+
     }
 
     render() {
