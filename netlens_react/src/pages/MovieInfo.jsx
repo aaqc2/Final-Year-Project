@@ -86,6 +86,7 @@ class MovieInfo extends Component {
     }
 
     render() {
+        console.log(this.props);
         return (
             <div className="container">
                 <br /><br /><br />
@@ -106,7 +107,7 @@ class MovieInfo extends Component {
                                                         <div className="tmdbid" id={this.props.match.params.id}> </div>
                                                         <h2 id="movie_title" className="card-title">title</h2>
                                                         
-                                                        <StarRating tmdbid={this.props.match.params.id}/>
+                                                        <StarRating tmdbid={this.props.match.params.id} userid={this.props.location.state.userid}/>
                                                         <b>
                                                             <p id="release" className="big"></p>
 

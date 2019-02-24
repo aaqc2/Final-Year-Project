@@ -4,9 +4,10 @@ import StarRating from './StarRating.jsx';
 
 class MovieImages extends Component {
    render() {
+       console.log(this.props);
       return (
-         <div >
-            <Link to={"/info/"+ this.props.id} className= "link">
+         <div>
+            <Link to={{pathname: "/info/"+ this.props.id, state : {userid: this.props.userid} }} className= "link">
             { this.props.info.data.title || this.props.info.data.name}
             <img src={this.props.poster} alt="movieimages" className="movie_image"/>
             </Link>
