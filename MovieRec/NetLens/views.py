@@ -49,17 +49,19 @@ def paginationTest(request):
 @api_view(['POST'])
 def register(request):
     if request.method == 'POST':
-        email = request.data.get('email')
-        password = request.data.get('password')
-        username = request.data.get('username')
-        if Users.objects.filter(email=email).exists():
-            return Response("Email already in use")
-        elif Users.objects.filter(username=username).exist():
-            return Response ("Username already exist")
-        else
-            hashPass = make_password(password, salt=None, hasher='default')
-            Users.objects.create(userid=str(uid), username=username, password=hashPass, email="email")
-            return Response("sucess")
+       email = request.data.get('email')
+       password = request.data.get('password')
+       username = request.data.get('username')
+       if Users.objects.filter(email=email).exists():
+           return Response("Email already in use", status=status.HTTP_406_NOT_ACCEPTABLE)
+       elif Users.objects.filter(username=username).exists():
+           return Response("Username already exist", status=status.HTTP_406_NOT_ACCEPTABLE)
+       else:
+           hashPass = make_password(password, salt=None, hasher='default')
+           queryset = str(Users.objects.values('userid').last().get("userid"))
+           uid = int(queryset) + 1
+           Users.objects.create(userid=str(uid), username=username, password=hashPass, email="email")
+           return Response("sucess", status=status.HTTP_201_CREATED)
 #def registerNewUser(self):
  #   queryset = str(Users.objects.values('userid').last().get("userid"))
  #   uid = int(queryset) + 1

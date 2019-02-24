@@ -8,9 +8,9 @@ class RegisterPage extends Component {
     super(props);
     this.state = {
         username: '',
-      email: '',
-      password: '',
-      retypePassword: '',
+        email: '',
+        password: '',
+        retypePassword: '',
 
     };
 
@@ -23,8 +23,45 @@ class RegisterPage extends Component {
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.email);
+    alert('A name was submitted: ' + this.state.username);
     event.preventDefault();
+    fetch('http://127.0.0.1:8000/api/register/', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            'username': this.state.username,
+            'email': this.state.email,
+            'password': this.state.password,
+        },)
+    })
+      .then((response) => {
+        return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      if(typeof data === 'object' ) {
+          let id ='';
+          data.map((item) => {
+            id = item.userid
+            console.log(id);
+          });
+          this.props.history.push({
+            pathname: '/LandingPage',
+            state: {user: id}
+          })
+      }
+      else {
+          this.setState({msg: data});
+      }
+
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+
   }
 
   render() {
