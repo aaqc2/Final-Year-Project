@@ -2,16 +2,32 @@ import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
 
 // List of movies to auto-suggest
-const movies = [
-  {
-    title: 'The Dark Knight',
-    year: 2008
-  },
-  {
-    title: 'The Dark Knight Rises',
-    year: 2012
-  }
-];
+let movies = [];
+const api = 'http://127.0.0.1:8000/api';
+fetch(api)
+    .then((result) => {
+      return result.json();
+    })
+    .then((data) => {
+      data.map((item) => {
+        movies.push({
+            title: item.title
+        })
+        //create search page
+        //when movie is searched, redirect to search page
+      });
+    });
+
+// const movies = [
+//   {
+//     title: 'The Dark Knight',
+//     year: 2008
+//   },
+//   {
+//     title: 'The Dark Knight Rises',
+//     year: 2012
+//   }
+// ];
 
 // Calculate suggestions for any given input value
 const getSuggestions = value => {

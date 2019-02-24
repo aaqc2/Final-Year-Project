@@ -5,13 +5,14 @@ from rest_framework import generics, status
 from .models import Titles, Ratings, Users, Links, Recommendations
 from .serializers import TitlesSerializer, RatingsSerializer, SearchSerializer, RatingSerializer, UserRating, AverageRatingSerializer, UserLoginSerializer
 from rest_framework.decorators import api_view
-from django.db.models import Avg, F, Sum
+from django.db.models import Avg, F, Sum, Q
 from rest_framework.pagination import PageNumberPagination
 from datetime import datetime
 
 # Create your views here.
 class ListTitles(generics.ListCreateAPIView):
     queryset = Titles.objects.all()
+    pagination_class = None
     serializer_class = TitlesSerializer
 
 
@@ -98,7 +99,7 @@ def AverageRating(request, tmdbid):
 @api_view(['GET'])
 def getRecommendation(request, u):
     userId = Users.objects.get(pk=u)
-    userList = Recommendations.objects.values_list('movieid').filter(userid=userId)[:10]
+    userList = list(Recommendations.objects.values_list('movieid').filter(userid=userId).order_by('-rating'))[:14]
     queryset = Links.objects.filter(movieid__in=list(userList)).values('tmdbid')
     serializer_class = RatingsSerializer(queryset, many=True)
     return Response(serializer_class.data)
@@ -115,10 +116,22 @@ def login(request):
         else:
             return Response("Invalid email or password", status=status.HTTP_401_UNAUTHORIZED)
 
+# @api_view(['GET'])
+# def getGenres(request):
+#     genres = request.GET.getlist('gen')
+#     queryset = Titles.objects.all()
+#     queryset = queryset.filter(genre__in=genres)
+#     serializer = TitlesSerializer(queryset, many=True)
+#     return Response(serializer.data)
+
 @api_view(['GET'])
 def getGenres(request):
     genres = request.GET.getlist('gen')
-    queryset = Titles.objects.all()
-    queryset = queryset.filter(genre__in=genres)
+    # queryset = Titles.objects.all()
+    # queryset = queryset.filter(genre__in=genres)
+    q = Q()
+    for genre in genres:
+        q |= Q(genre__icontains=genre)
+    queryset = Titles.objects.filter(q)
     serializer = TitlesSerializer(queryset, many=True)
     return Response(serializer.data)

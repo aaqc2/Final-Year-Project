@@ -25,7 +25,7 @@ class LandingPage extends Component {
     let movieRows = [];
     console.log(res);
     results.map((movie) => {
-      console.log("asd");
+      // console.log("asd");
        if (movie.data.poster_path !== null) {
        const movieComponent = <MovieImages
            id={movie.data.id}
