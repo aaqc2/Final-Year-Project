@@ -8,14 +8,13 @@ import LandingPage from './pages/LandingPage.jsx';
 import Signin from './pages/Signin.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
 import Footer from './components/Footer.jsx';
-import Navbar from "./components/Navbar";
+
 
 class App extends Component {
   render() {
     return (
       <Router>
         <div>
-          {/*<Navbar/>*/}
           <Route path="/Signin" component={Signin}/>
           <Route path="/RegisterPage" component={RegisterPage}/> 
           <Route exact path="/LandingPage" component={LandingPage}/>

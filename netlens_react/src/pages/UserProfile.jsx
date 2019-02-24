@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MovieImages from "../components/MovieImages";
 import axios from "../baseUrl";
+import Navbar from "../components/Navbar";
 
 
 
@@ -84,6 +85,7 @@ class UserProfile extends Component {
     render() {
         return (
             <div className="container">
+                      <Navbar/>
             <br /><br /><br />
                 <div className="card">
                     <div className="container user_profile">
