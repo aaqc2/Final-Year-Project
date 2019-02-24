@@ -1,4 +1,4 @@
-from django.urls import path, re_path
+from django.urls import path
 from . import views
 
 
@@ -8,7 +8,7 @@ urlpatterns = [
     path('toprated/', views.showTopRated),
     path('search/', views.showSearch),
     path('page/', views.paginationTest),
-    path('register/', views.registerNewUser),
+    path('register/', views.register),
     path('rate/<int:m>/<int:u>/<str:r>', views.rate),
     path('getUser/<int:u>/', views.getUser),
     path('getUser/<int:u>/<int:tmdbId>', views.getUserRating),
