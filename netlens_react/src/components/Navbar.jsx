@@ -9,8 +9,8 @@ class Navbar extends Component {
         return (
             <nav className="navbar navbar-expand-md navbar-dark navbar-fixed-top">
                 <div className="container">
-                    <Link className="navbar-brand" to="/">NetLens</Link>
-                      <h6 className="slogan">personalised movie recommendations</h6>
+                    <Link className="navbar-brand" to="/">TheMovieOracle</Link>
+                      <h5 className="slogan">personalised movie recommendations</h5>
 
                     <div className="mx-auto my-auto d-inline w-100">
                         <SearchBar />
@@ -31,7 +31,7 @@ class Navbar extends Component {
                                 <Link className="nav-link" to="/userprofile">Profile</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/">Logout</Link>
+                                <Link className="nav-link" to="/Signin">Logout</Link>
                             </li>
                         </ul>
                     </div>

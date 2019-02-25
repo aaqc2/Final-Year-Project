@@ -347,8 +347,6 @@ p.big {
        transform: scale(1.5);
        opacity: 1;
     }
-  
-
 
 .movielink{
       color: #FFFFFF;
@@ -462,3 +460,55 @@ p.big {
       color: white;
   }
 
+
+/* NEW USER RATINGS */
+
+/*.newUserRating-container {*/
+    /*width: 90%;*/
+    /*padding: 20pt;*/
+/*}*/
+
+.newUserRatingList {
+    overflow-y: hidden;
+    *overflow-x: scroll;
+    display: flex;
+    overflow: -moz-scrollbars-horizontal;
+    grid-template-columns: repeat(20, 1fr);
+    column-gap: 1;
+}
+
+.newUserRatingList .movielink {
+   color: black;
+}
+
+
+.newUserRatingList .movie_image{
+    cursor: pointer;
+    transition: all 450ms;
+    transform: center left;
+    min-height: 0;
+    height: 20rem;
+    width: 15.5rem;
+  }
+
+  .newUserRatingList .movie_image:hover  {
+       transform: scale(1.0);
+       opacity: 1;
+  }
+
+.newuserrating-container {
+  display: grid | inline-grid;
+}
+
+.landing-page-link:link, .landing-page-link:visited {
+  background-color: grey;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.landing-page-link:hover, active {
+     color: white;
+}
