@@ -140,6 +140,7 @@ def login(request):
         else:
             return Response("Invalid email or password", status=status.HTTP_401_UNAUTHORIZED)
 
+
 # @api_view(['GET'])
 # def getGenres(request):
 #     genres = request.GET.getlist('gen')

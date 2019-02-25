@@ -1,5 +1,5 @@
 body {
-    padding-top: 0px;
+    padding-top: 50px;
     position: relative;
     background: #221f1f;
 }
@@ -286,8 +286,25 @@ p.big {
 
 .advanced_search {
     width: 200px;
-    align-self: left;
+    float: left;
     font-size: 11pt;
+}
+
+.movieList {
+    overflow: auto;
+    position: relative;
+    padding-top: 45px;
+    padding-left: 70px;
+}
+
+.movieList a {
+    color: white;
+    font-size: 14pt;
+}
+
+.movieList a:hover {
+    color: #ff0000;
+    font-size: 14pt;
 }
 
 /* FOOTER */
@@ -461,5 +478,4 @@ p.big {
   .register-text{
       color: white;
   }
-
 

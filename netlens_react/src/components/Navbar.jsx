@@ -9,7 +9,7 @@ class Navbar extends Component {
         return (
             <nav className="navbar navbar-expand-md navbar-dark navbar-fixed-top">
                 <div className="container">
-                    <Link className="navbar-brand" to="/">NetLens</Link>
+                    <Link className="navbar-brand" to="/landingpage">NetLens</Link>
                       <h6 className="slogan">personalised movie recommendations</h6>
 
                     <div className="mx-auto my-auto d-inline w-100">

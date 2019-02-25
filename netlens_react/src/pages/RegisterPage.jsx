@@ -11,6 +11,7 @@ class RegisterPage extends Component {
         email: '',
         password: '',
         confirmPassword: '',
+         msg:''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -21,7 +22,7 @@ class RegisterPage extends Component {
     this.setState({[event.target.name]: event.target.value});
   }
 
-  handleSubmit = () => {
+  handleSubmit (event) {
     const { password, confirmPassword } = this.state;
     console.log(password)
       console.log(confirmPassword)
@@ -29,6 +30,7 @@ class RegisterPage extends Component {
     if (password !== confirmPassword) {
         alert("Passwords don't match");
     } else {
+        event.preventDefault();
         fetch('http://127.0.0.1:8000/api/register/', {
         method: 'POST',
         headers: {
@@ -38,7 +40,6 @@ class RegisterPage extends Component {
         body: JSON.stringify({
             'username': this.state.username,
             'email': this.state.email,
-            'password': this.state.password,
         },)
     })
       .then((response) => {
@@ -78,8 +79,8 @@ class RegisterPage extends Component {
 
                 <h2 className = "register-text"> Register </h2>
                 <h3 className = "register-text"> Create an account to get personalised movie recommendation </h3>
-                <h4 className = "register-text"> Already have an account?  <Link className="signin-link" to="/Signin">Sign in </Link> </h4>
-
+                <h4 className = "register-text">   {this.state.msg}  <br/> <br/> Already have an account?  <Link className="signin-link" to="/Signin">Sign in </Link> </h4>
+                   <Link className="signin-link" to="/NewUserRatings">ratings</Link>
                     <form id="registerForm" onSubmit={this.handleSubmit}>
                          <div className = "input, col-75">
                             <input type="text" placeholder="Enter Username"  name="username" onChange={this.handleChange} required/>
@@ -104,18 +105,15 @@ class RegisterPage extends Component {
                         <br/>
 
                         <button type="submit"value="Submit"> Register</button>
-                    </form>
 
-                    <div className = " col-75">
+                    </form>
+ <div className = " col-75">
                         <p className = "register-text"> By registering you are agreeing to the NetLens Terms of Use and Privacy Policy </p>
                     </div>
+
             </div>
-
-
 
     );
   }
 }
-
-
 export default RegisterPage;

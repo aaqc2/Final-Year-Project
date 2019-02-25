@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import MovieImages from "../components/MovieImages";
-import LandingPage from '../pages/LandingPage';
 // import homescreen from '../images/homescreen.png';
 
 class Login extends Component {
@@ -47,6 +45,7 @@ class Login extends Component {
             id = item.userid
             console.log(id);
           });
+
           this.props.history.push({
             pathname: '/LandingPage',
             state: {user: id}
