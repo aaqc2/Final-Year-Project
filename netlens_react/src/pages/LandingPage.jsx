@@ -121,7 +121,7 @@ class LandingPage extends Component {
             <div className="movieRow">
                 <Navbar/>
 
-                 <h1> Welcome </h1>h1>
+                 <h1> Welcome </h1>
 
                 <h1 className="movieRow_heading">Top Rated</h1>
                     <div className="movieRow_container">

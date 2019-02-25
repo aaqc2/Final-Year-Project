@@ -14,7 +14,7 @@ from django.contrib.auth.hashers import make_password, check_password
 # Create your views here.
 class ListTitles(generics.ListCreateAPIView):
     queryset = Titles.objects.all()
-    #pagination_class = None
+    pagination_class = None
     serializer_class = TitlesSerializer
 
 
@@ -90,7 +90,7 @@ def rate(request, m, u, r):
 def getUser(request, u):
     userId = Users.objects.get(pk=u)
     userList = Ratings.objects.values_list('movieid').filter(userid=userId)
-    queryset = Links.objects.filter(movieid__in=list(userList)).values('tmdbid')
+    queryset = Links.objects.filter(movieid__in=list(userList)).values('tmdbid') [:20]
     serializer_class = RatingsSerializer(queryset, many=True)
     return Response(serializer_class.data)
 
