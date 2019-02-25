@@ -77,7 +77,7 @@ class Login extends Component {
                     {this.state.msg}
                     <form onSubmit={this.handleSubmit}>
                         <div className = "input">
-                            <input type="email" placeholder="Enter Email" name="email" onChange={this.handleChange} required/>
+                            <input type="text" placeholder="Enter Email" name="email" onChange={this.handleChange} required/>
                         </div>
                         <br/>
                         <div className = "input">

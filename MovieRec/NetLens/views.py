@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
+import jwt
 from rest_framework.response import Response
 from rest_framework import generics, status
 from .models import Titles, Ratings, Users, Links, Recommendations
@@ -8,12 +9,12 @@ from rest_framework.decorators import api_view
 from django.db.models import Avg, F, Sum, Q
 from rest_framework.pagination import PageNumberPagination
 from datetime import datetime
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
 
 # Create your views here.
 class ListTitles(generics.ListCreateAPIView):
     queryset = Titles.objects.all()
-    pagination_class = None
+    #pagination_class = None
     serializer_class = TitlesSerializer
 
 
@@ -57,7 +58,7 @@ def register(request):
        elif Users.objects.filter(username=username).exists():
            return Response("Username already exist", status=status.HTTP_406_NOT_ACCEPTABLE)
        else:
-           hashPass = make_password(password, salt=None, hasher='default')
+           hashPass = make_password(password, salt=None, hasher='pbkdf2_sha256')
            queryset = str(Users.objects.values('userid').last().get("userid"))
            uid = int(queryset) + 1
            Users.objects.create(userid=str(uid), username=username, password=hashPass, email="email")
@@ -121,10 +122,21 @@ def login(request):
     if request.method == 'POST':
         email = request.data.get('email')
         password = request.data.get('password')
-        queryset = Users.objects.filter(email=email, password=password).values('userid')
-        if Users.objects.filter(email=email, password=password).exists():
-            serializer = UserLoginSerializer(queryset, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+        user = Users.objects.get(username=email)
+       # queryset = Users.objects.filter(email=email, password=password).values('userid')
+        if Users.objects.filter(username=email).exists():
+            user = Users.objects.get(username=email)
+            if check_password(password, user.password):
+                payload = {
+                    'id': user.userid
+                }
+                jwt_token = {'token': jwt.encode(payload, '12345')}
+            # serializer = UserLoginSerializer(queryset, many=True)
+                return Response(
+                    jwt_token,
+                    status=200,
+                    content_type="application/json"
+                )#serializer.data, status=status.HTTP_200_OK)
         else:
             return Response("Invalid email or password", status=status.HTTP_401_UNAUTHORIZED)
 
