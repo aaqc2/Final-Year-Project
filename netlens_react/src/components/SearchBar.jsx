@@ -9,6 +9,7 @@ fetch(api)
       return result.json();
     })
     .then((data) => {
+      console.log(data);
       data.map((item) => {
         movies.push({
             title: item.title
@@ -16,6 +17,9 @@ fetch(api)
         //create search page
         //when movie is searched, redirect to search page
       });
+    })
+    .catch((err) => {
+            console.log(err);
     });
 
 // Calculate suggestions for any given input value
@@ -92,4 +96,4 @@ class SearchBar extends Component {
 }
 
 export default SearchBar;
-//>>>>>>> 313fee15057b9198ec8a4b31afdf46e027815558
+

@@ -48,7 +48,7 @@ class UserProfile extends Component {
     let result = [];
     let link = [];
     let count = 0;
-    const api = 'http://127.0.0.1:8000/api/toprated';
+    const api = 'http://127.0.0.1:8000/api/getUser/1/';
     //const user = this.props.location.state.user;
     const user = 1;
     fetch(api)
@@ -98,7 +98,7 @@ class UserProfile extends Component {
                                     <input type="file" className="text-center center-block file-upload" />
                                 </div><br />
                                 <div className="panel panel-default">
-                                    <div className="panel-heading">Email address  <i class="fas fa-envelope"></i></div>
+                                    <div className="panel-heading">Email address  <i className="fas fa-envelope"></i></div>
                                     <div className="panel-body">random_user@gmail.com</div>
                                 </div>
                                 <ul className="list-group">

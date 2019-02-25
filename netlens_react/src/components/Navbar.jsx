@@ -9,6 +9,7 @@ class Navbar extends Component {
         return (
             <nav className="navbar navbar-expand-md navbar-dark navbar-fixed-top">
                 <div className="container">
+
                     <Link className="navbar-brand" to="/">TheMovieOracle</Link>
                       <h5 className="slogan">personalised movie recommendations</h5>
 
