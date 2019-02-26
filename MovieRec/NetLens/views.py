@@ -67,7 +67,6 @@ def register(request):
 @api_view(['GET'])
 def rate(request, m, u, r):
     tMovie = Links.objects.get(tmdbid=m)
-    #movieId = Titles.objects.get(link.tmdbid=m)
     userId= Users.objects.get(pk=u)
     try:
         rating = float(r)
@@ -111,9 +110,8 @@ def AverageRating(request, tmdbid):
 
 @api_view(['GET'])
 def getRecommendation(request, u):
-    userId = Users.objects.get(pk=u)
-    userList = list(Recommendations.objects.values_list('movieid').filter(userid=userId).order_by('-rating'))[:14]
-    queryset = Links.objects.filter(movieid__in=list(userList)).values('tmdbid')
+    queryset = Links.objects.raw('SELECT l.movieid, l.tmdbid FROM link l JOIN recommendations r ON l.movieid = r.movieid'
+                                 ' WHERE userid = %s ORDER BY r.rating', [u])[:20]
     serializer_class = RatingsSerializer(queryset, many=True)
     return Response(serializer_class.data)
 
@@ -122,8 +120,6 @@ def login(request):
     if request.method == 'POST':
         email = request.data.get('email')
         password = request.data.get('password')
-        user = Users.objects.get(username=email)
-       # queryset = Users.objects.filter(email=email, password=password).values('userid')
         if Users.objects.filter(username=email).exists():
             user = Users.objects.get(username=email)
             if check_password(password, user.password):
@@ -131,29 +127,17 @@ def login(request):
                     'id': user.userid
                 }
                 jwt_token = {'token': jwt.encode(payload, '12345')}
-            # serializer = UserLoginSerializer(queryset, many=True)
                 return Response(
                     jwt_token,
                     status=200,
                     content_type="application/json"
-                )#serializer.data, status=status.HTTP_200_OK)
+                )
         else:
             return Response("Invalid email or password", status=status.HTTP_401_UNAUTHORIZED)
-
-
-# @api_view(['GET'])
-# def getGenres(request):
-#     genres = request.GET.getlist('gen')
-#     queryset = Titles.objects.all()
-#     queryset = queryset.filter(genre__in=genres)
-#     serializer = TitlesSerializer(queryset, many=True)
-#     return Response(serializer.data)
 
 @api_view(['GET'])
 def getGenres(request):
     genres = request.GET.getlist('gen')
-    # queryset = Titles.objects.all()
-    # queryset = queryset.filter(genre__in=genres)
     q = Q()
     for genre in genres:
         q |= Q(genre__icontains=genre)
