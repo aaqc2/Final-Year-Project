@@ -55,6 +55,7 @@ class UserProfile extends Component {
     const user = 1;
     fetch(api)
         .then((result) => {
+
             return result.json();
         })
         .then((data) => {

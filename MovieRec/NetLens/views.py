@@ -88,9 +88,10 @@ def rate(request, m, u, r):
 
 @api_view(['GET'])
 def getUser(request, u):
-    userId = Users.objects.get(pk=u)
-    userList = Ratings.objects.values_list('movieid').filter(userid=userId)
-    queryset = Links.objects.filter(movieid__in=list(userList)).values('tmdbid') [:20]
+    # userId = Users.objects.get(pk=u)
+    # userList = Ratings.objects.values_list('movieid').filter(userid=userId);
+    # queryset = Links.objects.filter(movieid__in=list(userList)) [:20]
+    queryset = Links.objects.raw('SELECT l.movieid, l.tmdbid FROM link l JOIN ratings r ON r.movieid = l.movieid WHERE r.userid = %s ORDER BY r.timestamp DESC', [u]) [:20]
     serializer_class = RatingsSerializer(queryset, many=True)
     return Response(serializer_class.data)
 
