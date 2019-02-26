@@ -9,15 +9,13 @@ class UserProfile extends Component {
 
     apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
 
-  /** Hold each genre movie row in an array */
+  /** Hold rated list movie row in an array */
   state = {
-      // topRatedRow: [],
       ratedList:[]
   }
 
   /** Make all API calls as soon as the MovieGenreRow component mounts. */
   componentWillMount() {
-    // this.getTopRated();
       this.getUserRating();
   }
 
@@ -44,7 +42,7 @@ class UserProfile extends Component {
 
 
   /**
-   * Send request for movies that are top rated
+   * Send request for movies that have been rated by the user
    */
   getUserRating= () => {
     let result = [];
@@ -55,6 +53,7 @@ class UserProfile extends Component {
     const user = 1;
     fetch(api)
         .then((result) => {
+
             return result.json();
         })
         .then((data) => {
@@ -118,8 +117,7 @@ class UserProfile extends Component {
                             <div className="col-sm-9">
                                 <ul className="nav nav-tabs">
                                     <li className="active"><a data-toggle="tab" href="#tab1">Your rated movies</a></li>
-                                    <li><a data-toggle="tab" href="#tab2">Statistics 1</a></li>
-                                    <li><a data-toggle="tab" href="#tab3">Statistics 2</a></li>
+                                    <li><a data-toggle="tab" href="#tab2">Statistics </a></li>
                                 </ul>
                                 <div className="tab-content">
                                     <div className="tab-pane active" id="tab1">

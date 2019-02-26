@@ -6,7 +6,7 @@ class Footer extends Component {
         return (
             <footer className="footer">
                 <div className="container">
-                    <span>NetLens © {new Date().getFullYear()}</span>
+                    <span>TheMovieOracle © {new Date().getFullYear()}</span>
                 </div>
             </footer>
         );

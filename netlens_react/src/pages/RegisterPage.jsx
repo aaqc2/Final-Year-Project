@@ -73,14 +73,14 @@ class RegisterPage extends Component {
     return (
         <div className = "register-container">
              <header className="header">
-                <h1>NetLens</h1>
+                <h1>TheMovieOracle</h1>
                 <h5>personalised movie recommendations</h5>
             </header>
 
                 <h2 className = "register-text"> Register </h2>
                 <h3 className = "register-text"> Create an account to get personalised movie recommendation </h3>
                 <h4 className = "register-text">   {this.state.msg}  <br/> <br/> Already have an account?  <Link className="signin-link" to="/Signin">Sign in </Link> </h4>
-                   <Link className="signin-link" to="/NewUserRatings">ratings</Link>
+
                     <form id="registerForm" onSubmit={this.handleSubmit}>
                          <div className = "input, col-75">
                             <input type="text" placeholder="Enter Username"  name="username" onChange={this.handleChange} required/>

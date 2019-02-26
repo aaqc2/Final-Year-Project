@@ -6,10 +6,10 @@ let movies = [];
 const api = 'http://127.0.0.1:8000/api';
 fetch(api)
     .then((result) => {
+      console.log(result);
       return result.json();
     })
     .then((data) => {
-      console.log(data);
       data.map((item) => {
         movies.push({
             title: item.title

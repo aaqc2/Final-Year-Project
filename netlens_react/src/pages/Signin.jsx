@@ -66,7 +66,7 @@ class Login extends Component {
     return (
         <div className = "wrapper">
             <header className="header">
-                <h1>NetLens</h1>
+                <h1>TheMovieOracle</h1>
                 <h5>personalised movie recommendations</h5>
             </header>
             <div className = "login-container">
