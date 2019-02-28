@@ -134,7 +134,7 @@ def login(request):
                     content_type="application/json"
                 )
             else:
-                return Response(user.password, status=status.HTTP_401_UNAUTHORIZED)
+                return Response("Invalid email or password", status=status.HTTP_401_UNAUTHORIZED)
         else:
             return Response("Invalid email or password", status=status.HTTP_401_UNAUTHORIZED)
 
