@@ -3,6 +3,7 @@ from pyspark.ml.recommendation import ALS
 from pyspark.ml.evaluation import RegressionEvaluator
 from pyspark.ml.tuning import ParamGridBuilder, TrainValidationSplit
 from sqlalchemy import create_engine
+from psycopg2 import sql
 import pyspark.sql.functions as psf
 import psycopg2 as pg
 import pandas as pd
@@ -34,16 +35,13 @@ model = tvs.fit(training)
 tuned_model = model.bestModel
 predictions = tuned_model.transform(testing)
 
-# Calculate the RMSE of the recommendations model on the test data.
+# Calculate the RMSE of the recommendations model on the training data.
 rmse = evaluator.evaluate(predictions)
-print('RMSE: ' + str(rmse))
 
-# Generate movie recommendations for all users.
-#sql = 'SELECT COUNT(*) FROM titles;'
-#cur.execute(sql, conn)
-#result = cur.fetchone()
-#count = int(result[0])
-#mr = tuned_model.recommendForAllUsers(count)
+# Insert the RMSE value and the timestamp into the RDS.
+query = "INSERT INTO rmseSmallDataset VALUES (DEFAULT, %s, CURRENT_TIMESTAMP)" % str(rmse)
+cur.execute(query)
+conn.commit()
 
 # Generate movie recommendations for all users.
 mr = tuned_model.recommendForAllUsers(100)

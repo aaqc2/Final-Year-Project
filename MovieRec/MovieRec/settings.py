@@ -70,6 +70,11 @@ CORS_ORIGIN_WHITELIST = (
 
 ROOT_URLCONF = 'MovieRec.urls'
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

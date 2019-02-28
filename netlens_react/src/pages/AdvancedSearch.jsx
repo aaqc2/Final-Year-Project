@@ -32,7 +32,7 @@ class AdvancedSearch extends Component {
             selected.push(cbThriller.id);
             console.log(cbThriller.id);
         }
-        var cbSciFi = document.getElementById("SciFi");
+        var cbSciFi = document.getElementById("Sci-Fi");
         if (cbSciFi.checked === true) {
             selected.push(cbSciFi.id);
             console.log(cbSciFi.id);
@@ -107,8 +107,8 @@ class AdvancedSearch extends Component {
                                 {/* form-check.// */}
                                 <div className="custom-control custom-checkbox">
                                     <input type="checkbox" className="custom-control-input" onChange={this.handleChange}
-                                           id="SciFi"/>
-                                    <label className="custom-control-label" htmlFor="SciFi">Sci-Fi</label>
+                                           id="Sci-Fi"/>
+                                    <label className="custom-control-label" htmlFor="Sci-Fi">Sci-Fi</label>
                                 </div>
                                 {/* form-check.// */}
                             </div>
