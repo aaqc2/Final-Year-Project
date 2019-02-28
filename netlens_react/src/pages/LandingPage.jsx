@@ -19,7 +19,7 @@ class LandingPage extends Component {
   }
 
   /** Extract our movie data and pass it to our MovieGenre Component. */
-  getMovieRows = (res, user) => {
+  getMovieRows = (row, res, user) => {
     const results = res;
     let movieRows = [];
     console.log(res);
@@ -27,6 +27,7 @@ class LandingPage extends Component {
        if (movie.data.poster_path != null) {
        const movieComponent = <MovieImages
            id={movie.data.id}
+           row={row}
            userid={user}
            //url={url}
            poster={"https://image.tmdb.org/t/p/original" + movie.data.poster_path}
@@ -43,6 +44,7 @@ class LandingPage extends Component {
    * Send request for movies that are top rated
    */
   getTopRated = () => {
+    const row = 'toprated';
     let result = [];
     let link = [];
     let count = 0;
@@ -67,7 +69,7 @@ class LandingPage extends Component {
                                 result.push(res);
                                 console.log(count);
                                 if (count >= data.length - 1) {
-                                    const movieRows = this.getMovieRows(result, user);
+                                    const movieRows = this.getMovieRows(row, result, user);
                                     this.setState({topRatedRow: movieRows});
                                 }
                                 count++;
@@ -80,12 +82,14 @@ class LandingPage extends Component {
                 });
             })
         }).catch((err) => {
+            count++;
             console.log(err);
         });
 
   }
 
     getRecommendation = () => {
+    const row = 'recommendation'
     let result = [];
     let link = [];
     let count = 0;
@@ -107,11 +111,9 @@ class LandingPage extends Component {
                         let url = '/movie/' + value + '?api_key=' + this.apiKey;
                         axios.get(url)
                         .then(res => {
-                            console.log(res);
                             result.push(res);
-                            console.log(count);
                             if(count >= data.length-1){
-                                const movieRows = this.getMovieRows(result, user);
+                                const movieRows = this.getMovieRows(row, result, user);
                                 this.setState({ recommendation: movieRows });
                             }
                             count++;

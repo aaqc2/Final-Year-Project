@@ -10,6 +10,7 @@ from django.db.models import Avg, F, Sum, Q
 from rest_framework.pagination import PageNumberPagination
 from datetime import datetime
 from django.contrib.auth.hashers import make_password, check_password
+from passlib.hash import pbkdf2_sha256
 
 # Create your views here.
 class ListTitles(generics.ListCreateAPIView):
@@ -56,9 +57,10 @@ def register(request):
        if Users.objects.filter(email=email).exists():
            return Response("Email already in use", status=status.HTTP_406_NOT_ACCEPTABLE)
        elif Users.objects.filter(username=username).exists():
-           return Response("Username already exist", status=status.HTTP_406_NOT_ACCEPTABLE)
+           return Response(str(type(password)), status=status.HTTP_406_NOT_ACCEPTABLE)
        else:
-           hashPass = make_password(password, salt=None, hasher='pbkdf2_sha256')
+           # hashPass = make_password(password, salt=None, hasher='pbkdf2_sha256')
+           hashPass = pbkdf2_sha256.hash(password);
            queryset = str(Users.objects.values('userid').last().get("userid"))
            uid = int(queryset) + 1
            Users.objects.create(userid=str(uid), username=username, password=hashPass, email="email")
@@ -120,7 +122,8 @@ def login(request):
         password = request.data.get('password')
         if Users.objects.filter(username=email).exists():
             user = Users.objects.get(username=email)
-            if check_password(password, user.password):
+            # if check_password(password, user.password):
+            if pbkdf2_sha256.verify(str(password), user.password):
                 payload = {
                     'id': user.userid
                 }
@@ -130,6 +133,8 @@ def login(request):
                     status=200,
                     content_type="application/json"
                 )
+            else:
+                return Response(user.password, status=status.HTTP_401_UNAUTHORIZED)
         else:
             return Response("Invalid email or password", status=status.HTTP_401_UNAUTHORIZED)
 

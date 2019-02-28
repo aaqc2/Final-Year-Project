@@ -40,6 +40,7 @@ class RegisterPage extends Component {
         body: JSON.stringify({
             'username': this.state.username,
             'email': this.state.email,
+            'password': this.state.password,
         },)
     })
       .then((response) => {
@@ -47,6 +48,7 @@ class RegisterPage extends Component {
     })
     .then((data) => {
       console.log(data);
+      //change if statement
       if(typeof data === 'object' ) {
           let id ='';
           data.map((item) => {

@@ -4,7 +4,6 @@ import StarRating from './StarRating.jsx';
 
 class MovieImages extends Component {
    render() {
-       console.log(this.props);
       return (
          <div >
             <Link to={{pathname: "/info/"+ this.props.id, state : {userid: this.props.userid} }} className= "movielink">
@@ -12,7 +11,7 @@ class MovieImages extends Component {
             <img src={this.props.poster} alt="movieimages" className="movie_image"/>
             </Link>
              {/*<StarRating/>*/}
-         <StarRating tmdbid={this.props.id} userid={this.props.userid}/>
+         <StarRating row={this.props.row} tmdbid={this.props.id} userid={this.props.userid}/>
 
          </div>
       );
