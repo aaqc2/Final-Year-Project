@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import StarRatingComponent from 'react-star-rating-component';
 import '../style.css';
 
-class StarRating extends Component {
+class UserStarRating extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            rating_avg: [],
             rating_user:[],
         };
     }
@@ -23,7 +22,6 @@ class StarRating extends Component {
               rating = [{rating: 0}];
           }
           this.setState({
-              rating_avg: avg,
               rating_user: rating
           });
       }
@@ -50,37 +48,9 @@ class StarRating extends Component {
     }
 
     render() {
-        const { rating_avg } = this.state;
         const { rating_user } = this.state;
         return (
             <div>
-                {rating_avg.map(item => (
-                    <div style={{ fontSize: 24 }}>
-                        <h5>Average rating: {(item.avg_rating).toFixed(2)} </h5>
-                        <StarRatingComponent
-                            name="rating_avg"
-                            starColor="#ffb400"
-                            emptyStarColor="#ffb400"
-                            value={item.avg_rating}
-                            onStarClick={this.onStarClickHalfStar.bind(this)}
-                            editing={false}
-                            renderStarIcon={(index, value) => {
-                                return (
-                                    <span>
-                                    <i className={index <= value ? 'fas fa-star' : 'far fa-star'} />
-                                </span>
-                                );
-                            }}
-                            renderStarIconHalf={() => {
-                                return (
-                                    <span>
-                                    <span style={{ position: 'absolute' }}><i className="far fa-star" /></span>
-                                    <span><i className="fas fa-star-half" /></span>
-                                </span>
-                                );
-                            }} />
-                    </div>
-                ))}
                 {rating_user.map(item => (
                     <div style={{ fontSize: 24 }}>
                         <h5>Your rating: {item.rating}</h5>
@@ -114,4 +84,4 @@ class StarRating extends Component {
     }
 }
 
-export default StarRating;
+export default UserStarRating;
