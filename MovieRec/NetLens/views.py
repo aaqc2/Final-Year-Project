@@ -129,7 +129,13 @@ def login(request):
                 }
                 jwt_token = {'token': jwt.encode(payload, '12345')}
                 return Response(
-                    jwt_token,
+                    {
+                       'userid': user.userid,
+                       'username': user.username,
+                       'token': jwt_token
+
+                    },
+                    # jwt_token,
                     status=200,
                     content_type="application/json"
                 )
