@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
+import { Redirect } from 'react-router-dom';
 
 // List of movies to auto-suggest
 // let movies = [];
@@ -44,19 +45,32 @@ const renderSuggestion = suggestion => (
 
 
 class SearchBar extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.onKeyDown = this.onKeyDown.bind(this);
     this.state = {
       value: '',
-      suggestions: []
+      suggestions: [],
+      enter: false,
+      fireRedirect: false
     };
   }
+
+  onKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      this.setState({enter: true, fireRedirect: true});
+    }
+  };
 
   onChange = (event, { newValue }) => {
     this.setState({
       value: newValue
     });
   };
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({fireRedirect: false});
+  }
 
   // Update suggestions
   onSuggestionsFetchRequested = ({ value }) => {
@@ -86,13 +100,22 @@ class SearchBar extends Component {
 
   render() {
     const { value, suggestions } = this.state;
-
+    const { fireRedirect } = this.state;
     // Pass all props to the input.
     const inputProps = {
       placeholder: 'Search movies...',
       value,
-      onChange: this.onChange
+      onChange: this.onChange,
+      onKeyDown: this.onKeyDown
     };
+    if (this.state.enter && fireRedirect) {
+      return (
+        <Redirect to={{
+            pathname: '/advancedsearch',
+            state: { value: this.state.value }
+        }}/>
+      )
+    }
 
     return (
       <Autosuggest
