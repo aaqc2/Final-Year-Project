@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
-import StarRating from '../components/StarRating.jsx';
+// import StarRating from '../components/StarRating.jsx';
 import Navbar from "../components/Navbar";
+import UserStarRating from '../components/UserStarRating.jsx';
+import AverageRating from '../components/AverageRating.jsx';
 
 class MovieInfo extends Component {
 
@@ -106,8 +108,9 @@ class MovieInfo extends Component {
                                                     <div className="card-block">
                                                         <div className="tmdbid" id={this.props.match.params.id}> </div>
                                                         <h2 id="movie_title" className="card-title">title</h2>
-                                                        
-                                                        <StarRating tmdbid={this.props.match.params.id} userid={this.props.location.state.userid}/>
+                                                          <AverageRating tmdbid={this.props.match.params.id} userid={this.props.location.state.userid} />
+                                                           <UserStarRating tmdbid={this.props.match.params.id} userid={this.props.location.state.userid} />
+                                                        {/*<StarRating tmdbid={this.props.match.params.id} userid={this.props.location.state.userid}/>*/}
                                                         <b>
                                                             <p id="release" className="big"></p>
 

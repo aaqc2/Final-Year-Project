@@ -14,11 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from NetLens import views
 from django.urls import path, include
 
 # it is normal to have "error" in just http://127.0.0.1:8000/
 # go to http://127.0.0.1:8000/api/ after runserver to which we can see our data is converted to JSON
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('NetLens.urls'))
+    path('api/', include('NetLens.urls')),
+    path('login/', views.login, name='login'),
 ]

@@ -2,43 +2,43 @@ import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
 
 // List of movies to auto-suggest
-let movies = [];
-const api = 'http://127.0.0.1:8000/api';
-fetch(api)
-    .then((result) => {
-      console.log(result);
-      return result.json();
-    })
-    .then((data) => {
-      data.map((item) => {
-        movies.push({
-            title: item.title
-        })
-        //create search page
-        //when movie is searched, redirect to search page
-      });
-    })
-    .catch((err) => {
-            console.log(err);
-    });
+// let movies = [];
+// const api = 'http://127.0.0.1:8000/api';
+// fetch(api)
+//     .then((result) => {
+//       console.log(result);
+//       return result.json();
+//     })
+//     .then((data) => {
+//       data.map((item) => {
+//         movies.push({
+//             title: item.title
+//         })
+//         //create search page
+//         //when movie is searched, redirect to search page
+//       });
+//     })
+//     .catch((err) => {
+//             console.log(err);
+//     });
 
 // Calculate suggestions for any given input value
-const getSuggestions = value => {
-  const keywords = value.trim().toLowerCase();
-  const keyLength = keywords.length;
-
-  return keyLength === 0 ? [] : movies.filter(mov =>
-    mov.title.toLowerCase().slice(0, keyLength) === keywords
-  );
-};
+// const getSuggestions = value => {
+//   const keywords = value.trim().toLowerCase();
+//   const keyLength = keywords.length;
+//
+//   return keyLength === 0 ? [] : movies.filter(mov =>
+//     mov.title.toLowerCase().slice(0, keyLength) === keywords
+//   );
+// };
 
 // Populate the input based on the clicked suggestion
-const getSuggestionValue = suggestion => suggestion.title;
+const getSuggestionValue = suggestion => suggestion;
 
 // Render suggestions
 const renderSuggestion = suggestion => (
   <div>
-    {suggestion.title}
+    {suggestion}
   </div>
 );
 
@@ -61,8 +61,20 @@ class SearchBar extends Component {
   // Update suggestions
   onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
-      suggestions: getSuggestions(value)
+      suggestions: []
     });
+    fetch(`http://127.0.0.1:8000/api/search/?q=${value}`)
+      .then(response => response.json())
+      .then(data => {
+        data.map((item) => {
+            this.setState(
+                prevState => ({
+                    suggestions: [...prevState.suggestions, item.title]
+                }));
+        //create search page
+        //when movie is searched, redirect to search page
+       });
+      })
   };
 
   // Clear suggestions
