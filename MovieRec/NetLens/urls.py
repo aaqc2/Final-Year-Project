@@ -14,6 +14,7 @@ urlpatterns = [
     path('getUser/<int:u>/<int:tmdbId>', views.getUserRating),
     path('avgrate/<int:tmdbid>', views.AverageRating),
     path('recommendation/<int:u>', views.getRecommendation),
-    path('login/', views.login),
+    # path('login/', views.login),
     path('genres/', views.getGenres),
+    path('check/<str:token>', views.checkToken),
 ]

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import  { Redirect } from 'react-router-dom'
 // import homescreen from '../images/homescreen.png';
 import Authentication from '../components/Authentication.jsx';
 
@@ -26,7 +27,7 @@ class Login extends Component {
   handleSubmit(event) {
     //alert('A name was submitted: ' + this.state.email);
     event.preventDefault();
-    fetch('http://127.0.0.1:8000/api/login/', {
+    fetch('http://127.0.0.1:8000/login/', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -42,12 +43,12 @@ class Login extends Component {
     })
     .then((data) => {
       console.log(data);
-      if(typeof data === 'object' ) {
-          let id ='';
-          data.map((item) => {
-            id = item.userid
-            console.log(id);
-          });
+      if(data.token != null ) {
+          let id = data.userid;
+          // data.map((item) => {
+          //   id = item.userid
+          //   console.log(id);
+          // });
 
           this.props.history.push({
             pathname: '/LandingPage',
