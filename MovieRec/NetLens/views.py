@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 import jwt
+import json
 from rest_framework.response import Response
 from rest_framework import generics, status
 from .models import Titles, Ratings, Users, Links, Recommendations
@@ -11,8 +12,17 @@ from rest_framework.pagination import PageNumberPagination
 from datetime import datetime
 from django.contrib.auth.hashers import make_password, check_password
 from passlib.hash import pbkdf2_sha256
-
+from django.conf import settings
+from django.http import HttpResponse
 # Create your views here.
+
+def checkToken(request, token):
+    try:
+        jwt.decode(token, settings.SECRET_KEY)
+        return HttpResponse("OK", status=status.HTTP_200_OK)
+    except jwt.InvalidTokenError:
+        return HttpResponse("Invalid Token", status=status.HTTP_401_UNAUTHORIZED)
+
 class ListTitles(generics.ListCreateAPIView):
     queryset = Titles.objects.all()
     pagination_class = None
@@ -124,15 +134,17 @@ def login(request):
             user = Users.objects.get(username=email)
             # if check_password(password, user.password):
             if pbkdf2_sha256.verify(str(password), user.password):
+                secret = settings.SECRET_KEY
                 payload = {
                     'id': user.userid
                 }
-                jwt_token = {'token': jwt.encode(payload, '12345')}
+                jwt_token = {'token': jwt.encode(payload, secret)}
                 return Response(
                     {
                        'userid': user.userid,
                        'username': user.username,
                        'token': jwt_token
+
 
                     },
                     # jwt_token,

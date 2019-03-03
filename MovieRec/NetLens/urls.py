@@ -16,4 +16,5 @@ urlpatterns = [
     path('recommendation/<int:u>', views.getRecommendation),
     # path('login/', views.login),
     path('genres/', views.getGenres),
+    path('check/<str:token>', views.checkToken),
 ]
