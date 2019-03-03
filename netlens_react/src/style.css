@@ -31,18 +31,12 @@ p.big {
     margin-right: 50px;
 }
 
-
 .slogan{
     color: white;
     position: absolute;
     top: 55px;
 
 }
-
-
-
-
-
 
 /* SEARCH BAR */
 
@@ -148,12 +142,7 @@ p.big {
   color: #120000;
 }
 
-
-
-
-
-
-MOVIE INFORMATION */
+/* MOVIE INFORMATION */
 
 .card {
     border-radius: 10px;
@@ -317,21 +306,6 @@ MOVIE INFORMATION */
     color: #ff0000;
     font-size: 14pt;
 }
-
-
-
-
-@media screen and (max-width: 600px) {
-  .advanced_search {
-    float: none;
-    display: block;
-    text-align: left;
-    width: 100%;
-    margin: 0;
-    padding: 14px;
-  }
-  }
-
 
 /* FOOTER */
 
@@ -554,24 +528,4 @@ MOVIE INFORMATION */
 
 .landing-page-link:hover, active {
      color: white;
-}
-
-
-filter-genres{
-    width: 30%;
-
-}
-
-.card-newuserrating{
-    border-radius: 10px;
-    margin-top: 50px;
-    align-self: center;
-    background-color: white;
-
-    margin: auto;
-}
-
-.card-title {
-    text-transform: uppercase;
-    color: #000000;
 }

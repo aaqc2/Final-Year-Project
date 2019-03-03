@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import UserStarRating from './UserStarRating.jsx';
 import AverageRating from './AverageRating.jsx';
-import UserStarRating from "./UserStarRating";
 
 class MovieImages extends Component {
    render() {
@@ -13,9 +13,10 @@ class MovieImages extends Component {
             </Link>
              {/*<StarRating/>*/}
 
-         <AverageRating tmdbid={this.props.id} userid={this.props.userid}/>
-             <UserStarRating tmdbid={this.props.id} userid={this.props.userid}/>
+             <AverageRating row={this.props.row}  tmdbid={this.props.id} userid={this.props.userid}/>
+             <UserStarRating  row={this.props.row}  tmdbid={this.props.id} userid={this.props.userid}/>
 
+         {/*<StarRating tmdbid={this.props.id} userid={this.props.userid}/>*/}
 
          </div>
       );
