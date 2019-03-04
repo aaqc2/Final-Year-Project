@@ -49,7 +49,6 @@ class Login extends Component {
           //   id = item.userid
           //   console.log(id);
           // });
-
           this.props.history.push({
             pathname: '/LandingPage',
             state: {user: id}
