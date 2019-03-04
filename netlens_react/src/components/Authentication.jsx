@@ -24,7 +24,7 @@ class Authentication{
     }
 
 //check if there is a saved token and if its valid
-
+//need to change so it calls api token checker, not checked on the front end
 signedIn() {
         const token = this.getToken()
         return !!token && !this.isTokenExpired(token)
