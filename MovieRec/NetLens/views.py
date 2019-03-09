@@ -121,7 +121,7 @@ def AverageRating(request, tmdbid):
 @api_view(['GET'])
 def getRecommendation(request, u):
     queryset = Links.objects.raw('SELECT l.movieid, l.tmdbid FROM link l JOIN recommendations r ON l.movieid = r.movieid'
-                                 ' WHERE userid = %s ORDER BY r.rating', [u])[:20]
+                                 ' WHERE userid = %s ORDER BY r.rating DESC', [u])[:20]
     serializer_class = RatingsSerializer(queryset, many=True)
     return Response(serializer_class.data)
 
