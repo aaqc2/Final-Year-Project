@@ -13,12 +13,20 @@ class AdvancedSearch extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    componentDidMount() {
-        this.getSearchQuery();
+    // componentDidMount() {
+    //     this.getSearchQuery();
+    // }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.location.state.value !== prevProps.location.state.value)
+        {
+            document.getElementById('movieList').innerHTML="";
+            this.getSearchQuery(this.props.location.state.value);
+        }
     }
 
-    getSearchQuery() {
-        let api = `http://127.0.0.1:8000/api/search/?q=${this.state.query}`;
+    getSearchQuery(keyword) {
+        let api = `http://127.0.0.1:8000/api/search/?q=${keyword}`;
         let movieList = [];
         let result = [];
         fetch(api)
@@ -30,9 +38,10 @@ class AdvancedSearch extends Component {
                     movieList.push(item);
                 });
                 //displays list of movies
-                var list = "";
-                for (var i = 0; i < movieList.length; i++) {
-                    let url = '/movie/' + movieList[i].movieid + '?api_key=4f65322e8d193ba9623a9e7ab5caa01e';
+                let list = "";
+                for (let i = 0; i < movieList.length; i++) {
+                    console.log(movieList[i].links__tmdbid);
+                    let url = '/movie/' + movieList[i].links__tmdbid + '?api_key=4f65322e8d193ba9623a9e7ab5caa01e';
                     axios.get(url)
                         .then(res => {
                             result.push(res);
@@ -42,7 +51,7 @@ class AdvancedSearch extends Component {
                         }).catch(error => {
                             console.log(error);
                         })
-                    list += "<tr><td><a href='/info/" + movieList[i].movieid + "'>" + movieList[i].title + "</a></td></tr>";
+                    list += "<tr><td><a href='/info/" + movieList[i].links__tmdbid + "'>" + movieList[i].title + "</a></td></tr>";
                 }
             })
     }
@@ -106,6 +115,7 @@ class AdvancedSearch extends Component {
     }
 
     render() {
+        // console.log(this.state.query);
         return (
             <div className="container">
                 <Navbar/>

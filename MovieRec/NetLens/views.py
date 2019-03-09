@@ -45,7 +45,8 @@ def showTopRated(request):
 @api_view(['GET'])
 def showSearch(request):
     title = request.GET['q']
-    queryset = Titles.objects.filter(title__icontains=title) [:20]
+    # queryset = Titles.objects.filter(title__icontains=title)[:20]
+    queryset = Titles.objects.select_related('links').filter(title__icontains=title).values('title', 'genre', 'links__tmdbid')[:20]
     serializer = SearchSerializer(queryset, many=True)
     return Response(serializer.data)
 

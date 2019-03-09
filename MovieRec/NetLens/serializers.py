@@ -21,10 +21,12 @@ class RatingsSerializer(serializers.ModelSerializer):
 
 
 class SearchSerializer(serializers.ModelSerializer):
+    links__tmdbid=serializers.IntegerField()
     class Meta:
         fields = (
             'title',
             'genre',
+            'links__tmdbid',
         )
         model = Titles
 

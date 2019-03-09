@@ -94,8 +94,8 @@ class LandingPage extends Component {
     let link = [];
     let count = 0;
     //console.log(this.props.location.state.user);
-        const user = this.props.location.state.user;
-    //const user = 1;
+    // const user = this.props.location.state.user;
+    const user = 1;
     const api = `http://127.0.0.1:8000/api/recommendation/${user}`;
     fetch(api)
         .then((result) => {

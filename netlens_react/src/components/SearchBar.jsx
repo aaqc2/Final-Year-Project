@@ -48,18 +48,21 @@ const renderSuggestion = suggestion => (
 class SearchBar extends Component {
     constructor(props) {
         super(props);
-        this.onKeyDown = this.onKeyDown.bind(this);
+        this.onKeyPress = this.onKeyPress.bind(this);
         this.state = {
             value: '',
             suggestions: [],
-            enter: false,
-            fireRedirect: false
+            fireRedirect: false,
+            keyword: ''
         };
     }
 
-    onKeyDown = (event) => {
+    onKeyPress = (event) => {
         if (event.key === 'Enter') {
-            this.setState({enter: true, fireRedirect: true});
+            this.setState({fireRedirect: true, keyword: this.state.value});
+            // return <AdvancedSearch value={this.state.value}/>
+            // this.setState({keyword: value});
+            // console.log(this.state.keyword);
         }
     };
 
@@ -107,13 +110,14 @@ class SearchBar extends Component {
             placeholder: 'Search movies...',
             value,
             onChange: this.onChange,
-            onKeyDown: this.onKeyDown
+            onKeyPress: this.onKeyPress
         };
-        if (this.state.enter && fireRedirect) {
+
+        if (fireRedirect) {
             return (
                 <Redirect to={{
                     pathname: '/advancedsearch',
-                    state: {value: this.state.value}
+                    state: {value: this.state.keyword}
                 }}/>
             )
         }
@@ -128,7 +132,6 @@ class SearchBar extends Component {
                     onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                     onSuggestionsClearRequested={this.onSuggestionsClearRequested}
                 />
-                <AdvancedSearch query={this.state.value}/>
             </div>
         );
     }
