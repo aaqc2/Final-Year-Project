@@ -8,7 +8,7 @@ class AdvancedSearch extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            query: ''
+            query: 'hello'
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -52,6 +52,7 @@ class AdvancedSearch extends Component {
                             console.log(error);
                         })
                     list += "<tr><td><a href='/info/" + movieList[i].links__tmdbid + "'>" + movieList[i].title + "</a></td></tr>";
+
                 }
             })
     }
