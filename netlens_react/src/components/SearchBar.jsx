@@ -60,7 +60,7 @@ class SearchBar extends Component {
     onKeyPress = (event) => {
         if (event.key === 'Enter') {
             this.setState({fireRedirect: true, keyword: this.state.value});
-            // return <AdvancedSearch value={this.state.value}/>
+            return <AdvancedSearch value={this.state.value}/>
             // this.setState({keyword: value});
         }
     };

@@ -13,9 +13,9 @@ class AdvancedSearch extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    // componentDidMount() {
-    //     this.getSearchQuery();
-    // }
+    componentDidMount() {
+        this.getSearchQuery(this.props.location.state.value);
+    }
 
     componentDidUpdate(prevProps) {
         if(prevProps.location.state !== undefined) {
