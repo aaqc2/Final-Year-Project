@@ -8,31 +8,39 @@ class AdvancedSearch extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            query: ''
+            movieList: ''
         };
         this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
-        this.getSearchQuery(this.props.location.state.value);
+        if(this.props.location.state !== undefined) {
+            this.getSearchQuery(this.props.location.state.value);
+        }
     }
 
     componentDidUpdate(prevProps) {
         if(prevProps.location.state !== undefined) {
-           if(this.props.location.state.value !== prevProps.location.state.value) {
-            document.getElementById('movieList').innerHTML="";
-            this.getSearchQuery(this.props.location.state.value);
-           }
+            if(this.props.location.state !== undefined) {
+                if(this.props.location.state.value !== prevProps.location.state.value) {
+                    document.getElementById('movieList').innerHTML="";
+                    this.getSearchQuery(this.props.location.state.value);
+                }
+            }
         }
         else {
-            this.getSearchQuery(this.props.location.state.value);
+            if(this.props.location.state !== undefined) {
+                this.getSearchQuery(this.props.location.state.value);
+            }
         }
 
     }
 
     getSearchQuery(keyword) {
+        document.getElementById('movieList').innerHTML="";
+        document.querySelectorAll('input[type=checkbox]').forEach( checkboxes => checkboxes.checked = false ); //uncheck checkbox
         let api = `http://127.0.0.1:8000/api/search/?q=${keyword}`;
-        let movieList = [];
+        this.setState({movieList: []});
         let result = [];
         fetch(api)
             .then((result) => {
@@ -40,13 +48,14 @@ class AdvancedSearch extends Component {
             })
             .then((data) => {
                 data.map((item) => {
-                    movieList.push(item);
+                    // movieList.push(item);
+                    this.state.movieList.push(item);
                 });
                 //displays list of movies
                 let list = "";
-                for (let i = 0; i < movieList.length; i++) {
-                    console.log(movieList[i].links__tmdbid);
-                    let url = '/movie/' + movieList[i].links__tmdbid + '?api_key=4f65322e8d193ba9623a9e7ab5caa01e';
+                for (let i = 0; i < this.state.movieList.length; i++) {
+                    // console.log(this.state.movieList[i].links__tmdbid);
+                    let url = '/movie/' + this.state.movieList[i].links__tmdbid + '?api_key=4f65322e8d193ba9623a9e7ab5caa01e';
                     axios.get(url)
                         .then(res => {
                             result.push(res);
@@ -56,7 +65,7 @@ class AdvancedSearch extends Component {
                         }).catch(error => {
                             console.log(error);
                         })
-                    list += "<tr><td><a href='/info/" + movieList[i].links__tmdbid + "'>" + movieList[i].title + "</a></td></tr>";
+                    list += "<tr><td><a href='/info/" + this.state.movieList[i].links__tmdbid + "'>" + this.state.movieList[i].title + "</a></td></tr>";
 
                 }
             })
@@ -64,6 +73,7 @@ class AdvancedSearch extends Component {
 
     handleChange() {
         let selected = [];
+        document.getElementById('movieList').innerHTML="";
         var cbAction = document.getElementById("Action");
         if (cbAction.checked === true) {
             selected.push(cbAction.id);
@@ -95,33 +105,67 @@ class AdvancedSearch extends Component {
             console.log(cbSciFi.id);
         }
 
-
-        let url = [];
-        selected.map((movies) => {
-            url.push('&gen=' + movies);
-        });
-
-        let api = 'http://127.0.0.1:8000/api/genres/?' + url;
-        let movieList = [];
-        fetch(api)
-            .then((result) => {
-                return result.json();
-            })
-            .then((data) => {
-                data.map((item) => {
-                    movieList.push(item);
+        if(this.state.movieList.length >= 1) {
+            let chosen = [];
+            let result = [];
+            if(selected.length >= 1) {
+                this.state.movieList.map((movies) => {
+                    selected.map((genres) => {
+                        if(movies.genre.includes(genres)) {
+                            if(!chosen.some(existed => existed.links__tmdbid === movies.links__tmdbid)) { //to prevent movies to be added more than once
+                                chosen.push(movies);
+                            }
+                        }
+                    });
                 });
-                //displays list of movies
-                var list = "";
-                for (var i = 0; i < movieList.length; i++) {
-                    list += "<tr><td><a href='/info/" + movieList[i].movieid + "'>" + movieList[i].title + "</a></td></tr>";
-                }
-                document.getElementById('movieList').innerHTML = list;
-            })
+            }
+            else {
+                chosen = this.state.movieList;
+            }
+
+            let list = "";
+            chosen.map((chose) => {
+                let url = '/movie/' + chose.links__tmdbid + '?api_key=4f65322e8d193ba9623a9e7ab5caa01e';
+                axios.get(url)
+                    .then(res => {
+                        result.push(res);
+                        list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td></tr>";
+                        console.log(list);
+                        document.getElementById('movieList').insertAdjacentHTML('beforeend', list);
+                    }).catch(error => {
+                        console.log(error);
+                    })
+                list += "<tr><td><a href='/info/" + chose.links__tmdbid + "'>" + chose.title + "</a></td></tr>";
+            });
+        }
+        else {
+            let url = [];
+            selected.map((movies) => {
+                url.push('&gen=' + movies);
+            });
+
+            let api = 'http://127.0.0.1:8000/api/genres/?' + url;
+            let movieList = [];
+            fetch(api)
+                .then((result) => {
+                    return result.json();
+                })
+                .then((data) => {
+                    data.map((item) => {
+                        movieList.push(item);
+                    });
+                    //displays list of movies
+                    var list = "";
+                    for (var i = 0; i < movieList.length; i++) {
+                        list += "<tr><td><a href='/info/" + movieList[i].movieid + "'>" + movieList[i].title + "</a></td></tr>";
+                    }
+                    document.getElementById('movieList').innerHTML = list;
+                })
+        }
+
     }
 
     render() {
-        // console.log(this.state.query);
         return (
             <div className="container">
                 <Navbar/>
