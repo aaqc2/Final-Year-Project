@@ -62,7 +62,6 @@ class SearchBar extends Component {
             this.setState({fireRedirect: true, keyword: this.state.value});
             // return <AdvancedSearch value={this.state.value}/>
             // this.setState({keyword: value});
-            // console.log(this.state.keyword);
         }
     };
 
@@ -103,6 +102,7 @@ class SearchBar extends Component {
     };
 
     render() {
+        console.log(this.state.keyword);
         const {value, suggestions} = this.state;
         const {fireRedirect} = this.state;
         // Pass all props to the input.
@@ -113,7 +113,7 @@ class SearchBar extends Component {
             onKeyPress: this.onKeyPress
         };
 
-        if (fireRedirect) {
+        if (this.state.fireRedirect) {
             return (
                 <Redirect to={{
                     pathname: '/advancedsearch',

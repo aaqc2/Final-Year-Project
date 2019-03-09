@@ -8,7 +8,7 @@ class AdvancedSearch extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            query: 'hello'
+            query: ''
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -18,11 +18,16 @@ class AdvancedSearch extends Component {
     // }
 
     componentDidUpdate(prevProps) {
-        if(this.props.location.state.value !== prevProps.location.state.value)
-        {
+        if(prevProps.location.state !== undefined) {
+           if(this.props.location.state.value !== prevProps.location.state.value) {
             document.getElementById('movieList').innerHTML="";
             this.getSearchQuery(this.props.location.state.value);
+           }
         }
+        else {
+            this.getSearchQuery(this.props.location.state.value);
+        }
+
     }
 
     getSearchQuery(keyword) {
