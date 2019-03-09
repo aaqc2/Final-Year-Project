@@ -1,9 +1,51 @@
 import React, {Component} from 'react';
 import Navbar from "../components/Navbar";
+import axios from "../baseUrl";
 // import { TablePagination } from 'react-pagination-table';
 
 
 class AdvancedSearch extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            query: ''
+        };
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    componentDidMount() {
+        this.getSearchQuery();
+    }
+
+    getSearchQuery() {
+        let api = `http://127.0.0.1:8000/api/search/?q=${this.state.query}`;
+        let movieList = [];
+        let result = [];
+        fetch(api)
+            .then((result) => {
+                return result.json();
+            })
+            .then((data) => {
+                data.map((item) => {
+                    movieList.push(item);
+                });
+                //displays list of movies
+                var list = "";
+                for (var i = 0; i < movieList.length; i++) {
+                    let url = '/movie/' + movieList[i].movieid + '?api_key=4f65322e8d193ba9623a9e7ab5caa01e';
+                    axios.get(url)
+                        .then(res => {
+                            result.push(res);
+                            list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td></tr>";
+                            console.log(list);
+                            document.getElementById('movieList').insertAdjacentHTML('beforeend', list);
+                        }).catch(error => {
+                            console.log(error);
+                        })
+                    list += "<tr><td><a href='/info/" + movieList[i].movieid + "'>" + movieList[i].title + "</a></td></tr>";
+                }
+            })
+    }
 
     handleChange() {
         let selected = [];
