@@ -128,7 +128,6 @@ class SearchBar extends Component {
                     onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                     onSuggestionsClearRequested={this.onSuggestionsClearRequested}
                 />
-                <AdvancedSearch query={this.state.value}/>
             </div>
         );
     }

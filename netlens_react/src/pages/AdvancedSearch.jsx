@@ -8,7 +8,7 @@ class AdvancedSearch extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            query: ''
+            query: 'hello'
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -33,16 +33,15 @@ class AdvancedSearch extends Component {
                 var list = "";
                 for (var i = 0; i < movieList.length; i++) {
                     let url = '/movie/' + movieList[i].movieid + '?api_key=4f65322e8d193ba9623a9e7ab5caa01e';
-                    axios.get(url)
-                        .then(res => {
-                            result.push(res);
-                            list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td></tr>";
-                            console.log(list);
-                            document.getElementById('movieList').insertAdjacentHTML('beforeend', list);
-                        }).catch(error => {
-                            console.log(error);
-                        })
-                    list += "<tr><td><a href='/info/" + movieList[i].movieid + "'>" + movieList[i].title + "</a></td></tr>";
+                    // axios.get(url)
+                    //     .then(res => {
+                    //         result.push(res);
+                    //         list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td></tr>";
+                    //         console.log(list);
+                    //         document.getElementById('movieList').insertAdjacentHTML('beforeend', list);
+                    //     }).catch(error => {
+                    //         console.log(error);
+                    //     })
                 }
             })
     }
