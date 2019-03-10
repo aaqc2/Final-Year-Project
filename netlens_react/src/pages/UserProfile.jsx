@@ -48,9 +48,10 @@ class UserProfile extends Component {
     let result = [];
     let link = [];
     let count = 0;
-    const api = 'http://127.0.0.1:8000/api/getUser/1/';
+
     //const user = this.props.location.state.user;
-    const user = 1;
+    const user = localStorage.getItem('id');
+    const api = `http://127.0.0.1:8000/api/getUser/${user}`;
     fetch(api)
         .then((result) => {
 

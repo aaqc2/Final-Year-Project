@@ -9,7 +9,7 @@ from .serializers import TitlesSerializer, RatingsSerializer, SearchSerializer, 
 from rest_framework.decorators import api_view
 from django.db.models import Avg, F, Sum, Q
 from rest_framework.pagination import PageNumberPagination
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.contrib.auth.hashers import make_password, check_password
 from passlib.hash import pbkdf2_sha256
 from django.conf import settings
@@ -136,14 +136,17 @@ def login(request):
             if pbkdf2_sha256.verify(str(password), user.password):
                 secret = settings.SECRET_KEY
                 payload = {
-                    'id': user.userid
+                    'id': user.userid,
+                    'iat': datetime.now(),
+                    'exp': datetime.now() + timedelta(hours=6)
                 }
                 jwt_token = {'token': jwt.encode(payload, secret)}
                 return Response(
                     {
-                       'userid': user.userid,
-                       'username': user.username,
-                       'token': jwt_token
+                        'userid': user.userid,
+                        'username': user.username,
+                        'token': jwt_token,
+                        'email': user.email
 
 
                     },

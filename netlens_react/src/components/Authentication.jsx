@@ -4,24 +4,22 @@ class Authentication{
     constructor(domain) {
         this. domain = domain || 'http://localhost:3000 '
         this.fetch = this.fetch.bind(this)
-        this.signin = this.signin.bind(this)
+        //this.signin = this.signin.bind(this)
     }
 
-
-    signin(username, password) {
-        return this.fetch(' $ {this.domain}/signin', {
-            method: 'POST',
-            body: JSON.stringify({
-                username,
-                password
-            })
-
-        }).then(res => {
-            this.setToken(res.token) // set the token
-            return Promise.resolve(res);
-        })
-
-    }
+    //
+    // signin(username, password) {
+    //     return this.fetch(' $ {this.domain}/signin', {
+    //         method: 'POST',
+    //         body: JSON.stringify({
+    //             username,
+    //             password
+    //         })
+    //     }).then(res => {
+    //         this.setToken(res.token) // set the token
+    //         return Promise.resolve(res);
+    //     })
+    // }
 
 //check if there is a saved token and if its valid
 //need to change so it calls api token checker, not checked on the front end
@@ -46,6 +44,7 @@ signedIn() {
 setToken(idToken) {
 
         localStorage.setItem('id_token', idToken)
+    console.log(idToken);
     }
 
       // Retrieves the user token from localStorage
