@@ -96,7 +96,6 @@ class LandingPage extends Component {
     //console.log(this.props.location.state.user);
         //const user = this.props.location.state.user;
         const user  = localStorage.getItem('id');
-    //const user = 1;
     const api = `http://127.0.0.1:8000/api/recommendation/${user}`;
     console.log(api)
     fetch(api)
