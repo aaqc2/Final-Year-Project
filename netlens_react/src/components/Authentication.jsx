@@ -4,6 +4,8 @@ class Authentication{
     constructor(domain) {
         this.domain = 'http://127.0.0.1:8000/'
         this.fetch = this.fetch.bind(this)
+
+
         this.login= this.login.bind(this)
         this.getLandingPage = this.getLandingPage.bind(this)
 
@@ -25,9 +27,11 @@ class Authentication{
         })
 
     }
+        //this.signin = this.signin.bind(this)
+
 
 //check if there is a saved token and if its valid
-
+//need to change so it calls api token checker, not checked on the front end
 signedIn() {
         const token = this.getToken()
         return !!token && !this.isTokenExpired(token)
@@ -49,6 +53,7 @@ signedIn() {
 setToken(idToken) {
 
         localStorage.setItem('id_token', idToken)
+    console.log(idToken);
     }
 
       // Retrieves the user token from localStorage
