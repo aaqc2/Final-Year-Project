@@ -480,52 +480,75 @@ p.big {
 
 /* NEW USER RATINGS */
 
-/*.newUserRating-container {*/
-    /*width: 90%;*/
-    /*padding: 20pt;*/
-/*}*/
 
-.newUserRatingList {
-    overflow-y: hidden;
-    *overflow-x: scroll;
-    display: flex;
-    overflow: -moz-scrollbars-horizontal;
-    grid-template-columns: repeat(20, 1fr);
-    column-gap: 1;
+
+.newuser-card  {
+    color: white;
+     margin: auto;
+    width: 60%;
 }
 
-.newUserRatingList .movielink {
-   color: black;
+.newusercard-body{
+
+    border-radius: 10px;
+    margin-top: 50px;
+    align-self: center;
 }
-
-
-.newUserRatingList .movie_image{
+.movie-genres{
     cursor: pointer;
     transition: all 450ms;
     transform: center left;
     min-height: 0;
-    height: 20rem;
-    width: 15.5rem;
+    height: 22em;
+    width: 30em;
+
+}
+
+.newuser-rating-form{
+    margin: auto;
+
+}
+
+.movie-genres{
+     overflow-y: hidden;
+       transition: transform 450ms;
+       display: flex;
+
+}
+
+@media only screen and (max-width: 700px) {
+  .genreImages{
+    width: 49.99999%;
+    margin: 6px 0;
   }
+}
 
-  .newUserRatingList .movie_image:hover  {
-       transform: scale(1.0);
-       opacity: 1;
+@media only screen and (max-width: 500px) {
+  .genreImages{
+    width: 100%;
   }
-
-.newuserrating-container {
-  display: grid | inline-grid;
 }
 
-.landing-page-link:link, .landing-page-link:visited {
-  background-color: grey;
-  color: white;
-  padding: 14px 25px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
+.genreImages {
+  width: 140px;
+    height: auto;
 }
 
-.landing-page-link:hover, active {
-     color: white;
+.newuser-submit {
+     background-color: #e7e7e7;
+    color: black;
+   display:block;
+    font-size: 16px;
 }
+
+
+table, td {
+
+  border-collapse: collapse;
+}
+td {
+  padding: 15px;
+
+}
+
+

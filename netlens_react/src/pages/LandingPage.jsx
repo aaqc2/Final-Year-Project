@@ -70,6 +70,7 @@ class LandingPage extends Component {
                                 console.log(count);
                                 if (count >= data.length - 1) {
                                     const movieRows = this.getMovieRows(row, result, user);
+
                                     this.setState({topRatedRow: movieRows});
                                 }
                                 count++;
