@@ -6,6 +6,13 @@ import UserStarRating from '../components/UserStarRating.jsx';
 import AverageRating from '../components/AverageRating.jsx';
 
 class MovieInfo extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            userid: localStorage.getItem('id')
+        };
+    }
+
 
     componentWillMount() {
         this.setState = {info: this.props.match.params.id};
@@ -108,8 +115,8 @@ class MovieInfo extends Component {
                                                     <div className="card-block">
                                                         <div className="tmdbid" id={this.props.match.params.id}> </div>
                                                         <h2 id="movie_title" className="card-title">title</h2>
-                                                          <AverageRating tmdbid={this.props.match.params.id} userid={this.props.location.state.userid} />
-                                                           <UserStarRating tmdbid={this.props.match.params.id} userid={this.props.location.state.userid} />
+                                                          <AverageRating tmdbid={this.props.match.params.id} userid={this.state.userid} />
+                                                           <UserStarRating tmdbid={this.props.match.params.id} userid={this.state.userid} />
                                                         {/*<StarRating tmdbid={this.props.match.params.id} userid={this.props.location.state.userid}/>*/}
                                                         <b>
                                                             <p id="release" className="big"></p>
