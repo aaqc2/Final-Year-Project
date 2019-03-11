@@ -169,7 +169,7 @@ class UserProfile extends Component {
                 <div className="card">
                     <div className="container user_profile">
                         <div className="row">
-                            <div className="col-sm-10"><h1>username</h1></div>
+                            <div className="col-sm-10"><h1>{localStorage.getItem('username')}</h1></div>
                         </div>
                         <div className="row">
                             <div className="col-sm-3">{/*left col*/}
@@ -183,7 +183,7 @@ class UserProfile extends Component {
                                 <div className="panel panel-default">
                                     <div className="panel-heading">Email address <i className="fas fa-envelope"></i>
                                     </div>
-                                    <div className="panel-body">random_user@gmail.com</div>
+                                    <div className="panel-body">{localStorage.getItem('email')}</div>
                                 </div>
                                 <ul className="list-group">
                                     <li className="list-group-item">Activity</li>
