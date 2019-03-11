@@ -15,7 +15,7 @@ class AverageRating extends Component {
       try {
           const res = await fetch(`http://127.0.0.1:8000/api/avgrate/${this.props.tmdbid}`);
           const avg = await res.json();
-          console.log(this.props);
+          // console.log(this.props);
 
           this.setState({
               rating_avg: avg,

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import MovieImages from "../components/MovieImages";
 import axios from "../baseUrl";
 import Navbar from "../components/Navbar";
+import { checkToken } from "../components/authenticateToken";
 
 
 class UserProfile extends Component {
@@ -11,104 +12,85 @@ class UserProfile extends Component {
     /** Hold rated list movie row in an array */
     state = {
         ratedList: [],
-        //checkToken: ''
+        //checkToken: " "
     }
 
-    /** Make all API calls as soon as the MovieGenreRow component mounts. */
     componentWillMount() {
-        this.getUserRating();
-        //this.checkToken();
+       this.getUserRating();
     }
 
-//     checkToken() {
-//
-//
-//     let api = 'http://127.0.0.1:8000/check/' + data.token;
-//     fetch(api)
-//     .then((result) => {
-//     console.log(result);
-//     return result.json();
-// })
-//
-//
-//
-//
-//     fetch('http://127.0.0.1:8000/login/', {
-//     method: 'POST',
-//     headers: {
-//     'Accept': 'application/json',
-//     'Content-Type': 'application/json',
-// },
-//     body: JSON.stringify({
-//     'email': 'test',
-//     'password': 'pass',
-// },)
-// })
-// }
-  /** Extract our movie data and pass it to our MovieGenre Component. */
-  getMovieRows = (res, url, user) => {
-    const results = res;
-    let movieRows = [];
-    console.log(res);
-    results.map((movie) => {
-      console.log("asd");
-       if (movie.data.poster_path !== null) {
-       const movieComponent = <MovieImages
-          id={movie.data.id}
-            userid={user}
-           url={url}
-            poster={"https://image.tmdb.org/t/p/original" + movie.data.poster_path}
-           info={movie} />
-        movieRows.push(movieComponent);
-       }
-    });
-   return movieRows;
-
-  }
-
-
-  /**
-   * Send request for movies that have been rated by the user
-   */
-  getUserRating= () => {
-    let result = [];
-    let link = [];
-    let count = 0;
-
-    //const user = this.props.location.state.user;
-    const user = localStorage.getItem('id');
-    const api = `http://127.0.0.1:8000/api/getUser/${user}`;
-    fetch(api)
-        .then((result) => {
-
-            return result.json();
-
-        })
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                console.log(data);
-                if (data.token != null) {
-
-                    // let id = data.userid;
-                    // data.map((item) => {
-                    //   id = item.userid
-                    //   console.log(id);
-                    // });
-                    // this.props.history.push({
-                    //     pathname: '/LandingPage',
-                    //     state: {user: id}
-                    // })
-                } else {
-                    // this.setState({msg: data});
-                }
-
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+    check() {
+        if(checkToken() == 'invalid') {
+            this.props.history.push({
+            pathname: '/Signin'
+          })
+        }
     }
+
+    /** Extract our movie data and pass it to our MovieGenre Component. */
+    getMovieRows = (res, url, user) => {
+        const results = res;
+        let movieRows = [];
+        console.log(res);
+        results.map((movie) => {
+            console.log("asd");
+            if (movie.data.poster_path !== null) {
+                const movieComponent = <MovieImages
+                    id={movie.data.id}
+                    userid={user}
+                    url={url}
+                    poster={"https://image.tmdb.org/t/p/original" + movie.data.poster_path}
+                    info={movie}/>
+                movieRows.push(movieComponent);
+            }
+        });
+        return movieRows;
+
+    }
+
+
+    /**
+     * Send request for movies that have been rated by the user
+     */
+    // getUserRating = () => {
+    //     let result = [];
+    //     let link = [];
+    //     let count = 0;
+    //
+    //     //const user = this.props.location.state.user;
+    //     const user = localStorage.getItem('id');
+    //     const api = `http://127.0.0.1:8000/api/getUser/${user}`;
+    //     fetch(api)
+    //         .then((result) => {
+    //
+    //             return result.json();
+    //
+    //         })
+    //         .then((response) => {
+    //             return response.json();
+    //         })
+    //         .then((data) => {
+    //             console.log(data);
+    //             if (data.token != null) {
+    //
+    //                 // let id = data.userid;
+    //                 // data.map((item) => {
+    //                 //   id = item.userid
+    //                 //   console.log(id);
+    //                 // });
+    //                 // this.props.history.push({
+    //                 //     pathname: '/LandingPage',
+    //                 //     state: {user: id}
+    //                 // })
+    //             } else {
+    //                 // this.setState({msg: data});
+    //             }
+    //
+    //         })
+    //         .catch((error) => {
+    //             console.error(error);
+    //         });
+    // }
 
     /** Extract our movie data and pass it to our MovieGenre Component. */
     getMovieRows = (res, url, user) => {
@@ -143,6 +125,7 @@ class UserProfile extends Component {
         //const user = this.props.location.state.user;
         const api = 'http://127.0.0.1:8000/api/getUser/'+user;
 
+
         fetch(api)
             .then((result) => {
 
@@ -174,8 +157,12 @@ class UserProfile extends Component {
 
 
     render() {
+         this.check();
         return (
-            //{ this.state && this.state.checkToken
+            <div>
+                {/*<span>{this.check()}</span>*/}
+                {/*{this.check()}*/}
+            { this.state &&
             <div className="container">
                 <Navbar/>
                 <br/><br/><br/>
@@ -251,6 +238,8 @@ class UserProfile extends Component {
                     </div>
                 </div>
             </div>
+            }
+                </div>
         );
     }
 }
