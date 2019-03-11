@@ -2,14 +2,18 @@ import decode from 'jwt-decode';
 
 class Authentication{
     constructor(domain) {
-        this. domain = domain || 'http://localhost:3000 '
+        this.domain = 'http://127.0.0.1:8000/'
         this.fetch = this.fetch.bind(this)
-        this.signin = this.signin.bind(this)
+
+
+        this.login= this.login.bind(this)
+        this.getLandingPage = this.getLandingPage.bind(this)
+
     }
 
 
-    signin(username, password) {
-        return this.fetch(' $ {this.domain}/signin', {
+    login(username, password) {
+        return this.fetch('${this.domain}/login', {
             method: 'POST',
             body: JSON.stringify({
                 username,
@@ -19,9 +23,12 @@ class Authentication{
         }).then(res => {
             this.setToken(res.token) // set the token
             return Promise.resolve(res);
+
         })
 
     }
+        //this.signin = this.signin.bind(this)
+
 
 //check if there is a saved token and if its valid
 //need to change so it calls api token checker, not checked on the front end
@@ -46,6 +53,7 @@ signedIn() {
 setToken(idToken) {
 
         localStorage.setItem('id_token', idToken)
+    console.log(idToken);
     }
 
       // Retrieves the user token from localStorage
@@ -62,7 +70,10 @@ setToken(idToken) {
         localStorage.removeItem('id_token');
     }
 
-
+ getLandingPage() {
+        // Using jwt-decode npm package to decode the token
+        return decode(this.getToken());
+    }
 
     fetch(url, options) {
         // performs api calls sending the required authentication headers
@@ -82,6 +93,16 @@ setToken(idToken) {
         })
             .then(this._checkStatus)
             .then(response => response.json())
+    }
+
+    _classStatus(response){
+        if(response.status >=200 && response <300)
+            return response
+        else {
+            var error = new Error(response.statusText)
+            error.response = response
+            throw error
+        }
     }
 
 }

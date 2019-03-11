@@ -11,38 +11,78 @@ class UserProfile extends Component {
     /** Hold rated list movie row in an array */
     state = {
         ratedList: [],
-        checkToken: ''
+        //checkToken: ''
     }
 
     /** Make all API calls as soon as the MovieGenreRow component mounts. */
     componentWillMount() {
         this.getUserRating();
-        this.checkToken();
+        //this.checkToken();
     }
 
-    checkToken() {
+//     checkToken() {
+//
+//
+//     let api = 'http://127.0.0.1:8000/check/' + data.token;
+//     fetch(api)
+//     .then((result) => {
+//     console.log(result);
+//     return result.json();
+// })
+//
+//
+//
+//
+//     fetch('http://127.0.0.1:8000/login/', {
+//     method: 'POST',
+//     headers: {
+//     'Accept': 'application/json',
+//     'Content-Type': 'application/json',
+// },
+//     body: JSON.stringify({
+//     'email': 'test',
+//     'password': 'pass',
+// },)
+// })
+// }
+  /** Extract our movie data and pass it to our MovieGenre Component. */
+  getMovieRows = (res, url, user) => {
+    const results = res;
+    let movieRows = [];
+    console.log(res);
+    results.map((movie) => {
+      console.log("asd");
+       if (movie.data.poster_path !== null) {
+       const movieComponent = <MovieImages
+          id={movie.data.id}
+            userid={user}
+           url={url}
+            poster={"https://image.tmdb.org/t/p/original" + movie.data.poster_path}
+           info={movie} />
+        movieRows.push(movieComponent);
+       }
+    });
+   return movieRows;
+
+  }
 
 
-        let api = 'http://127.0.0.1:8000/check/' + data.token;
-        fetch(api)
-            .then((result) => {
-                console.log(result);
-                return result.json();
-            })
+  /**
+   * Send request for movies that have been rated by the user
+   */
+  getUserRating= () => {
+    let result = [];
+    let link = [];
+    let count = 0;
 
+    //const user = this.props.location.state.user;
+    const user = localStorage.getItem('id');
+    const api = `http://127.0.0.1:8000/api/getUser/${user}`;
+    fetch(api)
+        .then((result) => {
 
+            return result.json();
 
-
-        fetch('http://127.0.0.1:8000/login/', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'email': 'test',
-                'password': 'pass',
-            },)
         })
             .then((response) => {
                 return response.json();
@@ -134,7 +174,7 @@ class UserProfile extends Component {
 
     render() {
         return (
-            { this.state && this.state.checkToken
+            //{ this.state && this.state.checkToken
             <div className="container">
                 <Navbar/>
                 <br/><br/><br/>

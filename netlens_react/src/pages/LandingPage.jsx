@@ -70,6 +70,7 @@ class LandingPage extends Component {
                                 console.log(count);
                                 if (count >= data.length - 1) {
                                     const movieRows = this.getMovieRows(row, result, user);
+
                                     this.setState({topRatedRow: movieRows});
                                 }
                                 count++;
@@ -94,9 +95,10 @@ class LandingPage extends Component {
     let link = [];
     let count = 0;
     //console.log(this.props.location.state.user);
-    // const user = this.props.location.state.user;
-    const user = 1;
+        //const user = this.props.location.state.user;
+        const user  = localStorage.getItem('id');
     const api = `http://127.0.0.1:8000/api/recommendation/${user}`;
+    console.log(api)
     fetch(api)
         .then((result) => {
             return result.json();
