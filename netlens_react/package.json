@@ -8,6 +8,7 @@
     "axios": "^0.18.0",
     "jsonwebtoken": "^8.5.0",
     "jwt-decode": "^2.2.0",
+    "npm-install-missing": "^0.1.4",
     "react": "^16.7.0",
     "react-autosuggest": "^9.4.3",
     "react-dom": "^16.7.0",
