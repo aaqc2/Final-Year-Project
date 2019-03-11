@@ -74,7 +74,7 @@ def register(request):
            hashPass = pbkdf2_sha256.hash(password);
            queryset = str(Users.objects.values('userid').last().get("userid"))
            uid = int(queryset) + 1
-           Users.objects.create(userid=str(uid), username=username, password=hashPass, email="email")
+           Users.objects.create(userid=str(uid), username=username, password=hashPass, email=email)
            return Response("success", status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
