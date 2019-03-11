@@ -294,7 +294,7 @@ p.big {
     overflow: auto;
     position: relative;
     padding-top: 45px;
-    padding-left: 70px;
+    padding-left: 30px;
 }
 
 .movieList a {
@@ -305,6 +305,11 @@ p.big {
 .movieList a:hover {
     color: #ff0000;
     font-size: 14pt;
+}
+
+.nextButton {
+    position: absolute;
+    left: 90%;
 }
 
 /* FOOTER */

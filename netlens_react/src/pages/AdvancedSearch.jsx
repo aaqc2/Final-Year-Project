@@ -346,9 +346,9 @@ class AdvancedSearch extends Component {
                 </div>
                 <div class="movieList">
                     {this.state.hasPrevious&&!this.state.genrePage&&<button onClick={this.handlePreviousClick}>Previous</button>}
-                    {this.state.hasNext&&!this.state.genrePage&&<button onClick={this.handleNextClick}>Next</button>}
+                    {this.state.hasNext&&!this.state.genrePage&&<button className="nextButton" onClick={this.handleNextClick}>Next</button>}
                     {this.state.hasGenrePrevious&&this.state.genrePage&&<button onClick={this.handlePreviousGenreClick}>Previous</button>}
-                    {this.state.hasGenreNext&&this.state.genrePage&&<button onClick={this.handleNextGenreClick}>Next</button>}
+                    {this.state.hasGenreNext&&this.state.genrePage&&<button className="nextButton" onClick={this.handleNextGenreClick}>Next</button>}
                     <table id="movieList"></table>
                 </div>
             </div>
