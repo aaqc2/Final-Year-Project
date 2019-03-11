@@ -9,7 +9,7 @@ from .serializers import TitlesSerializer, RatingsSerializer, SearchSerializer, 
 from rest_framework.decorators import api_view
 from django.db.models import Avg, F, Sum, Q
 from rest_framework.pagination import PageNumberPagination
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.contrib.auth.hashers import make_password, check_password
 from passlib.hash import pbkdf2_sha256
 from django.conf import settings
@@ -45,7 +45,8 @@ def showTopRated(request):
 @api_view(['GET'])
 def showSearch(request):
     title = request.GET['q']
-    queryset = Titles.objects.filter(title__icontains=title) [:20]
+    # queryset = Titles.objects.filter(title__icontains=title)[:20]
+    queryset = Titles.objects.select_related('links').filter(title__icontains=title).values('title', 'genre', 'links__tmdbid')[:20]
     serializer = SearchSerializer(queryset, many=True)
     return Response(serializer.data)
 
@@ -121,7 +122,7 @@ def AverageRating(request, tmdbid):
 @api_view(['GET'])
 def getRecommendation(request, u):
     queryset = Links.objects.raw('SELECT l.movieid, l.tmdbid FROM link l JOIN recommendations r ON l.movieid = r.movieid'
-                                 ' WHERE userid = %s ORDER BY r.rating', [u])[:20]
+                                 ' WHERE userid = %s ORDER BY r.rating DESC', [u])[:20]
     serializer_class = RatingsSerializer(queryset, many=True)
     return Response(serializer_class.data)
 
@@ -136,14 +137,17 @@ def login(request):
             if pbkdf2_sha256.verify(str(password), user.password):
                 secret = settings.SECRET_KEY
                 payload = {
-                    'id': user.userid
+                    'id': user.userid,
+                    'iat': datetime.now(),
+                    'exp': datetime.now() + timedelta(hours=6)
                 }
                 jwt_token = {'token': jwt.encode(payload, secret)}
                 return Response(
                     {
-                       'userid': user.userid,
-                       'username': user.username,
-                       'token': jwt_token
+                        'userid': user.userid,
+                        'username': user.username,
+                        'token': jwt_token,
+                        'email': user.email
 
 
                     },

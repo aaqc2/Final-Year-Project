@@ -44,11 +44,14 @@ class Login extends Component {
     .then((data) => {
       console.log(data);
       if(data.token != null ) {
+
+          //saves token and id to local storage.
+          localStorage.setItem('token', data.token['token'])
+          localStorage.setItem('id', data.userid)
+          localStorage.setItem('username', data.username)
+          localStorage.setItem('email', data.email)
           let id = data.userid;
-          // data.map((item) => {
-          //   id = item.userid
-          //   console.log(id);
-          // });
+
           this.props.history.push({
             pathname: '/LandingPage',
             state: {user: id}
