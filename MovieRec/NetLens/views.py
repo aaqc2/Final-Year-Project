@@ -45,10 +45,24 @@ def showTopRated(request):
 @api_view(['GET'])
 def showSearch(request):
     title = request.GET['q']
-    # queryset = Titles.objects.filter(title__icontains=title)[:20]
-    queryset = Titles.objects.select_related('links').filter(title__icontains=title).values('title', 'genre', 'links__tmdbid')[:20]
-    serializer = SearchSerializer(queryset, many=True)
-    return Response(serializer.data)
+    queryset = Titles.objects.select_related('links').filter(title__icontains=title).values('title', 'genre', 'links__tmdbid')
+    paginator = PageNumberPagination()
+    result_page = paginator.paginate_queryset(queryset, request)
+    serializer = SearchSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
+
+@api_view(['GET'])
+def showSearchAndGenre(request):
+    title = request.GET['q']
+    genres = request.GET.getlist('gen')
+    q = Q()
+    for genre in genres:
+        q |= Q(genre__contains=genre)
+    queryset = Titles.objects.select_related('links').filter(q, title__icontains=title).values('title', 'genre', 'links__tmdbid')
+    paginator = PageNumberPagination()
+    result_page = paginator.paginate_queryset(queryset, request)
+    serializer = SearchSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 @api_view(['GET'])
 def paginationTest(request):

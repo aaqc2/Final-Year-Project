@@ -17,4 +17,5 @@ urlpatterns = [
     # path('login/', views.login),
     path('genres/', views.getGenres),
     path('check/<str:token>', views.checkToken),
+    path('titleandgenre/', views.showSearchAndGenre),
 ]
