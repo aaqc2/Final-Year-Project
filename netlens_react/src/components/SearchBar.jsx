@@ -83,7 +83,7 @@ class SearchBar extends Component {
         fetch(`http://127.0.0.1:8000/api/search/?q=${value}`)
             .then(response => response.json())
             .then(data => {
-                data.map((item) => {
+                data.results.map((item) => {
                     this.setState(
                         prevState => ({
                             suggestions: [...prevState.suggestions, item.title]

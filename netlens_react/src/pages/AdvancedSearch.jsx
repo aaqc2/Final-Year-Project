@@ -8,14 +8,34 @@ class AdvancedSearch extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            movieList: ''
+            movieList: '',
+            genreMovieList: '',
+            hasNext: false,
+            hasPrevious: false,
+            hasGenreNext: false,
+            hasGenrePrevious: false,
+            api: '',
+            nextApi: '',
+            prevApi: '',
+            genreApi: '',
+            nextGenreApi: '',
+            prevGenreApi: '',
+            genrePage: false,
+            selected: ''
         };
         this.handleChange = this.handleChange.bind(this);
+        this.handlePreviousClick = this.handlePreviousClick.bind(this);
+        this.handleNextClick = this.handleNextClick.bind(this);
+        this.handlePreviousGenreClick = this.handlePreviousGenreClick.bind(this);
+        this.handleNextGenreClick = this.handleNextGenreClick.bind(this);
+        this.getSearchQuery = this.getSearchQuery.bind(this);
+        this.getFilter = this.getFilter.bind(this);
     }
 
     componentDidMount() {
         if(this.props.location.state !== undefined) {
-            this.getSearchQuery(this.props.location.state.value);
+            this.setState({api: `http://127.0.0.1:8000/api/search/?q=${this.props.location.state.value}`}, this.getSearchQuery);
+
         }
     }
 
@@ -24,43 +44,39 @@ class AdvancedSearch extends Component {
             if(this.props.location.state !== undefined) {
                 if(this.props.location.state.value !== prevProps.location.state.value) {
                     document.getElementById('movieList').innerHTML="";
-                    this.getSearchQuery(this.props.location.state.value);
+                    this.setState({api: `http://127.0.0.1:8000/api/search/?q=${this.props.location.state.value}`},this.getSearchQuery);
                 }
             }
         }
         else {
             if(this.props.location.state !== undefined) {
-                this.getSearchQuery(this.props.location.state.value);
+                this.setState({api: `http://127.0.0.1:8000/api/search/?q=${this.props.location.state.value}`},this.getSearchQuery);
             }
         }
-
     }
 
-    getSearchQuery(keyword) {
+    getSearchQuery() {
         document.getElementById('movieList').innerHTML="";
         document.querySelectorAll('input[type=checkbox]').forEach( checkboxes => checkboxes.checked = false ); //uncheck checkbox
-        let api = `http://127.0.0.1:8000/api/search/?q=${keyword}`;
         this.setState({movieList: []});
         let result = [];
-        fetch(api)
+        fetch(this.state.api)
             .then((result) => {
                 return result.json();
             })
             .then((data) => {
-                data.map((item) => {
-                    // movieList.push(item);
+                data.results.map((item) => {
                     this.state.movieList.push(item);
                 });
                 //displays list of movies
                 let list = "";
                 for (let i = 0; i < this.state.movieList.length; i++) {
-                    // console.log(this.state.movieList[i].links__tmdbid);
                     let url = '/movie/' + this.state.movieList[i].links__tmdbid + '?api_key=4f65322e8d193ba9623a9e7ab5caa01e';
                     axios.get(url)
                         .then(res => {
                             result.push(res);
                             list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td></tr>";
-                            console.log(list);
+                            // console.log(list);
                             document.getElementById('movieList').insertAdjacentHTML('beforeend', list);
                         }).catch(error => {
                             console.log(error);
@@ -68,11 +84,36 @@ class AdvancedSearch extends Component {
                     list += "<tr><td><a href='/info/" + this.state.movieList[i].links__tmdbid + "'>" + this.state.movieList[i].title + "</a></td></tr>";
 
                 }
-            })
+                if(data.next !== null) {
+                    this.setState({hasNext: true, nextApi:data.next});
+                }
+                else {
+                    this.setState({hasNext: false, nextApi:''});
+                }
+                if(data.previous !== null) {
+                    this.setState({hasPrevious: true, previousApi:data.previous});
+                }
+                else {
+                    this.setState({hasPrevious: false, previousApi:''});
+                }
+            });
     }
+
+    handleNextClick() {
+        this.setState({api: this.state.nextApi},this.getSearchQuery);
+    }
+
+    handlePreviousClick() {
+        // this.state.api = this.state.previousApi;
+        // this.getSearchQuery();
+        this.setState({api: this.state.previousApi},this.getSearchQuery);
+    }
+
+
 
     handleChange() {
         let selected = [];
+        // this.setState({selected: []});
         document.getElementById('movieList').innerHTML="";
         var cbAction = document.getElementById("Action");
         if (cbAction.checked === true) {
@@ -104,65 +145,131 @@ class AdvancedSearch extends Component {
             selected.push(cbSciFi.id);
             console.log(cbSciFi.id);
         }
-
+        console.log(selected);
         if(this.state.movieList.length >= 1) {
             let chosen = [];
-            let result = [];
+            // let result = [];
             if(selected.length >= 1) {
-                this.state.movieList.map((movies) => {
-                    selected.map((genres) => {
-                        if(movies.genre.includes(genres)) {
-                            if(!chosen.some(existed => existed.links__tmdbid === movies.links__tmdbid)) { //to prevent movies to be added more than once
-                                chosen.push(movies);
-                            }
-                        }
-                    });
+                let genre = '';
+                selected.map((movies) => {
+                    genre += '&gen=' + movies;
                 });
+                this.setState(
+                    {
+                        genrePage: true,
+                        selected:selected,
+                        genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + genre}`
+                    },
+                    this.getFilter
+                )
+                // this.getFilter(this.state.selected);
+
             }
             else {
-                chosen = this.state.movieList;
+                this.setState({genrePage: false});
+                // chosen = this.state.movieList;
+                this.getSearchQuery();
             }
 
-            let list = "";
-            chosen.map((chose) => {
-                let url = '/movie/' + chose.links__tmdbid + '?api_key=4f65322e8d193ba9623a9e7ab5caa01e';
-                axios.get(url)
-                    .then(res => {
-                        result.push(res);
-                        list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td></tr>";
-                        console.log(list);
-                        document.getElementById('movieList').insertAdjacentHTML('beforeend', list);
-                    }).catch(error => {
+            // let list = "";
+            // chosen.map((chose) => {
+            //     let url = '/movie/' + chose.links__tmdbid + '?api_key=4f65322e8d193ba9623a9e7ab5caa01e';
+            //     axios.get(url)
+            //         .then(res => {
+            //             result.push(res);
+            //             list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td></tr>";
+            //             console.log(list);
+            //             document.getElementById('movieList').insertAdjacentHTML('beforeend', list);
+            //         }).catch(error => {
+            //             console.log(error);
+            //         })
+            //     list += "<tr><td><a href='/info/" + chose.links__tmdbid + "'>" + chose.title + "</a></td></tr>";
+            // });
+        }
+        // else {
+        //     let url = [];
+        //     selected.map((movies) => {
+        //         url.push('&gen=' + movies);
+        //     });
+        //
+        //     let api = 'http://127.0.0.1:8000/api/genres/?' + url;
+        //     let movieList = [];
+        //     fetch(api)
+        //         .then((result) => {
+        //             return result.json();
+        //         })
+        //         .then((data) => {
+        //             data.map((item) => {
+        //                 movieList.push(item);
+        //             });
+        //             //displays list of movies
+        //             var list = "";
+        //             for (var i = 0; i < movieList.length; i++) {
+        //                 list += "<tr><td><a href='/info/" + movieList[i].movieid + "'>" + movieList[i].title + "</a></td></tr>";
+        //             }
+        //             document.getElementById('movieList').innerHTML = list;
+        //         })
+        // }
+
+    }
+
+    getFilter() {
+        document.getElementById('movieList').innerHTML="";
+        let result = [];
+        // let genre = [];
+        // this.state.selected.map((movies) => {
+        //     genre.push('&gen=' + movies);
+        // });
+        // this.setState({genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + genre}`});
+        // let api = `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + genre}`;
+        this.setState({genreMovieList: []})
+        fetch(this.state.genreApi)
+            .then((result) => {
+                return result.json();
+            })
+            .then((data) => {
+                data.results.map((item) => {
+                    this.state.genreMovieList.push(item);
+                });
+                console.log(this.state.genreApi)
+                let list = "";
+                for (let i = 0; i < this.state.genreMovieList.length; i++) {
+                    let url = '/movie/' + this.state.genreMovieList[i].links__tmdbid + '?api_key=4f65322e8d193ba9623a9e7ab5caa01e';
+                    axios.get(url)
+                        .then(res => {
+                            result.push(res);
+                            list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td></tr>";
+                            // console.log(list);
+                            document.getElementById('movieList').insertAdjacentHTML('beforeend', list);
+                        }).catch(error => {
                         console.log(error);
                     })
-                list += "<tr><td><a href='/info/" + chose.links__tmdbid + "'>" + chose.title + "</a></td></tr>";
-            });
-        }
-        else {
-            let url = [];
-            selected.map((movies) => {
-                url.push('&gen=' + movies);
-            });
+                    list += "<tr><td><a href='/info/" + this.state.genreMovieList[i].links__tmdbid + "'>" + this.state.genreMovieList[i].title + "</a></td></tr>";
 
-            let api = 'http://127.0.0.1:8000/api/genres/?' + url;
-            let movieList = [];
-            fetch(api)
-                .then((result) => {
-                    return result.json();
-                })
-                .then((data) => {
-                    data.map((item) => {
-                        movieList.push(item);
-                    });
-                    //displays list of movies
-                    var list = "";
-                    for (var i = 0; i < movieList.length; i++) {
-                        list += "<tr><td><a href='/info/" + movieList[i].movieid + "'>" + movieList[i].title + "</a></td></tr>";
-                    }
-                    document.getElementById('movieList').innerHTML = list;
-                })
-        }
+                }
+                if(data.next !== null) {
+                    this.setState({hasGenreNext: true, nextGenreApi:data.next});
+                }
+                else {
+                    this.setState({hasGenreNext: false, nextGenreApi:''});
+                }
+                if(data.previous !== null) {
+                    this.setState({hasGenrePrevious: true, previousGenreApi:data.previous});
+                }
+                else {
+                    this.setState({hasGenrePrevious: false, previousGenreApi:''});
+                }
+            })
+    }
 
+    handleNextGenreClick() {
+        this.setState({genreApi: this.state.nextGenreApi},this.getFilter);
+    }
+
+    handlePreviousGenreClick() {
+        // this.state.api = this.state.previousApi;
+        // this.getSearchQuery();
+        this.setState({genreApi: this.state.previousGenreApi},this.getFilter);
     }
 
     render() {
@@ -238,6 +345,10 @@ class AdvancedSearch extends Component {
                     {/* card-group-item.// */}
                 </div>
                 <div class="movieList">
+                    {this.state.hasPrevious&&!this.state.genrePage&&<button onClick={this.handlePreviousClick}>Previous</button>}
+                    {this.state.hasNext&&!this.state.genrePage&&<button className="nextButton" onClick={this.handleNextClick}>Next</button>}
+                    {this.state.hasGenrePrevious&&this.state.genrePage&&<button onClick={this.handlePreviousGenreClick}>Previous</button>}
+                    {this.state.hasGenreNext&&this.state.genrePage&&<button className="nextButton" onClick={this.handleNextGenreClick}>Next</button>}
                     <table id="movieList"></table>
                 </div>
             </div>
