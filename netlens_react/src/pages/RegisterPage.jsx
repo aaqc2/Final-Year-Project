@@ -28,7 +28,7 @@ class RegisterPage extends Component {
       console.log(confirmPassword)
     // perform all neccassary validations
     if (password !== confirmPassword) {
-        alert("Passwords don't match");
+        alert("Passwords do not match");
     } else {
         event.preventDefault();
         fetch('http://127.0.0.1:8000/api/register/', {
@@ -49,6 +49,7 @@ class RegisterPage extends Component {
     .then((data) => {
       console.log(data);
       //change if statement
+         console.log('response');
       if(typeof data === 'object' ) {
           let id ='';
           data.map((item) => {
