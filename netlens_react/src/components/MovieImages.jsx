@@ -3,24 +3,23 @@ import { Link } from 'react-router-dom';
 import UserStarRating from './UserStarRating.jsx';
 import AverageRating from './AverageRating.jsx';
 
-class MovieImages extends Component {
-   render() {
-      return (
-         <div >
-            <Link to={{pathname: "/info/"+ this.props.id, state : {userid: this.props.userid} }} className= "movielink">
-                <div className ="movieTitle"> { this.props.info.data.title || this.props.info.data.name} </div>
-            <img src={this.props.poster} alt="movieimages" className="movie_image"/>
+ const MovieImages  =(props) =>(
+
+
+         <div key={props.info.data.id}>
+            <Link to={{pathname: "/info/"+ props.id, state : {userid: props.userid} }} className= "movielink">
+                <div className ="movieTitle"> {props.info.data.title || props.info.data.name} </div>
+            <img src={props.poster} alt="movieimages" className="movie_image"/>
             </Link>
              {/*<StarRating/>*/}
 
-             <AverageRating row={this.props.row}  tmdbid={this.props.id} userid={this.props.userid}/>
-             <UserStarRating  row={this.props.row}  tmdbid={this.props.id} userid={this.props.userid}/>
+             <AverageRating row={props.row}  tmdbid={props.id} userid={props.userid} key={props.userid}/>
+             <UserStarRating  row={props.row}  tmdbid={props.id} userid={props.userid}/>
 
          {/*<StarRating tmdbid={this.props.id} userid={this.props.userid}/>*/}
 
          </div>
       );
-   }
-}
+
 
 export default MovieImages;

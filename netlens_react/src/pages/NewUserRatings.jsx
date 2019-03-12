@@ -9,19 +9,18 @@ class NewUserRatings extends Component {
 
     constructor(props) {
     super(props);
-    this.changeCheckbox = this.changeCheckbox.bind(this)
+    this.changeCheckbox = this.changeCheckbox.bind(this);
     this.state = {
-    dramaMovieRow: [],
-    comedyMovieRow: [],
-    horrorMovieRow: [],
-    actionMovieRow: [],
-    animatedMovieRow: [],
-    romanceMovieRow: [],
-     checkedOptions: {},
+        dramaMovieRow: [],
+        comedyMovieRow: [],
+        horrorMovieRow: [],
+        actionMovieRow: [],
+        animatedMovieRow: [],
+        romanceMovieRow: [],
+        checkedOptions: {},
 
-    };
+    }
   }
-
 
 
   onChange = checkedValues => {
@@ -42,44 +41,35 @@ class NewUserRatings extends Component {
         })
         let  filtered = allValues.filter(value => value)
         console.log("Filtered", filtered)
-        if(filtered.length >= 2 && value ) { return alert ('You can only select 2 genres') }
+        if(filtered.length >= 2 && value ) { return alert ('Select a maximum of 2 genres') }
 
         allSelected[selected] = value
-
         this.setState({
             checkedOptions: allSelected
         })
     }
 
-    handleSubmit(e) {
-    e.preventDefault();
+    checked = (element) => {
+          // checks whether an element is checked
+          return element  === true;
+        };
+
+    handleSubmit = (e)  => {
+        e.preventDefault();
         let value = e.target.checked
-        let allSelected = this.state.checkedOptions
+        let allSelected = this.state.checkedOptions;
+
         let allValues = Object.keys(allSelected).map(key => {
             return allSelected[key]
         })
-        let  filtered = allValues.filter(value => value)
-        console.log("Filtered", filtered)
-        if(filtered.length < 2 && value ) { console.log('submit')
- this.setState({
-            checkedOptions: allSelected
-        })
-    // fetch('http://example.com',{
-    //     method: "POST",
-    //     body: JSON.stringify(value),
-    //     headers: {
-    //       'Accept': 'application/json',
-    //       'Content-Type': 'application/json'
-    //     },
-    //   }).then(response => {
-    //             response.json().then(data => {
-    //                 console.log("Successful" + data);
-    //             })
-    //
-    // });
-        }
-    }
 
+        if (!allValues.some(this.checked)) {
+             return alert ('You should select at least 1 genre!')
+
+        }
+        return this.props.history.push('/LandingPage', {selectedValues : allSelected})
+
+        }
 
 
 
@@ -210,6 +200,7 @@ class NewUserRatings extends Component {
 
 
     render() {
+      console.log(this.props, 'checkedboxs test')
         return (
             <div className="newuserrating-container">
                 <Navbar/>
@@ -220,8 +211,10 @@ class NewUserRatings extends Component {
 
                             <div className="newusercard-body">
 
-                                <form name="new_user_form" className="newuser-rating-form" action="/" method="get" onSubmit={this.handleSubmit} >
+                                <form name="new_user_form" className="newuser-rating-form"   >
                                     <table>
+                                       <tbody>
+
                                         <tr>
                                             <td>
                                                 <div>
@@ -298,8 +291,9 @@ class NewUserRatings extends Component {
                                             </div>
                                             </td>
                                         </tr>
-                                         <button className = "newuser-submit"> Next </button>
+                                       </tbody>
                                     </table>
+                                       <button className = "newuser-submit" onClick={this.handleSubmit}> Next </button>
                                 </form>
                            </div>
                 </div>
