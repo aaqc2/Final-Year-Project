@@ -383,25 +383,25 @@ class AdvancedSearch extends Component {
                         </header>
                         <div className="filter-content">
                             <div className="card-body">
-                                <button className="sortAZ btn btn-sm btn-danger"
+                                <button className="btn btn-sm btn-danger"
                                         onClick={() => this.sortResults('az')}>Sort A-Z
                                 </button>
-                                <button className="sortAZ btn btn-sm btn-danger"
+                                <button className="btn btn-sm btn-danger"
                                         onClick={() => this.sortResults('za')}>Sort Z-A
                                 </button>
-                                <button className="sortAZ btn btn-sm btn-danger"
+                                <button className="btn btn-sm btn-danger"
                                         onClick={() => this.sortResults('date')}>Sort by release date
                                 </button>
-                                <button className="sortAZ btn btn-sm btn-danger"
+                                <button className="btn btn-sm btn-danger"
                                         onClick={() => this.sortResults('vote')}>Sort by vote average
                                 </button>
-                                <select className="form-control" id="releasedate">
-                                    <option defaultValue>Select option...</option>
-                                    <option>Your ratings</option>
-                                    <option>Average ratings</option>
-                                    <option>Highly recommended</option>
-                                    <option>Release date</option>
-                                </select>
+                                {/*<select className="form-control" id="releasedate">*/}
+                                    {/*<option defaultValue>Select option...</option>*/}
+                                    {/*<option>Your ratings</option>*/}
+                                    {/*<option>Average ratings</option>*/}
+                                    {/*<option>Highly recommended</option>*/}
+                                    {/*<option>Release date</option>*/}
+                                {/*</select>*/}
                             </div>
                             {/* card-body.// */}
                         </div>
