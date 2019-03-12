@@ -297,7 +297,7 @@ p.big {
     padding-left: 30px;
 }
 
-.movieList a {
+.movieList a, td {
     color: white;
     font-size: 14pt;
 }
