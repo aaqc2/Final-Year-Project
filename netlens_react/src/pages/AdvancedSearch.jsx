@@ -156,7 +156,6 @@ class AdvancedSearch extends Component {
         }
         console.log(selected);
         if (this.state.movieList.length >= 1) {
-            let chosen = [];
             // let result = [];
             if (selected.length >= 1) {
                 let genre = '';
@@ -425,16 +424,30 @@ class AdvancedSearch extends Component {
                     {/* card-group-item.// */}
                 </div>
                 <div class="movieList">
-                    {this.state.hasPrevious && !this.state.genrePage &&
-                    <button className="btn btn-sm btn-primary" onClick={this.handlePreviousClick}>Previous</button>}
-                    {this.state.hasNext && !this.state.genrePage &&
-                    <button className="nextButton btn btn-sm btn-primary" onClick={this.handleNextClick}>Next</button>}
-                    {this.state.hasGenrePrevious && this.state.genrePage && <button className="btn btn-sm btn-primary"
-                                                                                    onClick={this.handlePreviousGenreClick}>Previous</button>}
-                    {this.state.hasGenreNext && this.state.genrePage &&
-                    <button className="nextButton btn btn-sm btn-primary"
-                            onClick={this.handleNextGenreClick}>Next</button>}
+                    <div id="topButtons">
+                        {this.state.hasPrevious && !this.state.genrePage &&
+                        <button className="btn btn-sm btn-primary" onClick={this.handlePreviousClick}>Previous</button>}
+                        {this.state.hasNext && !this.state.genrePage &&
+                        <button className="nextButton btn btn-sm btn-primary" onClick={this.handleNextClick}>Next</button>}
+                        {this.state.hasGenrePrevious && this.state.genrePage && <button className="btn btn-sm btn-primary"
+                                                                                        onClick={this.handlePreviousGenreClick}>Previous</button>}
+                        {this.state.hasGenreNext && this.state.genrePage &&
+                        <button className="nextButton btn btn-sm btn-primary"
+                                onClick={this.handleNextGenreClick}>Next</button>}
+                    </div>
+
                     <table id="movieList"></table>
+
+                    <div id="bottomButtons">
+                        {this.state.hasPrevious && !this.state.genrePage &&
+                        <button className="btn btn-sm btn-primary" onClick={this.handlePreviousClick}>Previous</button>}
+                        {this.state.hasNext && !this.state.genrePage &&
+                        <button className="nextButton btn btn-sm btn-primary" onClick={this.handleNextClick}>Next</button>}
+                        {this.state.hasGenrePrevious && this.state.genrePage && <button className="btn btn-sm btn-primary" onClick={this.handlePreviousGenreClick}>Previous</button>}
+                        {this.state.hasGenreNext && this.state.genrePage &&
+                        <button className="nextButton btn btn-sm btn-primary"
+                                onClick={this.handleNextGenreClick}>Next</button>}
+                    </div>
                 </div>
             </div>
         );
