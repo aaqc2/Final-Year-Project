@@ -217,7 +217,7 @@ class NewUserRatings extends Component {
 
                                         <tr>
                                             <td>
-                                                <div>
+                                                <div >
                                                     <input type="checkbox"
                                                            name="action"
                                                            onChange={this.changeCheckbox}
