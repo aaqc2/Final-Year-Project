@@ -46,8 +46,10 @@ class LandingPage extends Component {
         console.log(this.props.location.state);
         this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${localStorage.getItem('id')}`}, this.getRecommendation);
         this.getTopRated();
-        if(this.props.location.state.selectedValues !== undefined) {
+        if(this.props.state !== undefined) {
+            if(this.props.location.state.selectedValues !== undefined) {
             this.getGenreMovies();
+            }
         }
     }
 
@@ -73,7 +75,7 @@ class LandingPage extends Component {
 
     }
 
-
+    //still need to implement pagination
     getGenreMovies = () => {
         const row = 'movies';
         let result = [];
