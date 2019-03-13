@@ -5,7 +5,7 @@ import json
 from rest_framework.response import Response
 from rest_framework import generics, status
 from .models import Titles, Ratings, Users, Links, Recommendations
-from .serializers import TitlesSerializer, RatingsSerializer, SearchSerializer, RatingSerializer, UserRating, AverageRatingSerializer, UserLoginSerializer
+from .serializers import TitlesSerializer, RatingsSerializer, SearchSerializer, RatingSerializer, UserRating, AverageRatingSerializer, UserLoginSerializer, GenreSerializer
 from rest_framework.decorators import api_view
 from django.db.models import Avg, F, Sum, Q
 from rest_framework.pagination import PageNumberPagination
@@ -194,9 +194,14 @@ def getGenres(request):
     q = Q()
     for genre in genres:
         q |= Q(genre__icontains=genre)
-    queryset = Titles.objects.filter(q)
-    serializer = TitlesSerializer(queryset, many=True)
-    return Response(serializer.data)
+    queryset = Titles.objects.filter(q).select_related('links').values('links__tmdbid')
+    paginator = PageNumberPagination()
+    paginator.page_size = 6
+    result_page = paginator.paginate_queryset(queryset, request)
+    serializer = GenreSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
+    # serializer = TitlesSerializer(queryset, many=True)
+    # return Response(serializer.data)
 
 
 @api_view(['GET'])

@@ -43,9 +43,12 @@ class LandingPage extends Component {
 
     componentDidMount() {
         console.log('i am mounted');
+        console.log(this.props);
         this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${localStorage.getItem('id')}`}, this.getRecommendation);
         this.getTopRated();
-        this.getGenreMovies()
+        if(this.props.location.state !== undefined) {
+            this.getGenreMovies();
+        }
     }
 
 
@@ -74,26 +77,44 @@ class LandingPage extends Component {
     getGenreMovies = () => {
         const row = 'movies';
         let result = [];
+        let count = 0;
         //const user = this.props.location.state.user;
         const user = 1;
         const {location: {state: {selectedValues}}} = this.props;
-        console.log(selectedValues)
+        console.log(selectedValues);
         let url = [];
         Object.keys(selectedValues).map((gen) => {
-            console.log(gen, "genrews")
+            console.log(gen, "genres");
             url.push('&gen=' + gen);
         });
-        const api = 'http://127.0.0.1:8000/api/genres?' + url;
+        const api = 'http://127.0.0.1:8000/api/genres/?' + url;
         fetch(api)
             .then((result) => {
                 return result.json();
             })
             .then((data) => {
-                console.log(data)
-                result.push(data);
-                const movieRows = this.getMovieRows(row, result, user);
-                this.setState({genreMovies: movieRows});
-
+                console.log(data.results);
+                // result.push(data.results);
+                data.results.map((movie) => {
+                    // const movieRows = this.getMovieRows(row, movie, user);
+                    // this.setState({genreMovies: movieRows});
+                    // console.log(movie.links__tmdbid);
+                    let url = '/movie/' + movie.links__tmdbid + '?api_key=' + this.apiKey;
+                    axios.get(url)
+                        .then(res => {
+                            console.log(res);
+                            result.push(res);
+                            console.log(count);
+                            if (count >= data.results.length - 1) {
+                                const movieRows = this.getMovieRows(row, result, user);
+                                this.setState({genreMovies: movieRows});
+                            }
+                            count++;
+                        }).catch(error => {
+                        count++;
+                        console.log(error);
+                    });
+                });
             }).catch((err) => {
             console.log(err);
         });
@@ -193,11 +214,11 @@ class LandingPage extends Component {
                             axios.get(url)
                                 .then(res => {
                                     result.push(res);
-                                    count++;
                                     if (count >= data.results.length - 1) {
                                         const movieRows = this.getMovieRows(row, result, user);
                                         this.setState({recommendation: movieRows});
                                     }
+                                    count++;
                                 }).catch(error => {
                                 count++;
                                 console.log(error);
@@ -237,7 +258,7 @@ class LandingPage extends Component {
 
         // const {location: {state: {selectedValues}}} = this.props;
         //console.log(this.state.movies, 'movies')
-
+        console.log(this.state.genreMovies);
         return (
 
             <div className="movieRow">
@@ -253,8 +274,6 @@ class LandingPage extends Component {
                     <br/><br/>
                 </div>
                 <div className="movieRow_container">
-                    {this.state. genreMovies, 'movies genres'}
-
                     {this.state.recommendation}
                 </div>
                 <h1 className="movieRow_heading">Top Rated</h1>
@@ -268,6 +287,11 @@ class LandingPage extends Component {
 
                 <div className="movieRow_container">
                     {this.state.topRatedRow}
+                </div>
+
+                <h1 className="movieRow_heading">Cold Start</h1>
+                <div className="movieRow_container">
+                    {this.state. genreMovies}
                 </div>
 
 
