@@ -43,10 +43,10 @@ class LandingPage extends Component {
 
     componentDidMount() {
         console.log('i am mounted');
-        console.log(this.props);
+        console.log(this.props.location.state);
         this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${localStorage.getItem('id')}`}, this.getRecommendation);
         this.getTopRated();
-        if(this.props.location.state !== undefined) {
+        if(this.props.location.state.selectedValues !== undefined) {
             this.getGenreMovies();
         }
     }
