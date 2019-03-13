@@ -20,7 +20,7 @@ class LandingPage extends Component {
       console.log('i am mounted')
       this.getTopRated();
     this.getRecommendation();
-    this.getGenreMovies()
+    // this.getGenreMovies()
   }
 
 
@@ -47,32 +47,32 @@ class LandingPage extends Component {
 
 
 
-    getGenreMovies = () => {
-        const row = 'movies';
-    let result = [];
-    //const user = this.props.location.state.user;
-    const user = 1;
-      const {location: {state: {selectedValues}}} = this.props;
-      console.log(selectedValues)
-          let url = [];
-            Object.keys(selectedValues).map((gen) => {
-                url.push('&gen=' + gen);
-            });
-       const api = 'http://127.0.0.1:8000/api/genres?' + url;
-    fetch(api)
-        .then((result) => {
-            return result.json();
-        })
-        .then((data) => {
-           console.log(data)
-            result.push(data);
-             const movieRows = this.getMovieRows(row, result, user);
-            this.setState({genreMovies: movieRows});
-             result.splice(3, 1)
-        }).catch((err) => {
-            console.log(err);
-        });
-  }
+  //   getGenreMovies = () => {
+  //       const row = 'movies';
+  //   let result = [];
+  //   //const user = this.props.location.state.user;
+  //   const user = 1;
+  //     const {location: {state: {selectedValues}}} = this.props;
+  //     console.log(selectedValues)
+  //         let url = [];
+  //           Object.keys(selectedValues).map((gen) => {
+  //               url.push('&gen=' + gen);
+  //           });
+  //      const api = 'http://127.0.0.1:8000/api/genres?' + url;
+  //   fetch(api)
+  //       .then((result) => {
+  //           return result.json();
+  //       })
+  //       .then((data) => {
+  //          console.log(data)
+  //           result.push(data);
+  //            const movieRows = this.getMovieRows(row, result, user);
+  //           this.setState({genreMovies: movieRows});
+  //            result.splice(3, 1)
+  //       }).catch((err) => {
+  //           console.log(err);
+  //       });
+  // }
 
   /**
    * Send request for movies that are top rated
@@ -147,6 +147,7 @@ class LandingPage extends Component {
                         let url = '/movie/' + value + '?api_key=' + this.apiKey;
                         axios.get(url)
                         .then(res => {
+                            console.log(res);
                             result.push(res);
                             count++;
                             if(count >= data.length-1){
@@ -180,7 +181,7 @@ class LandingPage extends Component {
                  <h1> Welcome </h1>
                     <h1 className="movieRow_heading">Top Picks for you</h1>
                     <div className="movieRow_container">
-                        {this.state. genreMovies, 'movies genres'}
+                        {/*{this.state. genreMovies, 'movies genres'}*/}
 
                         {this.state.recommendation}
                     </div>
