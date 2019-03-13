@@ -25,7 +25,7 @@ def checkToken(request, token):
 
 class ListTitles(generics.ListCreateAPIView):
     queryset = Titles.objects.all()
-    pagination_class = None
+    # pagination_class = None
     serializer_class = TitlesSerializer
 
 
@@ -37,10 +37,16 @@ class ShowGenres(generics.RetrieveUpdateDestroyAPIView):
 
 @api_view(['GET'])
 def showTopRated(request):
-    getMID = Titles.objects.values_list('movieid', flat=True).annotate(avg_rating=Avg('ratings__rating')).annotate(sum_rating=Sum('ratings__rating')).order_by(F('sum_rating').desc(nulls_last=True))[:15]
-    queryset = Links.objects.filter(movieid__in=list(getMID)).values('tmdbid')
-    serializer = RatingsSerializer(queryset, many=True)
-    return Response(serializer.data)
+    # getMID = Titles.objects.values_list('movieid', flat=True).annotate(avg_rating=Avg('ratings__rating')).annotate(sum_rating=Sum('ratings__rating')).order_by(F('sum_rating').desc(nulls_last=True))
+    # queryset = Links.objects.filter(movieid__in=list(getMID)).values('tmdbid')
+    queryset = Links.objects.select_related('movieid').annotate(avg_rating=Avg('movieid__ratings__rating')).values('tmdbid').annotate(sum_rating=Sum('movieid__ratings__rating')).order_by(F('sum_rating').desc(nulls_last=True))
+    # serializer = RatingsSerializer(queryset, many=True)
+    paginator = PageNumberPagination()
+    paginator.page_size = 6
+    result_page = paginator.paginate_queryset(queryset, request)
+    serializer = RatingsSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
+    # return Response(serializer.data)
 
 @api_view(['GET'])
 def showSearch(request):
@@ -82,14 +88,14 @@ def register(request):
        if Users.objects.filter(email=email).exists():
            return Response("Email already in use", status=status.HTTP_406_NOT_ACCEPTABLE)
        elif Users.objects.filter(username=username).exists():
-           return Response(str(type(password)), status=status.HTTP_406_NOT_ACCEPTABLE)
+           return Response("Username already in use", status=status.HTTP_406_NOT_ACCEPTABLE)
        else:
            # hashPass = make_password(password, salt=None, hasher='pbkdf2_sha256')
            hashPass = pbkdf2_sha256.hash(password);
            queryset = str(Users.objects.values('userid').last().get("userid"))
            uid = int(queryset) + 1
            Users.objects.create(userid=str(uid), username=username, password=hashPass, email=email)
-           return Response("success", status=status.HTTP_201_CREATED)
+           return Response("Success", status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
 def rate(request, m, u, r):
@@ -137,11 +143,16 @@ def AverageRating(request, tmdbid):
 def getRecommendation(request, u):
     #queryset = Links.objects.raw('SELECT l.movieid, l.tmdbid FROM link l JOIN recommendations r ON l.movieid = r.movieid'
     #                             ' WHERE userid = %s ORDER BY r.rating DESC', [u])[:20]
-    queryset = Links.objects.raw(' SELECT l.tmdbid, l.movieid FROM link l JOIN recommendations r ON '
+    queryset = list(Links.objects.raw(' SELECT l.tmdbid, l.movieid FROM link l JOIN recommendations r ON '
                                  ' l.movieid = r.movieid WHERE r.userid = %s AND r.movieid NOT IN '
-                                 '(SELECT movieid FROM ratings rt WHERE rt.userid = %s) ORDER BY r.rating DESC', [u, u])[:20]
-    serializer_class = RatingsSerializer(queryset, many=True)
-    return Response(serializer_class.data)
+                                 '(SELECT movieid FROM ratings rt WHERE rt.userid = %s) ORDER BY r.rating DESC', [u, u]))
+    # serializer_class = RatingsSerializer(queryset, many=True)
+    paginator = PageNumberPagination()
+    paginator.page_size = 6
+    result_page = paginator.paginate_queryset(queryset, request)
+    serializer = RatingsSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
+    # return Response(serializer_class.data)
 
 @api_view(['POST'])
 def login(request):
@@ -187,3 +198,8 @@ def getGenres(request):
     serializer = TitlesSerializer(queryset, many=True)
     return Response(serializer.data)
 
+
+@api_view(['GET'])
+def getNumMovies(request, u):
+    query = Ratings.objects.filter(pk=u).count()
+    return Response(query)
