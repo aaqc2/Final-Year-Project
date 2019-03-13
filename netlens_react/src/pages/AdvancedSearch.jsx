@@ -75,10 +75,18 @@ class AdvancedSearch extends Component {
                     axios.get(url)
                         .then(res => {
                             result.push(res);
-                            list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td>" +
-                                "<td>" + res.data.original_title + "</td>" +
+                            if(res.data.original_language !== "en") {
+                                list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td>" +
+                                "<td><a href='/info/" + res.data.id + "'>" + res.data.title + " (" + res.data.original_title + ")" +"</td>" +
                                 "<td style='display:none;'>" + res.data.release_date + "</td>" +
                                 "<td style='display:none;'>" + res.data.vote_average + "</td></tr>";
+                            }
+                            else {
+                                list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td>" +
+                                "<td><a href='/info/" + res.data.id + "'>" + res.data.original_title + "</a></td>" +
+                                "<td style='display:none;'>" + res.data.release_date + "</td>" +
+                                "<td style='display:none;'>" + res.data.vote_average + "</td></tr>";
+                            }
                             // console.log(list);
                             document.getElementById('movieList').insertAdjacentHTML('beforeend', list);
                         }).catch(error => {
@@ -238,10 +246,18 @@ class AdvancedSearch extends Component {
                     axios.get(url)
                         .then(res => {
                             result.push(res);
-                            list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td>" +
-                                "<td>" + res.data.original_title + "</td>" +
+                            if(res.data.original_language !== "en") {
+                                list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td>" +
+                                "<td><a href='/info/" + res.data.id + "'>" + res.data.title + " (" + res.data.original_title + ")" +"</td>" +
+                                "<td style='display:none;'>" + res.data.release_date + "</a></td>" +
+                                "<td style='display:none;'>" + res.data.vote_average + "</td></tr>";
+                            }
+                            else {
+                                list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td>" +
+                                "<td><a href='/info/" + res.data.id + "'>" + res.data.original_title + "</a></td>" +
                                 "<td style='display:none;'>" + res.data.release_date + "</td>" +
                                 "<td style='display:none;'>" + res.data.vote_average + "</td></tr>";
+                            }
                             // console.log(list);
                             document.getElementById('movieList').insertAdjacentHTML('beforeend', list);
                         }).catch(error => {
@@ -416,7 +432,7 @@ class AdvancedSearch extends Component {
                     {this.state.hasGenrePrevious && this.state.genrePage && <button className="btn btn-sm btn-primary"
                                                                                     onClick={this.handlePreviousGenreClick}>Previous</button>}
                     {this.state.hasGenreNext && this.state.genrePage &&
-                    <button className="btn btn-sm btn-primary" className="nextButton"
+                    <button className="nextButton btn btn-sm btn-primary"
                             onClick={this.handleNextGenreClick}>Next</button>}
                     <table id="movieList"></table>
                 </div>
