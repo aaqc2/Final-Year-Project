@@ -6,17 +6,30 @@ import { checkToken } from "../components/authenticateToken";
 
 
 class UserProfile extends Component {
-
-    apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
-
-    /** Hold rated list movie row in an array */
-    state = {
+    constructor(props) {
+        super(props);
+        /** Hold rated list movie row in an array */
+        this.state = {
         ratedList: [],
         //checkToken: " "
+        user: localStorage.getItem('id'),
+        userRatedApi: '',
+        hasUserRatedNext: false,
+        hasUserRatedPrevious: false,
+        nextUserRatedApi: '',
+        prevUserRatedApi: '',
+        };
+
+        this.handlePreviousClick = this.handlePreviousClick.bind(this);
+        this.handleNextClick = this.handleNextClick.bind(this);
     }
+    apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
+
+
 
     componentWillMount() {
-       this.getUserRating();
+       this.setState({userRatedApi:`http://127.0.0.1:8000/api/getUser/${this.state.user}`},this.getUserRating);
+       // this.getUserRating();
     }
 
     check() {
@@ -121,26 +134,25 @@ class UserProfile extends Component {
         let result = [];
         let link = [];
         let count = 0;
-        const user = localStorage.getItem('id');
+        // const user = localStorage.getItem('id');
         //const user = this.props.location.state.user;
-        const api = 'http://127.0.0.1:8000/api/getUser/'+user;
+        // const api = 'http://127.0.0.1:8000/api/getUser/'+user;
 
-
-        fetch(api)
+        fetch(this.state.userRatedApi)
             .then((result) => {
 
                 return result.json();
             })
             .then((data) => {
-                data.map((id) => {
+                data.results.map((id) => {
                     Object.entries(id).forEach(([key, value]) => {
                         let url = '/movie/' + value + '?api_key=' + this.apiKey;
                         axios.get(url)
                             .then(res => {
                                 result.push(res);
                                 link.push(url);
-                                if (count >= data.length - 1) {
-                                    const movieRows = this.getMovieRows(result, link, user);
+                                if (count >= data.results.length - 1) {
+                                    const movieRows = this.getMovieRows(result, link, this.state.user);
                                     this.setState({ratedList: movieRows});
                                 }
                                 count++;
@@ -148,11 +160,30 @@ class UserProfile extends Component {
                             console.log(error);
                         })
                     });
-                })
+                });
+                console.log(data);
+                if (data.next !== null) {
+                    this.setState({hasUserRatedNext: true, nextUserRatedApi: data.next});
+                } else {
+                    this.setState({hasUserRatedNext: false, nextUserRatedApi: ''});
+                }
+                if (data.previous !== null) {
+                    this.setState({hasUserRatedPrevious: true, previousUserRatedApi: data.previous});
+                } else {
+                    this.setState({hasUserRatedPrevious: false, previousUserRatedApi: ''});
+                }
             }).catch((err) => {
             console.log(err);
         });
 
+    };
+
+    handleNextClick() {
+        this.setState({userRatedApi: this.state.nextUserRatedApi}, this.getUserRating);
+    }
+
+    handlePreviousClick() {
+        this.setState({userRatedApi: this.state.previousUserRatedApi}, this.getUserRating);
     }
 
 
@@ -210,12 +241,16 @@ class UserProfile extends Component {
                                 </ul>
                                 <div className="tab-content">
                                     <div className="tab-pane active" id="tab1">
+                                        <div id="Buttons">
+                                                {this.state.hasUserRatedPrevious && <button className="btn btn-sm btn-primary"
+                                                                     onClick={this.handlePreviousClick}>Previous</button>}
+                                                {this.state.hasUserRatedNext && <button className="nextButton btn btn-sm btn-primary"
+                                                                 onClick={this.handleNextClick}>Next</button>}
+                                                <br/><br/>
+                                        </div>
                                         <div className="ratedlist-container">
                                             {this.state.ratedList}
-
                                         </div>
-
-
                                     </div>
                                     {/*/tab-pane*/}
 

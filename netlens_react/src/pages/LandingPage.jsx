@@ -43,12 +43,11 @@ class LandingPage extends Component {
 
     componentDidMount() {
         console.log('i am mounted');
-        console.log(this.props.location.state);
         this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${localStorage.getItem('id')}`}, this.getRecommendation);
         this.getTopRated();
         if(this.props.state !== undefined) {
             if(this.props.location.state.selectedValues !== undefined) {
-            this.getGenreMovies();
+                this.getGenreMovies();
             }
         }
     }
@@ -120,7 +119,7 @@ class LandingPage extends Component {
             }).catch((err) => {
             console.log(err);
         });
-    }
+    };
 
 
 
@@ -207,6 +206,7 @@ class LandingPage extends Component {
                 return result.json();
             })
             .then((data) => {
+                console.log(data.results);
                 data.results.map((id) => {
                     Object.entries(id).forEach(([key, value]) => {
                         if (value == null) {
@@ -291,7 +291,7 @@ class LandingPage extends Component {
                     {this.state.topRatedRow}
                 </div>
 
-                <h1 className="movieRow_heading">Cold Start</h1>
+                {/*<h1 className="movieRow_heading">Cold Start</h1>*/}
                 <div className="movieRow_container">
                     {this.state. genreMovies}
                 </div>

@@ -121,8 +121,12 @@ def rate(request, m, u, r):
 @api_view(['GET'])
 def getUser(request, u):
     queryset = Links.objects.raw('SELECT l.movieid, l.tmdbid FROM link l JOIN ratings r ON r.movieid = l.movieid WHERE r.userid = %s ORDER BY r.timestamp DESC', [u]) [:20]
-    serializer_class = RatingsSerializer(queryset, many=True)
-    return Response(serializer_class.data)
+    # serializer_class = RatingsSerializer(queryset, many=True)
+    paginator = PageNumberPagination()
+    paginator.page_size = 4
+    result_page = paginator.paginate_queryset(queryset, request)
+    serializer = RatingsSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 @api_view(['GET'])
 def getUserRating(request, u, tmdbId):
