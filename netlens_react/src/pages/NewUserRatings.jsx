@@ -68,7 +68,7 @@ class NewUserRatings extends Component {
 
         }
         return this.props.history.push({
-            pathname: '/LandingPage',
+            pathname: '/ColdStartRatings',
             state:{selectedValues : allSelected}
         });
     };
