@@ -18,6 +18,7 @@ class UserProfile extends Component {
         hasUserRatedPrevious: false,
         nextUserRatedApi: '',
         prevUserRatedApi: '',
+        numberOfMoviesRated: 0
         };
 
         this.handlePreviousClick = this.handlePreviousClick.bind(this);
@@ -161,7 +162,7 @@ class UserProfile extends Component {
                         })
                     });
                 });
-                console.log(data);
+                this.setState({numberOfMoviesRated: data.count});
                 if (data.next !== null) {
                     this.setState({hasUserRatedNext: true, nextUserRatedApi: data.next});
                 } else {
@@ -218,7 +219,7 @@ class UserProfile extends Component {
                                 </div>
                                 <ul className="list-group">
                                     <li className="list-group-item">Activity</li>
-                                    <li className="list-group-item text-right"><span className="pull-left"><strong>Movies rated</strong></span> 125
+                                    <li className="list-group-item text-right"><span className="pull-left"><strong>Movies rated</strong></span> {this.state.numberOfMoviesRated}
                                     </li>
                                     <li className="list-group-item text-right"><span
                                         className="pull-left"><strong>Comments</strong></span> 13
