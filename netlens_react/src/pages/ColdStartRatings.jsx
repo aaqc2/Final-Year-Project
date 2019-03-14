@@ -233,7 +233,7 @@ class ColdStartRatings extends Component {
                 {/*</div>*/}
             {/*</div>*/}
 
- <button className = "btn btn-sm btn-primary" onClick={this.handleSubmit}> Next </button>
+ {/*<button className = "btn btn-sm btn-primary" onClick={this.handleSubmit}> Next </button>*/}
             </div>
             </div>
 

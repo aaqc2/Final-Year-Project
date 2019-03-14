@@ -298,7 +298,7 @@ class NewUserRatings extends Component {
                                         </tr>
                                        </tbody>
                                     </table>
-                                       {/*<button className = "newuser-submit" onClick={this.handleSubmit}> Next </button>*/}
+                                       <button className = "newuser-submit" onClick={this.handleSubmit}> Next </button>
                                 </form>
                            </div>
                 </div>
