@@ -205,7 +205,10 @@ class NewUserRatings extends Component {
       console.log(this.props, 'checkedboxs test')
         return (
             <div className="newuserrating-container">
-                <Navbar/>
+               <header className="header">
+                <h1>TheMovieOracle</h1>
+                <h5>personalised movie recommendations</h5>
+            </header>
 
                 <div className="newuser-card"> <br/> <br/>
                     <h1> Welcome </h1>
@@ -295,7 +298,7 @@ class NewUserRatings extends Component {
                                         </tr>
                                        </tbody>
                                     </table>
-                                       <button className = "newuser-submit" onClick={this.handleSubmit}> Next </button>
+                                       {/*<button className = "newuser-submit" onClick={this.handleSubmit}> Next </button>*/}
                                 </form>
                            </div>
                 </div>

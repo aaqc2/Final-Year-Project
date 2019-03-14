@@ -253,7 +253,7 @@ p.big {
        overflow-y: hidden;
        overflow-x: scroll;
        display: flex;
-       overflow: -moz-scrollbars-horizontal;
+       /*overflow: -moz-scrollbars-horizontal;*/
        /* grid-template-columns: repeat(20, 1fr); */
        column-gap: 1;
 
@@ -339,16 +339,17 @@ p.big {
        padding-top: rem;
        font-family: Arial, Helvetica, sans-serif;
        font-size: 20px;
+
 }
     
   
   .movieRow_container { 
-       overflow-y: hidden;
+       /*overflow-y: hidden;*/
        transition: transform 450ms;
-       overflow-x: scroll;
+       /*overflow-x: scroll;*/
        display: flex;
       
-       overflow: -moz-scrollbars-horizontal; 
+       /*overflow: -moz-scrollbars-horizontal;*/
        /* grid-template-columns: repeat(20, 1fr); */
        column-gap: 1;
   }
@@ -372,6 +373,8 @@ p.big {
 
 .movielink{
       color: #FFFFFF;
+     font-weight: bold;
+     /*font-size: 20px;*/
 
 }
   

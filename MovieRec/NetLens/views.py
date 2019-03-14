@@ -42,7 +42,7 @@ def showTopRated(request):
     queryset = Links.objects.select_related('movieid').annotate(avg_rating=Avg('movieid__ratings__rating')).values('tmdbid').annotate(sum_rating=Sum('movieid__ratings__rating')).order_by(F('sum_rating').desc(nulls_last=True))
     # serializer = RatingsSerializer(queryset, many=True)
     paginator = PageNumberPagination()
-    paginator.page_size = 6
+    paginator.page_size = 8
     result_page = paginator.paginate_queryset(queryset, request)
     serializer = RatingsSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
@@ -196,7 +196,7 @@ def getGenres(request):
         q |= Q(genre__icontains=genre)
     queryset = Titles.objects.filter(q).select_related('links').values('links__tmdbid')
     paginator = PageNumberPagination()
-    paginator.page_size = 6
+    paginator.page_size = 8
     result_page = paginator.paginate_queryset(queryset, request)
     serializer = GenreSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
