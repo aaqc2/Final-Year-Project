@@ -3,14 +3,23 @@ from .models import Titles, Ratings, Links, Users
 
 
 class TitlesSerializer(serializers.ModelSerializer):
+    links__tmdbid = serializers.IntegerField()
     class Meta:
         fields = (
             'movieid',
             'title',
             'genre',
+            'links__tmdbid',
         )
         model = Titles
 
+class GenreSerializer(serializers.ModelSerializer):
+    links__tmdbid = serializers.IntegerField()
+    class Meta:
+        fields = (
+            'links__tmdbid',
+        )
+        model = Titles
 
 class RatingsSerializer(serializers.ModelSerializer):
     class Meta:

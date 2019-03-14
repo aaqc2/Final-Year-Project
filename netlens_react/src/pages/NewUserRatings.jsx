@@ -67,9 +67,11 @@ class NewUserRatings extends Component {
              return alert ('You should select at least 1 genre!')
 
         }
-        return this.props.history.push('/LandingPage', {selectedValues : allSelected})
-
-        }
+        return this.props.history.push({
+            pathname: '/ColdStartRatings',
+            state:{selectedValues : allSelected}
+        });
+    };
 
 
 
@@ -217,7 +219,7 @@ class NewUserRatings extends Component {
 
                                         <tr>
                                             <td>
-                                                <div>
+                                                <div >
                                                     <input type="checkbox"
                                                            name="action"
                                                            onChange={this.changeCheckbox}
@@ -230,9 +232,9 @@ class NewUserRatings extends Component {
                                              <td>
                                                  <div>
                                                     <input type="checkbox"
-                                                           name="animated"
+                                                           name="animation"
                                                            onChange={this.changeCheckbox}
-                                                           checked = {this.state.checkedOptions.animated || false}
+                                                           checked = {this.state.checkedOptions.animation || false}
                                                     />
                                                     <label  htmlFor="Animated">Animated</label>
                                                     <div className="movie-genres"> {this.state.animatedMovieRow} </div>

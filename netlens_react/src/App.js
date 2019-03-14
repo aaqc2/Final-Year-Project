@@ -10,7 +10,7 @@ import Signin from './pages/Signin.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
 import Footer from './components/Footer.jsx';
 import NewUserRatings from "./pages/NewUserRatings";
-
+import ColdStartRatings from "./pages/ColdStartRatings";
 
 class App extends Component {
   render() {
@@ -19,6 +19,7 @@ class App extends Component {
         <div>
           <Route path="/Signin" component={Signin}/>
           <Route path="/NewUserRatings" component={NewUserRatings}/>
+           <Route path="/ColdStartRatings" component={ColdStartRatings}/>
           <Route path="/RegisterPage" component={RegisterPage}/> 
           <Route exact path="/LandingPage" component={LandingPage}/>
           <Route exact path="/info/:id" render={(props) => (<MovieInfo {...props} isAuthed={true} />)} />

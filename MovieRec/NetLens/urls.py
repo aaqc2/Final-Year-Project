@@ -18,4 +18,5 @@ urlpatterns = [
     path('genres/', views.getGenres),
     path('check/<str:token>', views.checkToken),
     path('titleandgenre/', views.showSearchAndGenre),
+    path('getNumMovies/<int:u>', views.getNumMovies)
 ]

@@ -51,7 +51,14 @@ class MovieInfo extends Component {
                     return result.json();
                 })
                 .then((data) => {
-                    title = data.original_title;
+                    console.log(data);
+
+                    if(data.original_language !== "en") {
+                        title = data.title + " (" + data.original_title + ")";
+                    }
+                    else {
+                         title = data.title
+                    }
                     console.log(title);
                     document.getElementById('movie_title').innerHTML = title;
 
