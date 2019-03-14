@@ -53,6 +53,7 @@ def showSearch(request):
     title = request.GET['q']
     queryset = Titles.objects.select_related('links').filter(title__icontains=title).values('title', 'genre', 'links__tmdbid')
     paginator = PageNumberPagination()
+    paginator.page_size = 8
     result_page = paginator.paginate_queryset(queryset, request)
     serializer = SearchSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
@@ -66,6 +67,7 @@ def showSearchAndGenre(request):
         q |= Q(genre__contains=genre)
     queryset = Titles.objects.select_related('links').filter(q, title__icontains=title).values('title', 'genre', 'links__tmdbid')
     paginator = PageNumberPagination()
+    paginator.page_size = 8
     result_page = paginator.paginate_queryset(queryset, request)
     serializer = SearchSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
