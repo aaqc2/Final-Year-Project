@@ -210,13 +210,14 @@ class ColdStartRatings extends Component {
             <div className="coldstart-container">
                  < Navbar/>
                 <div className='movieRow'>
+                    <br/>
                          <h1> Welcome </h1>
-                <h2>To receive accurate recommendation, we need to understand your movie preferences.</h2>
-                <h2> Provide ratings for the movies below </h2>
+                <h3>To receive accurate recommendation, we need to understand your movie preferences.</h3>
+                <h3> Provide ratings for the movies below </h3>
 
                   <h1 className="movieRow_heading">You might like...</h1>
                 <div className="movieRow_container">
-                    {this.state. genreMovies}
+                    {this.state.genreMovies}
                 </div>
 
                 {/*<h1 className="movieRow_heading">Top Rated</h1>*/}

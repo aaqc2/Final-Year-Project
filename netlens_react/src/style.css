@@ -318,12 +318,13 @@ p.big {
     position: absolute;
      /*bottom: 0;*/
     width: 100%;
+    height: 40px;
     line-height: 40px;
     text-align: center;
     color: white;
     background-color: #221f1f;
-     padding: 2px;
-    /*margin-bottom: 0px;*/
+
+    margin-bottom: 0;
     /*position: fixed;*/
 }
 
@@ -333,6 +334,9 @@ p.big {
     /* grid-column: 2 / 13; */
     color: #fff;
     margin-top: 100px;
+    margin: auto;
+  width: 80%;
+    padding: 10px;
   }
 
   .movieRow_heading {
@@ -431,7 +435,11 @@ p.big {
   input{
     width: 100%
   }
-  
+
+
+  .register-link{
+      color:red;
+  }
   
   .col-md-12{
   text-align: center;
@@ -562,5 +570,4 @@ td {
   padding: 15px;
 
 }
-
 

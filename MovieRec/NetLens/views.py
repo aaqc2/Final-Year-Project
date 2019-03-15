@@ -154,7 +154,7 @@ def getRecommendation(request, u):
                                  '(SELECT movieid FROM ratings rt WHERE rt.userid = %s) ORDER BY r.rating DESC', [u, u]))
     # serializer_class = RatingsSerializer(queryset, many=True)
     paginator = PageNumberPagination()
-    paginator.page_size = 6
+    paginator.page_size = 8
     result_page = paginator.paginate_queryset(queryset, request)
     serializer = RatingsSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
