@@ -62,9 +62,10 @@ for u in users:
 	subset = predictions.where(predictions.userid == u)
 	evaluations.append(evaluator.evaluate(subset))
 
+# Insert the rmse value and other information about the performance
+# of the model for individual users into the database.
 df = spark.createDataFrame(zip(users, evaluations, ratings), schema=['userid', 'rmse', 'movies_rated']).collect()
 
-# Insert into database
 for row in df:
 	user = int(row.userid)
 	rmse = float(row.rmse)
