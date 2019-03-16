@@ -35,16 +35,55 @@ model = tvs.fit(training)
 tuned_model = model.bestModel
 predictions = tuned_model.transform(testing)
 
-# Calculate the RMSE of the recommendations model on the training data.
-rmse = evaluator.evaluate(predictions)
+# Get the size of the dataset.
+query = 'SELECT COUNT(*) FROM ratings;'
+pdf = pd.read_sql_query(query, conn)
+df = spark.createDataFrame(pdf).collect()
 
-# Insert the RMSE value and the timestamp into the RDS.
+for row in df:
+	count = int(row[0])
+
+# Get the total number of movies a user has rated.
+users = [1, 613, 614, 615, 616, 617, 628, 414]
+ratings = []
+
+for u in users:
+	query = 'SELECT COUNT(*) FROM ratings where userid = %s' % str(u)
+	pdf = pd.read_sql_query(query, conn)
+	df = spark.createDataFrame(pdf).collect()
+	for row in df:
+		rated = int(row[0])
+		ratings.append(rated)
+
+#Generate RMSE values for each user in the users list.
+evaluations = []
+
+for u in users:
+	subset = predictions.where(predictions.userid == u)
+	evaluations.append(evaluator.evaluate(subset))
+
+# Insert the rmse value and other information about the performance
+# of the model for individual users into the database.
+df = spark.createDataFrame(zip(users, evaluations, ratings), schema=['userid', 'rmse', 'movies_rated']).collect()
+
+for row in df:
+	user = int(row.userid)
+	rmse = float(row.rmse)
+	total = int(row.movies_rated)
+	print(str(user) + ' ' + str(rmse) + ' ' + str(total))
+	query = "INSERT INTO individual_rmse_values VALUES (DEFAULT, current_timestamp, %s, %s, %s, %s);" % (str(user), str(rmse), str(total), str(count))
+	cur.execute(query)
+	conn.commit()
+
+# Calculate the RMSE of the recommendations model on the training 
+# and then insert the RMSE value and the timestamp into the RDS.
+rmse = evaluator.evaluate(predictions)
 query = "INSERT INTO rmseSmallDataset VALUES (DEFAULT, %s, CURRENT_TIMESTAMP)" % str(rmse)
 cur.execute(query)
 conn.commit()
 
 # Generate movie recommendations for all users.
-mr = tuned_model.recommendForAllUsers(100)
+mr = tuned_model.recommendForAllUsers(200)
 mr.cache()
 df = mr.withColumn('recommendations', psf.explode('recommendations')).select(
         'userid',
@@ -52,7 +91,7 @@ df = mr.withColumn('recommendations', psf.explode('recommendations')).select(
         psf.col('recommendations.rating')
     ).toPandas()
 
-# Create the recommendations table.
+# Create the recommendations relation.
 cur.execute("CREATE TABLE IF NOT EXISTS recommendations (userid INT NOT NULL, movieid INT NOT NULL, rating NUMERIC(4,3), PRIMARY KEY (userid, movieid), FOREIGN KEY (userid) REFERENCES users (userid), FOREIGN KEY (movieid) REFERENCES titles (movieid));")
 conn.commit()
 
