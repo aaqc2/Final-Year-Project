@@ -63,49 +63,6 @@ class UserProfile extends Component {
     }
 
 
-    /**
-     * Send request for movies that have been rated by the user
-     */
-    // getUserRating = () => {
-    //     let result = [];
-    //     let link = [];
-    //     let count = 0;
-    //
-    //     //const user = this.props.location.state.user;
-    //     const user = localStorage.getItem('id');
-    //     const api = `http://127.0.0.1:8000/api/getUser/${user}`;
-    //     fetch(api)
-    //         .then((result) => {
-    //
-    //             return result.json();
-    //
-    //         })
-    //         .then((response) => {
-    //             return response.json();
-    //         })
-    //         .then((data) => {
-    //             console.log(data);
-    //             if (data.token != null) {
-    //
-    //                 // let id = data.userid;
-    //                 // data.map((item) => {
-    //                 //   id = item.userid
-    //                 //   console.log(id);
-    //                 // });
-    //                 // this.props.history.push({
-    //                 //     pathname: '/LandingPage',
-    //                 //     state: {user: id}
-    //                 // })
-    //             } else {
-    //                 // this.setState({msg: data});
-    //             }
-    //
-    //         })
-    //         .catch((error) => {
-    //             console.error(error);
-    //         });
-    // }
-
     /** Extract our movie data and pass it to our MovieGenre Component. */
     getMovieRows = (res, url, user) => {
         const results = res;

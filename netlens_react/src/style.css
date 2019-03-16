@@ -1,5 +1,5 @@
 body {
-    padding-top: 50px;
+    /*padding-top: 50px;*/
     position: relative;
     background: #221f1f;
 }
@@ -315,8 +315,8 @@ p.big {
 /* FOOTER */
 
 .footer {
-    position: absolute;
-     /*bottom: 0;*/
+    /*position: absolute;*/
+     bottom: 0;
     width: 100%;
     height: 40px;
     line-height: 40px;
@@ -335,7 +335,7 @@ p.big {
     color: #fff;
     margin-top: 100px;
     margin: auto;
-  width: 80%;
+    width: 100%;
     padding: 10px;
   }
 
@@ -408,7 +408,7 @@ p.big {
 
   .wrapper{
     background: linear-gradient(90deg, #999999 0%,  #737373 50%, #4A4A4A 100%);;
-    height:30%;
+    height:40%;
     background-size: cover;
     background-image: url("./images/landingPage.png");
     background-repeat: no-repeat, repeat;
@@ -445,8 +445,7 @@ p.big {
   text-align: center;
   position: absolute;
   color: #ddd;
-  
-  
+
   }
   
   .col-md-12 img {
@@ -529,9 +528,7 @@ p.big {
      overflow-y: hidden;
        transition: transform 450ms;
        display: flex;
-       height: 200px;
-
-
+       height: 150px;
 }
 
 .genreImages {

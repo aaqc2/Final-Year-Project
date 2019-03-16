@@ -268,6 +268,9 @@ class LandingPage extends Component {
 
                 <h1> Welcome </h1>
                 <h1 className="movieRow_heading">Top Picks for you</h1>
+                <div className="movieRow_container">
+                    {this.state.recommendation}
+                </div>
                 <div>
                     {this.state.hasRecommendationPrevious && <button className="btn btn-sm btn-primary"
                                                                      onClick={this.handlePreviousRecommendationClick}>Previous</button>}
@@ -275,10 +278,11 @@ class LandingPage extends Component {
                                                                  onClick={this.handleNextRecommendationClick}>Next</button>}
                     <br/><br/>
                 </div>
-                <div className="movieRow_container">
-                    {this.state.recommendation}
-                </div>
                 <h1 className="movieRow_heading">Top Rated</h1>
+
+                <div className="movieRow_container">
+                    {this.state.topRatedRow}
+                </div>
                 <div>
                     {this.state.hasTopRatedPrevious && <button className="btn btn-sm btn-primary"
                                                                onClick={this.handlePreviousTopRatedClick}>Previous</button>}
@@ -286,11 +290,6 @@ class LandingPage extends Component {
                                                            onClick={this.handleNextTopRatedClick}>Next</button>}
                     <br/><br/>
                 </div>
-
-                <div className="movieRow_container">
-                    {this.state.topRatedRow}
-                </div>
-
                 {/*<h1 className="movieRow_heading">Cold Start</h1>*/}
                 {/*<div className="movieRow_container">*/}
                     {/*{this.state. genreMovies}*/}
