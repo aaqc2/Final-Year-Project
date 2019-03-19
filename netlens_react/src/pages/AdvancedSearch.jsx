@@ -315,7 +315,12 @@ class AdvancedSearch extends Component {
                     // if (a.innerHTML.toLowerCase() > b.innerHTML.toLowerCase()) {
                     //     changePosition = true;
                     //     break;
-                    this.setState({orderby: 'title'}, this.getSearchQuery)
+                    if(this.state.genrePage) {
+                        this.setState({orderby: 'title'}, this.getFilter)
+                    }
+                    else {
+                        this.setState({orderby: 'title'}, this.getSearchQuery)
+                    }
                     // }
                 }
                 if (order === 'za') {
@@ -326,7 +331,13 @@ class AdvancedSearch extends Component {
                     //     break;
                     // }
                     document.getElementById('movieList').innerHTML = "";
-                    this.setState({orderby: '-title'}, this.getSearchQuery)
+                    if(this.state.genrePage) {
+                        this.setState({orderby: '-title'}, this.getFilter)
+                    }
+                    else {
+                        this.setState({orderby: '-title'}, this.getSearchQuery)
+                    }
+                    // this.setState({orderby: '-title'}, this.getSearchQuery)
                 }
                 // if (order === 'date') {
                 //     a = rows[i].getElementsByTagName("td")[2];
@@ -344,7 +355,13 @@ class AdvancedSearch extends Component {
                     //     break;
                     // }
                     document.getElementById('movieList').innerHTML = "";
-                    this.setState({orderby: '-avg_rating'}, this.getSearchQuery)
+                    if(this.state.genrePage) {
+                        this.setState({orderby: '-avg_rating'}, this.getFilter)
+                    }
+                    else {
+                        this.setState({orderby: '-avg_rating'}, this.getSearchQuery)
+                    }
+                    // this.setState({orderby: '-avg_rating'}, this.getSearchQuery)
                 }
             }
             if (changePosition) {
