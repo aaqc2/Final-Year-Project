@@ -1,11 +1,13 @@
 # cdfrom django.shortcuts import render
 from django.contrib.auth import authenticate, login
+from django.db import connection
 import jwt
 import json
+import operator
 from rest_framework.response import Response
 from rest_framework import generics, status
 from .models import Titles, Ratings, Users, Links, Recommendations
-from .serializers import TitlesSerializer, RatingsSerializer, SearchSerializer, RatingSerializer, UserRating, AverageRatingSerializer, UserLoginSerializer, GenreSerializer
+from .serializers import TitlesSerializer, RatingsSerializer, SearchSerializer, RatingSerializer, UserRating, AverageRatingSerializer, UserLoginSerializer, GenreSerializer, CustomRecSeralizer
 from rest_framework.decorators import api_view
 from django.db.models import Avg, F, Sum, Q
 from rest_framework.pagination import PageNumberPagination
@@ -14,6 +16,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from passlib.hash import pbkdf2_sha256
 from django.conf import settings
 from django.http import HttpResponse
+
 # Create your views here.
 
 def checkToken(request, token):
@@ -214,3 +217,43 @@ def getGenres(request):
 def getNumMovies(request, u):
     query = Ratings.objects.filter(pk=u).count()
     return Response(query)
+
+@api_view(['GET'])
+def getCustomRec(request, u):
+    cursor = connection.cursor()
+    query = ("SELECT SUM((CASE WHEN genre LIKE '%%Romance%%' THEN 1 ELSE 0 end) * r.rating) AS Romance, "
+                                    " SUM((CASE WHEN genre LIKE '%%Action%%' THEN 1 ELSE 0 end) * r.rating) AS Action,"
+                                    " SUM((CASE WHEN genre LIKE '%%Comedy%%' THEN 1 ELSE 0 end) * r.rating) AS Comedy,"
+                                    " SUM((CASE WHEN genre LIKE '%%Drama%%' THEN 1 ELSE 0 end) * r.rating) AS Drama,"
+                                    " SUM((CASE WHEN genre LIKE '%%Horror%%' THEN 1 ELSE 0 end) * r.rating) AS Horror,"
+                                    " SUM((CASE WHEN genre LIKE '%%Thriller%%' THEN 1 ELSE 0 end) * r.rating) AS Thriller,"
+                                    " SUM((CASE WHEN genre LIKE '%%Sci-Fi%%' THEN 1 ELSE 0 end) * r.rating) AS SciFi,"
+                                    " SUM((CASE WHEN genre LIKE '%%Romance%%' THEN 1 ELSE 0 end) * 5) AS RRomance,"
+                                    " SUM((CASE WHEN genre LIKE '%%Action%%' THEN 1 ELSE 0 end) * 5) AS RAction,"
+                                    " SUM((CASE WHEN genre LIKE '%%Comedy%%' THEN 1 ELSE 0 end) * 5) AS RComedy,"
+                                    " SUM((CASE WHEN genre LIKE '%%Drama%%' THEN 1 ELSE 0 end) * 5) AS RDrama,"
+                                    " SUM((CASE WHEN genre LIKE '%%Horror%%' THEN 1 ELSE 0 end) * 5) AS RHorror,"
+                                    " SUM((CASE WHEN genre LIKE '%%Thrille%%' THEN 1 ELSE 0 end) * 5) AS RThriller,"
+                                    " SUM((CASE WHEN genre LIKE '%%Sci-Fi%%' THEN 1 ELSE 0 end) * 5) AS RSciFi,"
+                                    " SUM((CASE WHEN GENRE LIKE '%%Romance%%' THEN 1 ELSE 0 end)) AS TRomance,"
+                                    " SUM((CASE WHEN GENRE LIKE '%%Action%%' THEN 1 ELSE 0 end)) AS TAction,"
+                                    " SUM((CASE WHEN GENRE LIKE '%%Comedy%%' THEN 1 ELSE 0 end)) AS TComedy,"
+                                    " SUM((CASE WHEN GENRE LIKE '%%Drama%%' THEN 1 ELSE 0 end)) AS TDrama,"
+                                    " SUM((CASE WHEN GENRE LIKE '%%Horror%%' THEN 1 ELSE 0 end)) AS THorror,"
+                                    " SUM((CASE WHEN GENRE LIKE '%%Thriller%%' THEN 1 ELSE 0 end)) AS TThriller,"
+                                    " SUM((CASE WHEN GENRE LIKE '%%Sci-Fi%%' THEN 1 ELSE 0 end)) AS TSciFi,"
+                                    " COUNT(*) AS total FROM titles t "
+                                    " JOIN ratings r ON t.movieid = r.movieid WHERE userid = %s;")
+    cursor.execute(query, [u])
+    results = cursor.fetchall()
+    data = {
+        "Romance": [(results[0][0]/results[0][7])*(results[0][14]/results[0][21])],
+        "Action": [(results[0][1] / results[0][8])*(results[0][15]/results[0][21])],
+        "Comedy": [(results[0][2] / results[0][9])*(results[0][16]/results[0][21])],
+        "Drama": [(results[0][3] / results[0][10])*(results[0][17]/results[0][21])],
+        "Horror": [(results[0][4] / results[0][11])*(results[0][18]/results[0][21])],
+        "Thriller": [(results[0][5] / results[0][12])*(results[0][19]/results[0][21])],
+        "Scifi": [(results[0][6] / results[0][13])*(results[0][20]/results[0][21])]
+    }
+    sortedList = sorted(data.items(), key=operator.itemgetter(1), reverse=True)
+    return Response(sortedList)
