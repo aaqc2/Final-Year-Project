@@ -220,24 +220,21 @@ class ColdStartRatings extends Component {
                     {this.state.genreMovies}
                 </div>
 
-                {/*<h1 className="movieRow_heading">Top Rated</h1>*/}
-                {/*<div>*/}
-                    {/*{this.state.hasTopRatedPrevious && <button className="btn btn-sm btn-primary"*/}
-                                                               {/*onClick={this.handlePreviousTopRatedClick}>Previous</button>}*/}
-                    {/*{this.state.hasTopRatedNext && <button className="nextButton btn btn-sm btn-primary"*/}
-                                                           {/*onClick={this.handleNextTopRatedClick}>Next</button>}*/}
-                    {/*<br/><br/>*/}
-                {/*</div>*/}
+                <h1 className="movieRow_heading">Top Rated</h1>
 
-                {/*<div className="movieRow_container">*/}
-                    {/*{this.state.topRatedRow}*/}
-                {/*</div>*/}
-            {/*</div>*/}
+                <div className="movieRow_container">
+                    {this.state.topRatedRow}
+                </div>
+                    <div>
+                    {this.state.hasTopRatedPrevious && <button className="btn btn-sm btn-primary"
+                                                               onClick={this.handlePreviousTopRatedClick}>Previous</button>}
+                    {this.state.hasTopRatedNext && <button className="nextButton btn btn-sm btn-primary"
+                                                           onClick={this.handleNextTopRatedClick}>Next</button>}
+                    <br/><br/>
+                </div>
 
- {/*<button className = "btn btn-sm btn-primary" onClick={this.handleSubmit}> Next </button>*/}
-            </div>
-            </div>
-
+                </div>
+                </div>
 
         );
     }
