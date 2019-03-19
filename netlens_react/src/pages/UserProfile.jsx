@@ -152,7 +152,7 @@ class UserProfile extends Component {
                             .then(res => {
                                 result.push(res);
                                 link.push(url);
-                                if (count >= data.results.length - 1) {
+                                if (count <= data.results.length - 1) {
                                     const movieRows = this.getMovieRows(result, link, this.state.user);
                                     this.setState({ratedList: movieRows});
                                 }
