@@ -13,17 +13,21 @@ class Navbar extends Component {
     render() {
         return (
             <nav className="navbar navbar-expand-md navbar-dark navbar-fixed-top">
-                <div className="container">
+                <div className="container d-flex flex-row align-items-center">
 
-                    <Link className="navbar-brand" to="/landingpage">TheMovieOracle</Link>
-                    <h5 className="slogan">personalised movie recommendations</h5>
+                        <div>
+                            <Link className="navbar-brand" to="/landingpage">TheMovieOracle</Link>
+                            <h5 className="slogan">personalised movie recommendations</h5>
+                        </div>
 
-                    <div className="mx-auto my-auto d-inline w-100">
-                        <SearchBar/>
-                    </div>
+                        <div className="mx-auto my-auto d-inline w-100">
+                            <SearchBar/>
+                        </div>
 
                     <Link className="btn btn-sm btn-primary" to="/advancedsearch" id="advanced_search">
                         Search</Link>
+
+
 
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"

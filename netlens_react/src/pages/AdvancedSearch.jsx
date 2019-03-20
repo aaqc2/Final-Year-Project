@@ -440,12 +440,12 @@ class AdvancedSearch extends Component {
                         </header>
                         <div className="filter-content">
                             <div className="card-body">
-                                <button className="btn btn-sm btn-danger"
-                                        onClick={() => this.sortResults('az')}>Sort A-Z
-                                </button>
-                                <button className="btn btn-sm btn-danger"
-                                        onClick={() => this.sortResults('za')}>Sort Z-A
-                                </button>
+                                {/*<button className="btn btn-sm btn-danger"*/}
+                                        {/*onClick={() => this.sortResults('az')}>Sort A-Z*/}
+                                {/*</button>*/}
+                                {/*<button className="btn btn-sm btn-danger"*/}
+                                        {/*onClick={() => this.sortResults('za')}>Sort Z-A*/}
+                                {/*</button>*/}
                                 <button className="btn btn-sm btn-danger"
                                         onClick={() => this.sortResults('date')}>Sort by release date
                                 </button>
