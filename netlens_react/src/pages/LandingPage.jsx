@@ -9,7 +9,6 @@ class LandingPage extends Component {
     apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
     constructor(props) {
         super(props);
-
         this.state = {
             userid: localStorage.getItem('id'),
             topRatedRow: [],
@@ -85,6 +84,8 @@ class LandingPage extends Component {
                             })
                     });
                 });
+
+
                 if (data.next !== null) {
                     this.setState({hasTopRatedNext: true, nextTopRatedApi: data.next});
                 } else {
@@ -100,6 +101,7 @@ class LandingPage extends Component {
         });
 
     };
+
 
     handleNextTopRatedClick() {
         this.setState({topRatedApi: this.state.nextTopRatedApi}, this.getTopRated);
@@ -156,17 +158,22 @@ class LandingPage extends Component {
     };
 
 
+
+    R
+
     render() {
         return (
-
             <div className="movieRow">
                 <Navbar/>
-
                 <h1> Welcome </h1>
+
+                {/* Render the recommendation list */}
                 <h1 className="movieRow_heading">Top Picks for you</h1>
                 <div className="movieRow_container">
                     {this.state.recommendation}
                 </div>
+
+                 {/* Render the paginator element to render the   */}
                 <div>
                     {this.state.hasRecommendationPrevious && <button className="btn btn-sm btn-primary"
                                                                      onClick={this.handlePreviousRecommendationClick}>Previous</button>}
@@ -174,8 +181,10 @@ class LandingPage extends Component {
                                                                  onClick={this.handleNextRecommendationClick}>Next</button>}
                     <br/><br/>
                 </div>
-                <h1 className="movieRow_heading">Top Rated</h1>
 
+
+                   {/* Render the top rated list */}
+                <h1 className="movieRow_heading">Top Rated</h1>
                 <div className="movieRow_container">
                     {this.state.topRatedRow}
                 </div>
@@ -186,7 +195,6 @@ class LandingPage extends Component {
                                                            onClick={this.handleNextTopRatedClick}>Next</button>}
                     <br/><br/>
                 </div>
-
             </div>
 
 

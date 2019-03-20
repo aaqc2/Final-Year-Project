@@ -115,20 +115,38 @@ def paginationTest(request):
 @api_view(['POST'])
 def register(request):
     if request.method == 'POST':
-       email = request.data.get('email')
-       password = request.data.get('password')
-       username = request.data.get('username')
-       if Users.objects.filter(email=email).exists():
-           return Response("Email already in use", status=status.HTTP_406_NOT_ACCEPTABLE)
-       elif Users.objects.filter(username=username).exists():
-           return Response("Username already in use", status=status.HTTP_406_NOT_ACCEPTABLE)
-       else:
-           # hashPass = make_password(password, salt=None, hasher='pbkdf2_sha256')
-           hashPass = pbkdf2_sha256.hash(password);
-           queryset = str(Users.objects.values('userid').last().get("userid"))
-           uid = int(queryset) + 1
-           Users.objects.create(userid=str(uid), username=username, password=hashPass, email=email)
-           return Response("Success", status=status.HTTP_201_CREATED)
+        email = request.data.get('email')
+        password = request.data.get('password')
+        username = request.data.get('username')
+        if Users.objects.filter(email=email).exists():
+            return Response("Email already in use", status=status.HTTP_406_NOT_ACCEPTABLE)
+        elif Users.objects.filter(username=username).exists():
+            return Response("Username already in use", status=status.HTTP_406_NOT_ACCEPTABLE)
+        else:
+            hashPass = pbkdf2_sha256.hash(password);
+            queryset = str(Users.objects.values('userid').last().get("userid"))
+            uid = int(queryset) + 1
+            Users.objects.create(userid=str(uid), username=username, password=hashPass, email=email)
+
+            #create a token here
+            secret = settings.SECRET_KEY
+            payload = {
+                'id': uid,
+                'iat': datetime.now(),
+                'exp': datetime.now() + timedelta(hours=6)
+            }
+            jwt_token = {'token': jwt.encode(payload, secret)}
+            return Response(
+                {
+                    'userid': uid,
+                    'username': username,
+                    'token': jwt_token,
+                    'email': email
+                },
+                # jwt_token,
+                status=200,
+                content_type="application/json"
+            )
 
 @api_view(['GET'])
 def rate(request, m, u, r):
@@ -181,8 +199,8 @@ def getRecommendation(request, u):
     #queryset = Links.objects.raw('SELECT l.movieid, l.tmdbid FROM link l JOIN recommendations r ON l.movieid = r.movieid'
     #                             ' WHERE userid = %s ORDER BY r.rating DESC', [u])[:20]
     queryset = list(Links.objects.raw(' SELECT l.tmdbid, l.movieid FROM link l JOIN recommendations r ON '
-                                 ' l.movieid = r.movieid WHERE r.userid = %s AND r.movieid NOT IN '
-                                 '(SELECT movieid FROM ratings rt WHERE rt.userid = %s) ORDER BY r.rating DESC', [u, u]))
+                                      ' l.movieid = r.movieid WHERE r.userid = %s AND r.movieid NOT IN '
+                                      '(SELECT movieid FROM ratings rt WHERE rt.userid = %s) ORDER BY r.rating DESC', [u, u]))
     # serializer_class = RatingsSerializer(queryset, many=True)
     paginator = PageNumberPagination()
     paginator.page_size = 7
@@ -247,51 +265,59 @@ def getNumMovies(request, u):
     return Response(query)
 
 @api_view(['GET'])
-def getCustomRec(request, u):
+def getCustomRec(self, u):
     user = Users.objects.get(pk=u)
     cursor = connection.cursor()
     query = ("SELECT SUM((CASE WHEN genre LIKE '%%Romance%%' THEN 1 ELSE 0 end) * r.rating) AS Romance, "
-                                    " SUM((CASE WHEN genre LIKE '%%Action%%' THEN 1 ELSE 0 end) * r.rating) AS Action,"
-                                    " SUM((CASE WHEN genre LIKE '%%Comedy%%' THEN 1 ELSE 0 end) * r.rating) AS Comedy,"
-                                    " SUM((CASE WHEN genre LIKE '%%Drama%%' THEN 1 ELSE 0 end) * r.rating) AS Drama,"
-                                    " SUM((CASE WHEN genre LIKE '%%Horror%%' THEN 1 ELSE 0 end) * r.rating) AS Horror,"
-                                    " SUM((CASE WHEN genre LIKE '%%Thriller%%' THEN 1 ELSE 0 end) * r.rating) AS Thriller,"
-                                    " SUM((CASE WHEN genre LIKE '%%Sci-Fi%%' THEN 1 ELSE 0 end) * r.rating) AS SciFi,"
-                                    " SUM((CASE WHEN genre LIKE '%%Romance%%' THEN 1 ELSE 0 end) * 5) AS RRomance,"
-                                    " SUM((CASE WHEN genre LIKE '%%Action%%' THEN 1 ELSE 0 end) * 5) AS RAction,"
-                                    " SUM((CASE WHEN genre LIKE '%%Comedy%%' THEN 1 ELSE 0 end) * 5) AS RComedy,"
-                                    " SUM((CASE WHEN genre LIKE '%%Drama%%' THEN 1 ELSE 0 end) * 5) AS RDrama,"
-                                    " SUM((CASE WHEN genre LIKE '%%Horror%%' THEN 1 ELSE 0 end) * 5) AS RHorror,"
-                                    " SUM((CASE WHEN genre LIKE '%%Thrille%%' THEN 1 ELSE 0 end) * 5) AS RThriller,"
-                                    " SUM((CASE WHEN genre LIKE '%%Sci-Fi%%' THEN 1 ELSE 0 end) * 5) AS RSciFi,"
-                                    " SUM((CASE WHEN GENRE LIKE '%%Romance%%' THEN 1 ELSE 0 end)) AS TRomance,"
-                                    " SUM((CASE WHEN GENRE LIKE '%%Action%%' THEN 1 ELSE 0 end)) AS TAction,"
-                                    " SUM((CASE WHEN GENRE LIKE '%%Comedy%%' THEN 1 ELSE 0 end)) AS TComedy,"
-                                    " SUM((CASE WHEN GENRE LIKE '%%Drama%%' THEN 1 ELSE 0 end)) AS TDrama,"
-                                    " SUM((CASE WHEN GENRE LIKE '%%Horror%%' THEN 1 ELSE 0 end)) AS THorror,"
-                                    " SUM((CASE WHEN GENRE LIKE '%%Thriller%%' THEN 1 ELSE 0 end)) AS TThriller,"
-                                    " SUM((CASE WHEN GENRE LIKE '%%Sci-Fi%%' THEN 1 ELSE 0 end)) AS TSciFi,"
-                                    " COUNT(*) AS total FROM titles t "
-                                    " JOIN ratings r ON t.movieid = r.movieid WHERE userid = %s;")
+             " SUM((CASE WHEN genre LIKE '%%Action%%' THEN 1 ELSE 0 end) * r.rating) AS Action,"
+             " SUM((CASE WHEN genre LIKE '%%Comedy%%' THEN 1 ELSE 0 end) * r.rating) AS Comedy,"
+             " SUM((CASE WHEN genre LIKE '%%Drama%%' THEN 1 ELSE 0 end) * r.rating) AS Drama,"
+             " SUM((CASE WHEN genre LIKE '%%Horror%%' THEN 1 ELSE 0 end) * r.rating) AS Horror,"
+             " SUM((CASE WHEN genre LIKE '%%Thriller%%' THEN 1 ELSE 0 end) * r.rating) AS Thriller,"
+             " SUM((CASE WHEN genre LIKE '%%Sci-Fi%%' THEN 1 ELSE 0 end) * r.rating) AS SciFi,"
+             " SUM((CASE WHEN genre LIKE '%%Romance%%' THEN 1 ELSE 0 end) * 5) AS RRomance,"
+             " SUM((CASE WHEN genre LIKE '%%Action%%' THEN 1 ELSE 0 end) * 5) AS RAction,"
+             " SUM((CASE WHEN genre LIKE '%%Comedy%%' THEN 1 ELSE 0 end) * 5) AS RComedy,"
+             " SUM((CASE WHEN genre LIKE '%%Drama%%' THEN 1 ELSE 0 end) * 5) AS RDrama,"
+             " SUM((CASE WHEN genre LIKE '%%Horror%%' THEN 1 ELSE 0 end) * 5) AS RHorror,"
+             " SUM((CASE WHEN genre LIKE '%%Thrille%%' THEN 1 ELSE 0 end) * 5) AS RThriller,"
+             " SUM((CASE WHEN genre LIKE '%%Sci-Fi%%' THEN 1 ELSE 0 end) * 5) AS RSciFi,"
+             " SUM((CASE WHEN GENRE LIKE '%%Romance%%' THEN 1 ELSE 0 end)) AS TRomance,"
+             " SUM((CASE WHEN GENRE LIKE '%%Action%%' THEN 1 ELSE 0 end)) AS TAction,"
+             " SUM((CASE WHEN GENRE LIKE '%%Comedy%%' THEN 1 ELSE 0 end)) AS TComedy,"
+             " SUM((CASE WHEN GENRE LIKE '%%Drama%%' THEN 1 ELSE 0 end)) AS TDrama,"
+             " SUM((CASE WHEN GENRE LIKE '%%Horror%%' THEN 1 ELSE 0 end)) AS THorror,"
+             " SUM((CASE WHEN GENRE LIKE '%%Thriller%%' THEN 1 ELSE 0 end)) AS TThriller,"
+             " SUM((CASE WHEN GENRE LIKE '%%Sci-Fi%%' THEN 1 ELSE 0 end)) AS TSciFi,"
+             " COUNT(*) AS total FROM titles t "
+             " JOIN ratings r ON t.movieid = r.movieid WHERE userid = %s;")
     cursor.execute(query, [u])
     results = cursor.fetchall()
+    replacement = []
+    for i in range(7):
+        if results[0][i+7] == 0:
+            replacement.append(1)
+        else:
+            replacement.append(results[0][i+7])
+
+
     data = {
-        "Romance": [(results[0][0]/results[0][7])*(results[0][14]/results[0][21])],
-        "Action": [(results[0][1] / results[0][8])*(results[0][15]/results[0][21])],
-        "Comedy": [(results[0][2] / results[0][9])*(results[0][16]/results[0][21])],
-        "Drama": [(results[0][3] / results[0][10])*(results[0][17]/results[0][21])],
-        "Horror": [(results[0][4] / results[0][11])*(results[0][18]/results[0][21])],
-        "Thriller": [(results[0][5] / results[0][12])*(results[0][19]/results[0][21])],
-        "Scifi": [(results[0][6] / results[0][13])*(results[0][20]/results[0][21])]
+        "Romance": [(results[0][0]/replacement[0])*(results[0][14]/results[0][21])],
+        "Action": [(results[0][1] / replacement[1])*(results[0][15]/results[0][21])],
+        "Comedy": [(results[0][2] / replacement[2])*(results[0][16]/results[0][21])],
+        "Drama": [(results[0][3] / replacement[3])*(results[0][17]/results[0][21])],
+        "Horror": [(results[0][4] / replacement[4])*(results[0][18]/results[0][21])],
+        "Thriller": [(results[0][5] / replacement[5])*(results[0][19]/results[0][21])],
+        "Scifi": [(results[0][6] / replacement[6])*(results[0][20]/results[0][21])]
     }
     sortedList = sorted(data.items(), key=operator.itemgetter(1), reverse=True)
 
     genre1 = sortedList[0][0]
     genre2 = sortedList[1][0]
-    queryset = Titles.objects.filter(genre__icontains=genre1 and genre2).only('movieid')[:200]
-    #serializer = Test(queryset, many=True)
-    #i = 0;
-    #while i < len(queryset):
-    #    Recommendations.objects.create(userid=user, movieid=queryset[i])
-
-    return Response(data)
+    queryset = list(Titles.objects.filter(genre__icontains=genre1 or genre2).values_list('movieid', flat=True))[:200]
+    i = 0
+    while i < len(queryset):
+        title = Titles.objects.get(pk=queryset[i])
+        Recommendations.objects.create(userid=user, movieid=title)
+        i += 1
+    return Response(status=status.HTTP_200_OK)
