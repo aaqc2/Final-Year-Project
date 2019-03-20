@@ -22,7 +22,8 @@ class AdvancedSearch extends Component {
             nextGenreApi: '',
             prevGenreApi: '',
             genrePage: false,
-            selected: ''
+            selected: '',
+            orderby: 'movieid'
         };
         this.handleChange = this.handleChange.bind(this);
         this.handlePreviousClick = this.handlePreviousClick.bind(this);
@@ -60,7 +61,16 @@ class AdvancedSearch extends Component {
         document.querySelectorAll('input[type=checkbox]').forEach(checkboxes => checkboxes.checked = false); //uncheck checkbox
         this.setState({movieList: []});
         let result = [];
-        fetch(this.state.api)
+        fetch(this.state.api, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+             },
+            body: JSON.stringify({
+                'orderby': this.state.orderby,
+            },)
+        })
             .then((result) => {
                 return result.json();
             })
@@ -230,7 +240,16 @@ class AdvancedSearch extends Component {
         // this.setState({genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + genre}`});
         // let api = `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + genre}`;
         this.setState({genreMovieList: []})
-        fetch(this.state.genreApi)
+        fetch(this.state.genreApi, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+             },
+            body: JSON.stringify({
+                'orderby': this.state.orderby,
+            },)
+        })
             .then((result) => {
                 return result.json();
             })
@@ -290,36 +309,59 @@ class AdvancedSearch extends Component {
             for (i = 0; i < rows.length - 1; i++) {
                 changePosition = false;
                 if (order === 'az') {
-                    a = rows[i].getElementsByTagName("td")[1];
-                    b = rows[i + 1].getElementsByTagName("td")[1];
-                    if (a.innerHTML.toLowerCase() > b.innerHTML.toLowerCase()) {
-                        changePosition = true;
-                        break;
+                    document.getElementById('movieList').innerHTML = "";
+                    // a = rows[i].getElementsByTagName("td")[1];
+                    // b = rows[i + 1].getElementsByTagName("td")[1];
+                    // if (a.innerHTML.toLowerCase() > b.innerHTML.toLowerCase()) {
+                    //     changePosition = true;
+                    //     break;
+                    if(this.state.genrePage) {
+                        this.setState({orderby: 'title'}, this.getFilter)
                     }
+                    else {
+                        this.setState({orderby: 'title'}, this.getSearchQuery)
+                    }
+                    // }
                 }
                 if (order === 'za') {
-                    a = rows[i].getElementsByTagName("td")[1];
-                    b = rows[i + 1].getElementsByTagName("td")[1];
-                    if (a.innerHTML.toLowerCase() < b.innerHTML.toLowerCase()) {
-                        changePosition = true;
-                        break;
+                    // a = rows[i].getElementsByTagName("td")[1];
+                    // b = rows[i + 1].getElementsByTagName("td")[1];
+                    // if (a.innerHTML.toLowerCase() < b.innerHTML.toLowerCase()) {
+                    //     changePosition = true;
+                    //     break;
+                    // }
+                    document.getElementById('movieList').innerHTML = "";
+                    if(this.state.genrePage) {
+                        this.setState({orderby: '-title'}, this.getFilter)
                     }
-                }
-                if (order === 'date') {
-                    a = rows[i].getElementsByTagName("td")[2];
-                    b = rows[i + 1].getElementsByTagName("td")[2];
-                    if (a.innerHTML.toLowerCase() < b.innerHTML.toLowerCase()) {
-                        changePosition = true;
-                        break;
+                    else {
+                        this.setState({orderby: '-title'}, this.getSearchQuery)
                     }
+                    // this.setState({orderby: '-title'}, this.getSearchQuery)
                 }
+                // if (order === 'date') {
+                //     a = rows[i].getElementsByTagName("td")[2];
+                //     b = rows[i + 1].getElementsByTagName("td")[2];
+                //     if (a.innerHTML.toLowerCase() < b.innerHTML.toLowerCase()) {
+                //         changePosition = true;
+                //         break;
+                //     }
+                // }
                 if (order === 'vote') {
-                    a = rows[i].getElementsByTagName("td")[3];
-                    b = rows[i + 1].getElementsByTagName("td")[3];
-                    if (a.innerHTML.toLowerCase() < b.innerHTML.toLowerCase()) {
-                        changePosition = true;
-                        break;
+                    // a = rows[i].getElementsByTagName("td")[3];
+                    // b = rows[i + 1].getElementsByTagName("td")[3];
+                    // if (a.innerHTML.toLowerCase() < b.innerHTML.toLowerCase()) {
+                    //     changePosition = true;
+                    //     break;
+                    // }
+                    document.getElementById('movieList').innerHTML = "";
+                    if(this.state.genrePage) {
+                        this.setState({orderby: '-avg_rating'}, this.getFilter)
                     }
+                    else {
+                        this.setState({orderby: '-avg_rating'}, this.getSearchQuery)
+                    }
+                    // this.setState({orderby: '-avg_rating'}, this.getSearchQuery)
                 }
             }
             if (changePosition) {

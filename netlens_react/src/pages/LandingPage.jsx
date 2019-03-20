@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import axios from '../baseUrl'; 
 import MovieImages from '../components/MovieImages';
 import Navbar from "../components/Navbar";
@@ -11,7 +12,7 @@ class LandingPage extends Component {
         this.state = {
             topRatedRow: [],
             recommendation: [],
-            genreMovies: [],
+            // genreMovies: [],
             topRatedApi: 'http://127.0.0.1:8000/api/toprated',
             hasTopRatedNext: false,
             hasTopRatedPrevious: false,
@@ -32,11 +33,11 @@ class LandingPage extends Component {
     apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
     /** Hold each genre movie row in an array */
 
-    state = {
-        topRatedRow: [],
-        recommendation: [],
-        genreMovies: []
-    }
+    // state = {
+    //     topRatedRow: [],
+    //     recommendation: [],
+    //     // genreMovies: []
+    // }
 
 
     /** Make all API calls as soon as the MovieGenreRow component mounts. */
@@ -46,20 +47,20 @@ class LandingPage extends Component {
         console.log(this.props.location.state);
         this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${localStorage.getItem('id')}`}, this.getRecommendation);
         this.getTopRated();
-        if(this.props.state !== undefined) {
-            if(this.props.location.state.selectedValues !== undefined) {
-            this.getGenreMovies();
-            }
-        }
+        // if(this.props.state !== undefined) {
+        //     if(this.props.location.state.selectedValues !== undefined) {
+        //     this.getGenreMovies();
+        //     }
+        // }
     }
 
 
     /** Extract our movie data and pass it to our MovieGenre Component. */
     getMovieRows = (row, res, user) => {
-        const results = res;
+        // const results = res;
         let movieRows = [];
         console.log(res);
-        results.map((movie) => {
+        res.map((movie) => {
             if (movie.data.poster_path != null) {
                 const movieComponent = <MovieImages
                     id={movie.data.id}
@@ -75,52 +76,52 @@ class LandingPage extends Component {
 
     }
 
-    //still need to implement pagination
-    getGenreMovies = () => {
-        const row = 'movies';
-        let result = [];
-        let count = 0;
-        //const user = this.props.location.state.user;
-        const user = 1;
-        const {location: {state: {selectedValues}}} = this.props;
-        console.log(selectedValues);
-        let url = [];
-        Object.keys(selectedValues).map((gen) => {
-            console.log(gen, "genres");
-            url.push('&gen=' + gen);
-        });
-        const api = 'http://127.0.0.1:8000/api/genres/?' + url;
-        fetch(api)
-            .then((result) => {
-                return result.json();
-            })
-            .then((data) => {
-                console.log(data.results);
-                // result.push(data.results);
-                data.results.map((movie) => {
-                    // const movieRows = this.getMovieRows(row, movie, user);
-                    // this.setState({genreMovies: movieRows});
-                    // console.log(movie.links__tmdbid);
-                    let url = '/movie/' + movie.links__tmdbid + '?api_key=' + this.apiKey;
-                    axios.get(url)
-                        .then(res => {
-                            console.log(res);
-                            result.push(res);
-                            console.log(count);
-                            if (count >= data.results.length - 1) {
-                                const movieRows = this.getMovieRows(row, result, user);
-                                this.setState({genreMovies: movieRows});
-                            }
-                            count++;
-                        }).catch(error => {
-                        count++;
-                        console.log(error);
-                    });
-                });
-            }).catch((err) => {
-            console.log(err);
-        });
-    }
+    // //still need to implement pagination
+    // getGenreMovies = () => {
+    //     const row = 'movies';
+    //     let result = [];
+    //     let count = 0;
+    //     //const user = this.props.location.state.user;
+    //     const user = 1;
+    //     const {location: {state: {selectedValues}}} = this.props;
+    //     console.log(selectedValues);
+    //     let url = [];
+    //     Object.keys(selectedValues).map((gen) => {
+    //         console.log(gen, "genres");
+    //         url.push('&gen=' + gen);
+    //     });
+    //     const api = 'http://127.0.0.1:8000/api/genres/?' + url;
+    //     fetch(api)
+    //         .then((result) => {
+    //             return result.json();
+    //         })
+    //         .then((data) => {
+    //             console.log(data.results);
+    //             // result.push(data.results);
+    //             data.results.map((movie) => {
+    //                 // const movieRows = this.getMovieRows(row, movie, user);
+    //                 // this.setState({genreMovies: movieRows});
+    //                 // console.log(movie.links__tmdbid);
+    //                 let url = '/movie/' + movie.links__tmdbid + '?api_key=' + this.apiKey;
+    //                 axios.get(url)
+    //                     .then(res => {
+    //                         console.log(res);
+    //                         result.push(res);
+    //                         console.log(count);
+    //                         if (count >= data.results.length - 1) {
+    //                             const movieRows = this.getMovieRows(row, result, user);
+    //                             this.setState({genreMovies: movieRows});
+    //                         }
+    //                         count++;
+    //                     }).catch(error => {
+    //                     count++;
+    //                     console.log(error);
+    //                 });
+    //             });
+    //         }).catch((err) => {
+    //         console.log(err);
+    //     });
+    // }
 
 
 
@@ -152,7 +153,7 @@ class LandingPage extends Component {
                                     console.log(res);
                                     result.push(res);
                                     console.log(count);
-                                    if (count >= data.results.length - 1) {
+                                    if (count <= data.results.length - 1) {
                                         const movieRows = this.getMovieRows(row, result, user);
                                         this.setState({topRatedRow: movieRows});
                                     }
@@ -160,7 +161,6 @@ class LandingPage extends Component {
                                 }).catch(error => {
                                 count++;
                                 console.log(error);
-
                             })
                         }
                     });
@@ -216,7 +216,8 @@ class LandingPage extends Component {
                             axios.get(url)
                                 .then(res => {
                                     result.push(res);
-                                    if (count >= data.results.length - 1) {
+                                    console.log(count, data.results.length);
+                                    if (count <= data.results.length - 1) {
                                         const movieRows = this.getMovieRows(row, result, user);
                                         this.setState({recommendation: movieRows});
                                     }
@@ -260,7 +261,7 @@ class LandingPage extends Component {
 
         // const {location: {state: {selectedValues}}} = this.props;
         //console.log(this.state.movies, 'movies')
-        console.log(this.state.genreMovies);
+        // console.log(this.state.genreMovies);
         return (
 
             <div className="movieRow">
@@ -268,6 +269,9 @@ class LandingPage extends Component {
 
                 <h1> Welcome </h1>
                 <h1 className="movieRow_heading">Top Picks for you</h1>
+                <div className="movieRow_container">
+                    {this.state.recommendation}
+                </div>
                 <div>
                     {this.state.hasRecommendationPrevious && <button className="btn btn-sm btn-primary"
                                                                      onClick={this.handlePreviousRecommendationClick}>Previous</button>}
@@ -275,10 +279,11 @@ class LandingPage extends Component {
                                                                  onClick={this.handleNextRecommendationClick}>Next</button>}
                     <br/><br/>
                 </div>
-                <div className="movieRow_container">
-                    {this.state.recommendation}
-                </div>
                 <h1 className="movieRow_heading">Top Rated</h1>
+
+                <div className="movieRow_container">
+                    {this.state.topRatedRow}
+                </div>
                 <div>
                     {this.state.hasTopRatedPrevious && <button className="btn btn-sm btn-primary"
                                                                onClick={this.handlePreviousTopRatedClick}>Previous</button>}
@@ -286,15 +291,10 @@ class LandingPage extends Component {
                                                            onClick={this.handleNextTopRatedClick}>Next</button>}
                     <br/><br/>
                 </div>
-
-                <div className="movieRow_container">
-                    {this.state.topRatedRow}
-                </div>
-
-                <h1 className="movieRow_heading">Cold Start</h1>
-                <div className="movieRow_container">
-                    {this.state. genreMovies}
-                </div>
+                {/*<h1 className="movieRow_heading">Cold Start</h1>*/}
+                {/*<div className="movieRow_container">*/}
+                    {/*{this.state. genreMovies}*/}
+                {/*</div>*/}
 
 
             </div>

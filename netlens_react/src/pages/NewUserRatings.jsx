@@ -197,22 +197,20 @@ class NewUserRatings extends Component {
   }
 
 
-
-
-
-
-    render() {
+  render() {
       console.log(this.props, 'checkedboxs test')
         return (
             <div className="newuserrating-container">
-                <Navbar/>
+               <header className="header">
+                <h1>TheMovieOracle</h1>
+                <h5>personalised movie recommendations</h5>
+            </header>
 
-                <div className="newuser-card"> <br/> <br/>
-                    <h1> Welcome </h1>
-                    <h3> To get started, tell us about your movie preferences. Select your top two favourite movie genres</h3>
+                <div className="newuser-card">
+                    <h2> Welcome </h2>
+                    <h3> To get started, tell us about your movie preferences. Using the checkboxs, select your top two favourite movie genres</h3>
 
                             <div className="newusercard-body">
-
                                 <form name="new_user_form" className="newuser-rating-form"   >
                                     <table>
                                        <tbody>

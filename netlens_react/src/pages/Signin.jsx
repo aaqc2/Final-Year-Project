@@ -12,7 +12,9 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      msg: ''
+      msg: '',
+        numberOfMoviesRated: 0
+
     };
 
     this.handleChange = this.handleChange.bind(this);
