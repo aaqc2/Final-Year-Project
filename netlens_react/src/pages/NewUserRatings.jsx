@@ -200,7 +200,7 @@ class NewUserRatings extends Component {
   render() {
       console.log(this.props, 'checkedboxs test')
         return (
-            <div className="newuserrating-container">
+            <div  className="newuserrating-container">
                <header className="header">
                 <h1>TheMovieOracle</h1>
                 <h5>personalised movie recommendations</h5>
