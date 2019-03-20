@@ -186,11 +186,6 @@ class LandingPage extends Component {
                                                            onClick={this.handleNextTopRatedClick}>Next</button>}
                     <br/><br/>
                 </div>
-                {/*<h1 className="movieRow_heading">Cold Start</h1>*/}
-                {/*<div className="movieRow_container">*/}
-                    {/*{this.state. genreMovies}*/}
-                {/*</div>*/}
-
 
             </div>
 
