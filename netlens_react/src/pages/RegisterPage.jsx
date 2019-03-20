@@ -50,12 +50,15 @@ class RegisterPage extends Component {
       console.log(data);
       //change if statement
          console.log('response');
-      if(typeof data === 'object' ) {
-          let id ='';
-          data.map((item) => {
-            id = item.userid
-            console.log(id);
-          });
+             if(data.token != null ) {
+
+          //saves token and id to local storage.
+          localStorage.setItem('token', data.token['token'])
+          localStorage.setItem('id', data.userid)
+          localStorage.setItem('username', data.username)
+          localStorage.setItem('email', data.email)
+          let id = data.userid;
+
           this.props.history.push({
             pathname: '/LandingPage',
             state: {user: id}
@@ -69,6 +72,25 @@ class RegisterPage extends Component {
     .catch((error) => {
         console.error(error);
     });
+    //   if(typeof data === 'object' ) {
+    //       let id ='';
+    //       data.map((item) => {
+    //         id = item.userid
+    //         console.log(id);
+    //       });
+    //       this.props.history.push({
+    //         pathname: '/LandingPage',
+    //         state: {user: id}
+    //       })
+    //   }
+    //   else {
+    //       this.setState({msg: data});
+    //   }
+    //
+    // })
+    // .catch((error) => {
+    //     console.error(error);
+    // });
     }
   }
 

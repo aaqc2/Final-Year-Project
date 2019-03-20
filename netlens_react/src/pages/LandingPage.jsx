@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import axios from '../baseUrl'; 
 import MovieImages from '../components/MovieImages';
 import Navbar from "../components/Navbar";
@@ -7,12 +6,14 @@ import Navbar from "../components/Navbar";
 
 
 class LandingPage extends Component {
+    apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
     constructor(props) {
         super(props);
+
         this.state = {
+            userid: localStorage.getItem('id'),
             topRatedRow: [],
             recommendation: [],
-            // genreMovies: [],
             topRatedApi: 'http://127.0.0.1:8000/api/toprated',
             hasTopRatedNext: false,
             hasTopRatedPrevious: false,
@@ -30,34 +31,19 @@ class LandingPage extends Component {
         this.handleNextRecommendationClick = this.handleNextRecommendationClick.bind(this);
     };
 
-    apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
-    /** Hold each genre movie row in an array */
-
-    // state = {
-    //     topRatedRow: [],
-    //     recommendation: [],
-    //     // genreMovies: []
-    // }
-
 
     /** Make all API calls as soon as the MovieGenreRow component mounts. */
 
     componentDidMount() {
         console.log('i am mounted');
         console.log(this.props.location.state);
-        this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${localStorage.getItem('id')}`}, this.getRecommendation);
+        this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${this.state.userid}`}, this.getRecommendation);
         this.getTopRated();
-        // if(this.props.state !== undefined) {
-        //     if(this.props.location.state.selectedValues !== undefined) {
-        //     this.getGenreMovies();
-        //     }
-        // }
     }
 
 
     /** Extract our movie data and pass it to our MovieGenre Component. */
-    getMovieRows = (row, res, user) => {
-        // const results = res;
+    getMovieRows = (row, res) => {
         let movieRows = [];
         console.log(res);
         res.map((movie) => {
@@ -65,8 +51,7 @@ class LandingPage extends Component {
                 const movieComponent = <MovieImages
                     id={movie.data.id}
                     row={row}
-                    userid={user}
-                    //url={url}
+                    userid={this.state.userid}
                     poster={"https://image.tmdb.org/t/p/original" + movie.data.poster_path}
                     info={movie}/>
                 movieRows.push(movieComponent);
@@ -74,57 +59,7 @@ class LandingPage extends Component {
         });
         return movieRows;
 
-    }
-
-    // //still need to implement pagination
-    // getGenreMovies = () => {
-    //     const row = 'movies';
-    //     let result = [];
-    //     let count = 0;
-    //     //const user = this.props.location.state.user;
-    //     const user = 1;
-    //     const {location: {state: {selectedValues}}} = this.props;
-    //     console.log(selectedValues);
-    //     let url = [];
-    //     Object.keys(selectedValues).map((gen) => {
-    //         console.log(gen, "genres");
-    //         url.push('&gen=' + gen);
-    //     });
-    //     const api = 'http://127.0.0.1:8000/api/genres/?' + url;
-    //     fetch(api)
-    //         .then((result) => {
-    //             return result.json();
-    //         })
-    //         .then((data) => {
-    //             console.log(data.results);
-    //             // result.push(data.results);
-    //             data.results.map((movie) => {
-    //                 // const movieRows = this.getMovieRows(row, movie, user);
-    //                 // this.setState({genreMovies: movieRows});
-    //                 // console.log(movie.links__tmdbid);
-    //                 let url = '/movie/' + movie.links__tmdbid + '?api_key=' + this.apiKey;
-    //                 axios.get(url)
-    //                     .then(res => {
-    //                         console.log(res);
-    //                         result.push(res);
-    //                         console.log(count);
-    //                         if (count >= data.results.length - 1) {
-    //                             const movieRows = this.getMovieRows(row, result, user);
-    //                             this.setState({genreMovies: movieRows});
-    //                         }
-    //                         count++;
-    //                     }).catch(error => {
-    //                     count++;
-    //                     console.log(error);
-    //                 });
-    //             });
-    //         }).catch((err) => {
-    //         console.log(err);
-    //     });
-    // }
-
-
-
+    };
 
     /**
      * Send request for movies that are top rated
@@ -132,37 +67,22 @@ class LandingPage extends Component {
     getTopRated = () => {
         const row = 'toprated';
         let result = [];
-        let link = [];
-        let count = 0;
-        // const api = 'http://127.0.0.1:8000/api/toprated';
-        //const user = this.props.location.state.user;
-        const user = 1;
         fetch(this.state.topRatedApi)
-            .then((result) => {
-                return result.json();
+            .then((response) => {
+                return response.json();
             })
             .then((data) => {
                 data.results.map((id) => {
                     Object.entries(id).forEach(([key, value]) => {
-                        if (value == null) {
-                            count++;
-                        } else {
-                            let url = '/movie/' + value + '?api_key=' + this.apiKey;
-                            axios.get(url)
-                                .then(res => {
-                                    console.log(res);
-                                    result.push(res);
-                                    console.log(count);
-                                    if (count <= data.results.length - 1) {
-                                        const movieRows = this.getMovieRows(row, result, user);
-                                        this.setState({topRatedRow: movieRows});
-                                    }
-                                    count++;
-                                }).catch(error => {
-                                count++;
+                        let url = '/movie/' + value + '?api_key=' + this.apiKey;
+                        axios.get(url)
+                            .then(res => {
+                                result.push(res);
+                                const movieRows = this.getMovieRows(row, result);
+                                this.setState({topRatedRow: movieRows});
+                            }).catch(error => {
                                 console.log(error);
                             })
-                        }
                     });
                 });
                 if (data.next !== null) {
@@ -176,7 +96,6 @@ class LandingPage extends Component {
                     this.setState({hasTopRatedPrevious: false, previousTopRatedApi: ''});
                 }
             }).catch((err) => {
-            count++;
             console.log(err);
         });
 
@@ -187,47 +106,29 @@ class LandingPage extends Component {
     }
 
     handlePreviousTopRatedClick() {
-        // this.state.api = this.state.previousApi;
-        // this.getSearchQuery();
         this.setState({topRatedApi: this.state.previousTopRatedApi}, this.getTopRated);
     };
 
     getRecommendation = () => {
         const row = 'recommendation';
         let result = [];
-        let link = [];
-        let count = 0;
-        //console.log(this.props.location.state.user);
-        //const user = this.props.location.state.user;
-        const user = localStorage.getItem('id');
-        // const api = `http://127.0.0.1:8000/api/recommendation/${user}`;
         console.log(this.state.recommendationApi);
         fetch(this.state.recommendationApi)
-            .then((result) => {
-                return result.json();
+            .then((response) => {
+                return response.json();
             })
             .then((data) => {
                 data.results.map((id) => {
                     Object.entries(id).forEach(([key, value]) => {
-                        if (value == null) {
-                            count++;
-                        } else {
-                            let url = '/movie/' + value + '?api_key=' + this.apiKey;
-                            axios.get(url)
-                                .then(res => {
-                                    result.push(res);
-                                    console.log(count, data.results.length);
-                                    if (count <= data.results.length - 1) {
-                                        const movieRows = this.getMovieRows(row, result, user);
-                                        this.setState({recommendation: movieRows});
-                                    }
-                                    count++;
-                                }).catch(error => {
-                                count++;
+                        let url = '/movie/' + value + '?api_key=' + this.apiKey;
+                        axios.get(url)
+                            .then(res => {
+                                result.push(res);
+                                const movieRows = this.getMovieRows(row, result);
+                                this.setState({recommendation: movieRows});
+                            }).catch(error => {
                                 console.log(error);
-
                             })
-                        }
                     });
                 });
                 if (data.next !== null) {
@@ -251,17 +152,11 @@ class LandingPage extends Component {
     }
 
     handlePreviousRecommendationClick() {
-        // this.state.api = this.state.previousApi;
-        // this.getSearchQuery();
         this.setState({recommendationApi: this.state.previousRecommendationApi}, this.getRecommendation);
     };
 
 
     render() {
-
-        // const {location: {state: {selectedValues}}} = this.props;
-        //console.log(this.state.movies, 'movies')
-        // console.log(this.state.genreMovies);
         return (
 
             <div className="movieRow">
