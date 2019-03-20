@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-
-// import StarRating from '../components/StarRating.jsx';
 import Navbar from "../components/Navbar";
 import UserStarRating from '../components/UserStarRating.jsx';
 import AverageRating from '../components/AverageRating.jsx';

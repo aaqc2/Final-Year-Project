@@ -22,8 +22,8 @@ class Navbar extends Component {
                         <SearchBar/>
                     </div>
 
-                    <Link className="btn btn-sm btn-primary" to="/advancedsearch" id="advanced_search">Advanced
-                        search</Link>
+                    <Link className="btn btn-sm btn-primary" to="/advancedsearch" id="advanced_search">
+                        Search</Link>
 
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"

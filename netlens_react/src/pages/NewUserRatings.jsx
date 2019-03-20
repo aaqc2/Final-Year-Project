@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import GenreImages from "../components/GenreImages";
 import axios from "../baseUrl";
-import Navbar from "../components/Navbar";
+
 
 
 class NewUserRatings extends Component {
@@ -18,7 +18,6 @@ class NewUserRatings extends Component {
         animatedMovieRow: [],
         romanceMovieRow: [],
         checkedOptions: {},
-
     }
   }
 
@@ -296,11 +295,10 @@ class NewUserRatings extends Component {
                                        <button className = "newuser-submit" onClick={this.handleSubmit}> Next </button>
                                 </form>
                            </div>
-                </div>
-            </div>
+                     </div>
+                 </div>
         );
-    }
-
+      }
 }
 
 export default NewUserRatings;
