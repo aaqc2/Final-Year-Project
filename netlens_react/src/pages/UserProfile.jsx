@@ -165,8 +165,8 @@ class UserProfile extends Component {
                                 <div className="text-center">
                                     <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
                                          className="avatar img-circle img-thumbnail" alt="avatar"/>
-                                    <h5>Upload a photo</h5>
-                                    <input type="file" className="text-center center-block file-upload"/>
+                                    {/*<h5>Upload a photo</h5>*/}
+                                    {/*<input type="file" className="text-center center-block file-upload"/>*/}
                                 </div>
                                 <br/>
                                 <div className="panel panel-default">
@@ -195,7 +195,7 @@ class UserProfile extends Component {
                             <div className="col-sm-9">
                                 <ul className="nav nav-tabs">
                                     <li className="active"><a data-toggle="tab" href="#tab1">Your rated movies</a></li>
-                                    <li><a data-toggle="tab" href="#tab2">Statistics </a></li>
+                                    {/*<li><a data-toggle="tab" href="#tab2">Statistics </a></li>*/}
                                 </ul>
                                 <div className="tab-content">
                                     <div className="tab-pane active" id="tab1">
@@ -212,14 +212,14 @@ class UserProfile extends Component {
                                     </div>
                                     {/*/tab-pane*/}
 
-                                    <div className="tab-pane" id="tab2">
-                                        <br/><br/>Rating statistics 1
-                                    </div>
+                                    {/*<div className="tab-pane" id="tab2">*/}
+                                        {/*<br/><br/>Rating statistics 1*/}
+                                    {/*</div>*/}
                                     {/*/tab-pane*/}
 
-                                    <div className="tab-pane" id="tab3">
-                                        <br/><br/>Rating statistics 2
-                                    </div>
+                                    {/*<div className="tab-pane" id="tab3">*/}
+                                        {/*<br/><br/>Rating statistics 2*/}
+                                    {/*</div>*/}
                                     {/*/tab-pane*/}
 
                                 </div>
