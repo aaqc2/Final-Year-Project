@@ -290,11 +290,6 @@ class ColdStartRatings extends Component {
     apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
     /** Hold each genre movie row in an array */
 
-    state = {
-        topRatedRow: [],
-        // recommendation: [],
-        genreMovies: []
-    }
 
 
     /** Make all API calls as soon as the MovieGenreRow component mounts. */
@@ -304,10 +299,15 @@ class ColdStartRatings extends Component {
         console.log(this.props.location.state);
        // this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${localStorage.getItem('id')}`}, this.getRecommendation);
         this.getTopRated();
-        if(this.props.state !== undefined) {
-            if(this.props.location.state.selectedValues !== undefined) {
-            this.getGenreMovies();
-            }
+        if(this.props.location.state.selectedValues !== undefined) {
+            const {location: {state: {selectedValues}}} = this.props;
+            console.log(selectedValues);
+            let url = [];
+            Object.keys(selectedValues).map((gen) => {
+                console.log(gen, "genres");
+                url.push('&gen=' + gen);
+            });
+            this.setState({genreApi: `http://127.0.0.1:8000/api/genres/?${url}`},this.getGenreMovies)
         }
     }
 
@@ -358,40 +358,24 @@ class ColdStartRatings extends Component {
         const row = 'movies';
         let result = [];
         let count = 0;
-        //const user = this.props.location.state.user;
         const user = 1;
-        const {location: {state: {selectedValues}}} = this.props;
-        console.log(selectedValues);
-        let url = [];
-        Object.keys(selectedValues).map((gen) => {
-            console.log(gen, "genres");
-            url.push('&gen=' + gen);
-        });
-        const api = 'http://127.0.0.1:8000/api/genres/?' + url;
-        fetch(api)
+        fetch(this.state.genreApi)
             .then((result) => {
                 return result.json();
             })
             .then((data) => {
                 console.log(data.results);
-                result.push(data.results);
+                // result.push(data.results);
                 data.results.map((movie) => {
-                    // const movieRows = this.getMovieRows(row, movie, user);
-                    // this.setState({genreMovies: movieRows});
-                    // console.log(movie.links__tmdbid);
                     let url = '/movie/' + movie.links__tmdbid + '?api_key=' + this.apiKey;
                     axios.get(url)
                         .then(res => {
                             console.log(res);
                             result.push(res);
                             console.log(count);
-                            if (count >= data.results.length - 1) {
                                 const movieRows = this.getMovieRows(row, result, user);
                                 this.setState({genreMovies: movieRows});
-                            }
-                            count++;
                         }).catch(error => {
-                        count++;
                         console.log(error);
                     });
                     if (data.next !== null) {
@@ -404,23 +388,25 @@ class ColdStartRatings extends Component {
                     } else {
                         this.setState({hasGenrePrevious: false, previousGenreApi: ''});
                     }
-                }).catch((err) => {
+                })
+            })
+            .catch((err) => {
                     console.log(err);
                 });
 
-            });
-    }
-                handleNextGenreClick()
-                {
-                    this.setState({GenreApi: this.state.nextGenreApi}, this.getGenreMovies);
-                }
 
-                handlePreviousGenreClick()
-                {
-                    // this.state.api = this.state.previousApi;
-                    // this.getSearchQuery();
-                    this.setState({GenreApi: this.state.previousGenreApi}, this.getGenreMovies);
-                };
+    };
+
+    handleNextGenreClick()
+    {
+        this.setState({genreApi: this.state.nextGenreApi}, this.getGenreMovies);
+    }
+
+
+    handlePreviousGenreClick()
+    {
+        this.setState({genreApi: this.state.previousGenreApi}, this.getGenreMovies);
+    };
 
 
 

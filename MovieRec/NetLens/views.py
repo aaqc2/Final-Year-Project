@@ -233,7 +233,7 @@ def getGenres(request):
         q |= Q(genre__icontains=genre)
     queryset = Titles.objects.filter(q).select_related('links').values('links__tmdbid')
     paginator = PageNumberPagination()
-    paginator.page_size = 8
+    paginator.page_size = 5
     result_page = paginator.paginate_queryset(queryset, request)
     serializer = GenreSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
