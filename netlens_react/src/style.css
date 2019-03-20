@@ -275,6 +275,14 @@ p.big {
     width: 15.5rem;
   }
 
+.ratedlist-container .movieTitle{
+    height: 55px;
+    width: 155px;
+    overflow: hidden;
+    border: 1px solid #00d95a;
+    padding-right: 10px;
+  }
+
   .ratedlist-container .movie_image:hover  {
        transform: scale(1.0);
        opacity: 1;
@@ -391,6 +399,7 @@ p.big {
     height: 55px;
     width: 205px;
     overflow: hidden;
+    border: 1px solid #00d95a;
     padding-right: 10px;
 
 }

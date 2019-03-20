@@ -41,26 +41,6 @@ class UserProfile extends Component {
         }
     }
 
-    /** Extract our movie data and pass it to our MovieGenre Component. */
-    getMovieRows = (res, url, user) => {
-        const results = res;
-        let movieRows = [];
-        console.log(res);
-        results.map((movie) => {
-            console.log("asd");
-            if (movie.data.poster_path !== null) {
-                const movieComponent = <MovieImages
-                    id={movie.data.id}
-                    userid={user}
-                    url={url}
-                    poster={"https://image.tmdb.org/t/p/original" + movie.data.poster_path}
-                    info={movie}/>
-                movieRows.push(movieComponent);
-            }
-        });
-        return movieRows;
-
-    }
 
 
     /** Extract our movie data and pass it to our MovieGenre Component. */
