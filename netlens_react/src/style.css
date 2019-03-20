@@ -276,7 +276,6 @@ p.big {
     height: 55px;
     width: 155px;
     overflow: hidden;
-    border: 1px solid #00d95a;
     padding-right: 10px;
   }
 
@@ -392,7 +391,6 @@ p.big {
     height: 55px;
     width: 205px;
     overflow: hidden;
-    border: 1px solid #00d95a;
     padding-right: 10px;
 
 }
