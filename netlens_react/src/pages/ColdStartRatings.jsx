@@ -417,10 +417,7 @@ class ColdStartRatings extends Component {
     getTopRated = () => {
         const row = 'toprated';
         let result = [];
-        let link = [];
         let count = 0;
-        // const api = 'http://127.0.0.1:8000/api/toprated';
-        //const user = this.props.location.state.user;
         const user = 1;
         fetch(this.state.topRatedApi)
             .then((result) => {
@@ -437,14 +434,9 @@ class ColdStartRatings extends Component {
                                 .then(res => {
                                     console.log(res);
                                     result.push(res);
-                                    console.log(count);
-                                    if (count >= data.results.length - 1) {
-                                        const movieRows = this.getMovieRows(row, result, user);
-                                        this.setState({topRatedRow: movieRows});
-                                    }
-                                    count++;
+                                    const movieRows = this.getMovieRows(row, result, user);
+                                    this.setState({topRatedRow: movieRows});
                                 }).catch(error => {
-                                count++;
                                 console.log(error);
 
                             })
