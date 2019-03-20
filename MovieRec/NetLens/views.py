@@ -248,6 +248,7 @@ def getNumMovies(request, u):
 
 @api_view(['GET'])
 def getCustomRec(request, u):
+    user = Users.objects.get(pk=u)
     cursor = connection.cursor()
     query = ("SELECT SUM((CASE WHEN genre LIKE '%%Romance%%' THEN 1 ELSE 0 end) * r.rating) AS Romance, "
                                     " SUM((CASE WHEN genre LIKE '%%Action%%' THEN 1 ELSE 0 end) * r.rating) AS Action,"
@@ -284,4 +285,13 @@ def getCustomRec(request, u):
         "Scifi": [(results[0][6] / results[0][13])*(results[0][20]/results[0][21])]
     }
     sortedList = sorted(data.items(), key=operator.itemgetter(1), reverse=True)
-    return Response(sortedList)
+
+    genre1 = sortedList[0][0]
+    genre2 = sortedList[1][0]
+    queryset = Titles.objects.filter(genre__icontains=genre1 and genre2).only('movieid')[:200]
+    #serializer = Test(queryset, many=True)
+    #i = 0;
+    #while i < len(queryset):
+    #    Recommendations.objects.create(userid=user, movieid=queryset[i])
+
+    return Response(data)
