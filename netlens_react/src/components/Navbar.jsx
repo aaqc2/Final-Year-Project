@@ -23,10 +23,9 @@ class Navbar extends Component {
                         <div className="mx-auto my-auto d-inline w-100">
                             <SearchBar/>
                         </div>
-
-                    <Link className="btn btn-sm btn-primary" to="/advancedsearch" id="advanced_search">
+                    <br/>
+                       <Link className="btn btn-sm btn-primary" to="/advancedsearch" id="advanced_search">
                         Search</Link>
-
 
 
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
