@@ -253,10 +253,7 @@ p.big {
        overflow-y: hidden;
        overflow-x: scroll;
        display: flex;
-       /*overflow: -moz-scrollbars-horizontal;*/
-       /* grid-template-columns: repeat(20, 1fr); */
        column-gap: 1;
-
 }
 
 
@@ -339,13 +336,14 @@ p.big {
  /* MOVIE ROW-LANDING PAGE */
 .movieRow {
     background-color:#221f1f;
-    /* grid-column: 2 / 13; */
     color: #fff;
     margin-top: 100px;
     margin: auto;
     width: 100%;
-    padding: 10px;
+    padding: 100px;
   }
+
+
 
   .movieRow_heading {
        padding-top: rem;
@@ -355,14 +353,9 @@ p.big {
 }
     
   
-  .movieRow_container { 
-       /*overflow-y: hidden;*/
+  .movieRow_container {
        transition: transform 450ms;
-       /*overflow-x: scroll;*/
        display: flex;
-      
-       /*overflow: -moz-scrollbars-horizontal;*/
-       /* grid-template-columns: repeat(20, 1fr); */
        column-gap: 1;
   }
 
@@ -419,7 +412,7 @@ p.big {
 
   .wrapper{
     background: linear-gradient(90deg, #999999 0%,  #737373 50%, #4A4A4A 100%);;
-    height:40%;
+    height:100%;
     background-size: cover;
     background-image: url("./images/landingPage.png");
     background-repeat: no-repeat, repeat;
