@@ -1,7 +1,9 @@
 # cdfrom django.shortcuts import render
 from django.contrib.auth import authenticate, login
+from django.db import connection
 import jwt
 import json
+import operator
 from rest_framework.response import Response
 from rest_framework import generics, status
 from .models import Titles, Ratings, Users, Links, Recommendations
@@ -14,6 +16,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from passlib.hash import pbkdf2_sha256
 from django.conf import settings
 from django.http import HttpResponse
+from django.db import connection
 # Create your views here.
 
 def checkToken(request, token):
@@ -42,35 +45,63 @@ def showTopRated(request):
     queryset = Links.objects.select_related('movieid').annotate(avg_rating=Avg('movieid__ratings__rating')).values('tmdbid').annotate(sum_rating=Sum('movieid__ratings__rating')).order_by(F('sum_rating').desc(nulls_last=True))
     # serializer = RatingsSerializer(queryset, many=True)
     paginator = PageNumberPagination()
-    paginator.page_size = 8
+    paginator.page_size = 5
     result_page = paginator.paginate_queryset(queryset, request)
     serializer = RatingsSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
     # return Response(serializer.data)
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def showSearch(request):
     title = request.GET['q']
-    queryset = Titles.objects.select_related('links').filter(title__icontains=title).values('title', 'genre', 'links__tmdbid')
-    paginator = PageNumberPagination()
-    paginator.page_size = 8
-    result_page = paginator.paginate_queryset(queryset, request)
-    serializer = SearchSerializer(result_page, many=True)
-    return paginator.get_paginated_response(serializer.data)
 
-@api_view(['GET'])
+    if request.method == 'GET':
+        queryset = Titles.objects.filter(title__icontains=title).values('title', 'genre', 'links__tmdbid')
+        paginator = PageNumberPagination()
+        result_page = paginator.paginate_queryset(queryset, request)
+        serializer = SearchSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
+    if request.method == 'POST':
+        order = request.data.get('orderby')
+        if(order == "-avg_rating"):
+            order = F('sum_rating').desc(nulls_last=True)
+        queryset = Titles.objects.select_related('links').filter(title__icontains=title).values('title', 'genre', 'links__tmdbid').annotate(avg_rating=Avg('ratings__rating')).annotate(sum_rating=Sum('ratings__rating')).order_by(order)
+        paginator = PageNumberPagination()
+        paginator.page_size = 8
+        result_page = paginator.paginate_queryset(queryset, request)
+        serializer = SearchSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
+
+
+@api_view(['GET', 'POST'])
 def showSearchAndGenre(request):
     title = request.GET['q']
     genres = request.GET.getlist('gen')
     q = Q()
     for genre in genres:
         q |= Q(genre__contains=genre)
-    queryset = Titles.objects.select_related('links').filter(q, title__icontains=title).values('title', 'genre', 'links__tmdbid')
-    paginator = PageNumberPagination()
-    paginator.page_size = 8
-    result_page = paginator.paginate_queryset(queryset, request)
-    serializer = SearchSerializer(result_page, many=True)
-    return paginator.get_paginated_response(serializer.data)
+    if request.method == 'GET':
+        queryset = Titles.objects.select_related('links').filter(q, title__icontains=title).values('title', 'genre', 'links__tmdbid')
+        paginator = PageNumberPagination()
+        paginator.page_size = 8
+        result_page = paginator.paginate_queryset(queryset, request)
+        serializer = SearchSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
+    if request.method == 'POST':
+        order = request.data.get('orderby')
+        if (order == "-avg_rating"):
+            order = F('sum_rating').desc(nulls_last=True)
+        queryset = Titles.objects.select_related('links').filter(q, title__icontains=title).values('title', 'genre', 'links__tmdbid').annotate(avg_rating=Avg('ratings__rating')).annotate(sum_rating=Sum('ratings__rating')).order_by(order)
+        paginator = PageNumberPagination()
+        paginator.page_size = 8
+        result_page = paginator.paginate_queryset(queryset, request)
+        serializer = SearchSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
+
 
 @api_view(['GET'])
 def paginationTest(request):
@@ -122,7 +153,7 @@ def rate(request, m, u, r):
 
 @api_view(['GET'])
 def getUser(request, u):
-    queryset = Links.objects.raw('SELECT l.movieid, l.tmdbid FROM link l JOIN ratings r ON r.movieid = l.movieid WHERE r.userid = %s ORDER BY r.timestamp DESC', [u]) [:20]
+    queryset = list(Links.objects.raw('SELECT l.movieid, l.tmdbid FROM link l JOIN ratings r ON r.movieid = l.movieid WHERE r.userid = %s ORDER BY r.timestamp DESC', [u]))
     # serializer_class = RatingsSerializer(queryset, many=True)
     paginator = PageNumberPagination()
     paginator.page_size = 4
@@ -154,7 +185,7 @@ def getRecommendation(request, u):
                                  '(SELECT movieid FROM ratings rt WHERE rt.userid = %s) ORDER BY r.rating DESC', [u, u]))
     # serializer_class = RatingsSerializer(queryset, many=True)
     paginator = PageNumberPagination()
-    paginator.page_size = 8
+    paginator.page_size = 5
     result_page = paginator.paginate_queryset(queryset, request)
     serializer = RatingsSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
@@ -214,3 +245,43 @@ def getGenres(request):
 def getNumMovies(request, u):
     query = Ratings.objects.filter(pk=u).count()
     return Response(query)
+
+@api_view(['GET'])
+def getCustomRec(request, u):
+    cursor = connection.cursor()
+    query = ("SELECT SUM((CASE WHEN genre LIKE '%%Romance%%' THEN 1 ELSE 0 end) * r.rating) AS Romance, "
+                                    " SUM((CASE WHEN genre LIKE '%%Action%%' THEN 1 ELSE 0 end) * r.rating) AS Action,"
+                                    " SUM((CASE WHEN genre LIKE '%%Comedy%%' THEN 1 ELSE 0 end) * r.rating) AS Comedy,"
+                                    " SUM((CASE WHEN genre LIKE '%%Drama%%' THEN 1 ELSE 0 end) * r.rating) AS Drama,"
+                                    " SUM((CASE WHEN genre LIKE '%%Horror%%' THEN 1 ELSE 0 end) * r.rating) AS Horror,"
+                                    " SUM((CASE WHEN genre LIKE '%%Thriller%%' THEN 1 ELSE 0 end) * r.rating) AS Thriller,"
+                                    " SUM((CASE WHEN genre LIKE '%%Sci-Fi%%' THEN 1 ELSE 0 end) * r.rating) AS SciFi,"
+                                    " SUM((CASE WHEN genre LIKE '%%Romance%%' THEN 1 ELSE 0 end) * 5) AS RRomance,"
+                                    " SUM((CASE WHEN genre LIKE '%%Action%%' THEN 1 ELSE 0 end) * 5) AS RAction,"
+                                    " SUM((CASE WHEN genre LIKE '%%Comedy%%' THEN 1 ELSE 0 end) * 5) AS RComedy,"
+                                    " SUM((CASE WHEN genre LIKE '%%Drama%%' THEN 1 ELSE 0 end) * 5) AS RDrama,"
+                                    " SUM((CASE WHEN genre LIKE '%%Horror%%' THEN 1 ELSE 0 end) * 5) AS RHorror,"
+                                    " SUM((CASE WHEN genre LIKE '%%Thrille%%' THEN 1 ELSE 0 end) * 5) AS RThriller,"
+                                    " SUM((CASE WHEN genre LIKE '%%Sci-Fi%%' THEN 1 ELSE 0 end) * 5) AS RSciFi,"
+                                    " SUM((CASE WHEN GENRE LIKE '%%Romance%%' THEN 1 ELSE 0 end)) AS TRomance,"
+                                    " SUM((CASE WHEN GENRE LIKE '%%Action%%' THEN 1 ELSE 0 end)) AS TAction,"
+                                    " SUM((CASE WHEN GENRE LIKE '%%Comedy%%' THEN 1 ELSE 0 end)) AS TComedy,"
+                                    " SUM((CASE WHEN GENRE LIKE '%%Drama%%' THEN 1 ELSE 0 end)) AS TDrama,"
+                                    " SUM((CASE WHEN GENRE LIKE '%%Horror%%' THEN 1 ELSE 0 end)) AS THorror,"
+                                    " SUM((CASE WHEN GENRE LIKE '%%Thriller%%' THEN 1 ELSE 0 end)) AS TThriller,"
+                                    " SUM((CASE WHEN GENRE LIKE '%%Sci-Fi%%' THEN 1 ELSE 0 end)) AS TSciFi,"
+                                    " COUNT(*) AS total FROM titles t "
+                                    " JOIN ratings r ON t.movieid = r.movieid WHERE userid = %s;")
+    cursor.execute(query, [u])
+    results = cursor.fetchall()
+    data = {
+        "Romance": [(results[0][0]/results[0][7])*(results[0][14]/results[0][21])],
+        "Action": [(results[0][1] / results[0][8])*(results[0][15]/results[0][21])],
+        "Comedy": [(results[0][2] / results[0][9])*(results[0][16]/results[0][21])],
+        "Drama": [(results[0][3] / results[0][10])*(results[0][17]/results[0][21])],
+        "Horror": [(results[0][4] / results[0][11])*(results[0][18]/results[0][21])],
+        "Thriller": [(results[0][5] / results[0][12])*(results[0][19]/results[0][21])],
+        "Scifi": [(results[0][6] / results[0][13])*(results[0][20]/results[0][21])]
+    }
+    sortedList = sorted(data.items(), key=operator.itemgetter(1), reverse=True)
+    return Response(sortedList)

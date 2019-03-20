@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import axios from '../baseUrl'; 
 import MovieImages from '../components/MovieImages';
 import Navbar from "../components/Navbar";
@@ -32,11 +33,11 @@ class LandingPage extends Component {
     apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
     /** Hold each genre movie row in an array */
 
-    state = {
-        topRatedRow: [],
-        recommendation: [],
-        // genreMovies: []
-    }
+    // state = {
+    //     topRatedRow: [],
+    //     recommendation: [],
+    //     // genreMovies: []
+    // }
 
 
     /** Make all API calls as soon as the MovieGenreRow component mounts. */
@@ -56,10 +57,10 @@ class LandingPage extends Component {
 
     /** Extract our movie data and pass it to our MovieGenre Component. */
     getMovieRows = (row, res, user) => {
-        const results = res;
+        // const results = res;
         let movieRows = [];
         console.log(res);
-        results.map((movie) => {
+        res.map((movie) => {
             if (movie.data.poster_path != null) {
                 const movieComponent = <MovieImages
                     id={movie.data.id}
@@ -152,7 +153,7 @@ class LandingPage extends Component {
                                     console.log(res);
                                     result.push(res);
                                     console.log(count);
-                                    if (count >= data.results.length - 1) {
+                                    if (count <= data.results.length - 1) {
                                         const movieRows = this.getMovieRows(row, result, user);
                                         this.setState({topRatedRow: movieRows});
                                     }
@@ -160,7 +161,6 @@ class LandingPage extends Component {
                                 }).catch(error => {
                                 count++;
                                 console.log(error);
-
                             })
                         }
                     });
@@ -216,7 +216,8 @@ class LandingPage extends Component {
                             axios.get(url)
                                 .then(res => {
                                     result.push(res);
-                                    if (count >= data.results.length - 1) {
+                                    console.log(count, data.results.length);
+                                    if (count <= data.results.length - 1) {
                                         const movieRows = this.getMovieRows(row, result, user);
                                         this.setState({recommendation: movieRows});
                                     }
@@ -260,7 +261,7 @@ class LandingPage extends Component {
 
         // const {location: {state: {selectedValues}}} = this.props;
         //console.log(this.state.movies, 'movies')
-        console.log(this.state.genreMovies);
+        // console.log(this.state.genreMovies);
         return (
 
             <div className="movieRow">
