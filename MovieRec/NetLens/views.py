@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework import generics, status
 from .models import Titles, Ratings, Users, Links, Recommendations
 from .serializers import TitlesSerializer, RatingsSerializer, SearchSerializer, RatingSerializer, UserRating, AverageRatingSerializer, UserLoginSerializer, GenreSerializer
+from rest_framework.decorators import api_view
 from django.db.models import Avg, F, Sum, Q
 from rest_framework.pagination import PageNumberPagination
 from datetime import datetime, timedelta
@@ -15,7 +16,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from passlib.hash import pbkdf2_sha256
 from django.conf import settings
 from django.http import HttpResponse
-
+from django.db import connection
 # Create your views here.
 
 def checkToken(request, token):
@@ -44,35 +45,63 @@ def showTopRated(request):
     queryset = Links.objects.select_related('movieid').annotate(avg_rating=Avg('movieid__ratings__rating')).values('tmdbid').annotate(sum_rating=Sum('movieid__ratings__rating')).order_by(F('sum_rating').desc(nulls_last=True))
     # serializer = RatingsSerializer(queryset, many=True)
     paginator = PageNumberPagination()
-    paginator.page_size = 8
+    paginator.page_size = 5
     result_page = paginator.paginate_queryset(queryset, request)
     serializer = RatingsSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
     # return Response(serializer.data)
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def showSearch(request):
     title = request.GET['q']
-    queryset = Titles.objects.select_related('links').filter(title__icontains=title).values('title', 'genre', 'links__tmdbid')
-    paginator = PageNumberPagination()
-    paginator.page_size = 8
-    result_page = paginator.paginate_queryset(queryset, request)
-    serializer = SearchSerializer(result_page, many=True)
-    return paginator.get_paginated_response(serializer.data)
 
-@api_view(['GET'])
+    if request.method == 'GET':
+        queryset = Titles.objects.filter(title__icontains=title).values('title', 'genre', 'links__tmdbid')
+        paginator = PageNumberPagination()
+        result_page = paginator.paginate_queryset(queryset, request)
+        serializer = SearchSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
+    if request.method == 'POST':
+        order = request.data.get('orderby')
+        if(order == "-avg_rating"):
+            order = F('sum_rating').desc(nulls_last=True)
+        queryset = Titles.objects.select_related('links').filter(title__icontains=title).values('title', 'genre', 'links__tmdbid').annotate(avg_rating=Avg('ratings__rating')).annotate(sum_rating=Sum('ratings__rating')).order_by(order)
+        paginator = PageNumberPagination()
+        paginator.page_size = 8
+        result_page = paginator.paginate_queryset(queryset, request)
+        serializer = SearchSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
+
+
+@api_view(['GET', 'POST'])
 def showSearchAndGenre(request):
     title = request.GET['q']
     genres = request.GET.getlist('gen')
     q = Q()
     for genre in genres:
         q |= Q(genre__contains=genre)
-    queryset = Titles.objects.select_related('links').filter(q, title__icontains=title).values('title', 'genre', 'links__tmdbid')
-    paginator = PageNumberPagination()
-    paginator.page_size = 8
-    result_page = paginator.paginate_queryset(queryset, request)
-    serializer = SearchSerializer(result_page, many=True)
-    return paginator.get_paginated_response(serializer.data)
+    if request.method == 'GET':
+        queryset = Titles.objects.select_related('links').filter(q, title__icontains=title).values('title', 'genre', 'links__tmdbid')
+        paginator = PageNumberPagination()
+        paginator.page_size = 8
+        result_page = paginator.paginate_queryset(queryset, request)
+        serializer = SearchSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
+    if request.method == 'POST':
+        order = request.data.get('orderby')
+        if (order == "-avg_rating"):
+            order = F('sum_rating').desc(nulls_last=True)
+        queryset = Titles.objects.select_related('links').filter(q, title__icontains=title).values('title', 'genre', 'links__tmdbid').annotate(avg_rating=Avg('ratings__rating')).annotate(sum_rating=Sum('ratings__rating')).order_by(order)
+        paginator = PageNumberPagination()
+        paginator.page_size = 8
+        result_page = paginator.paginate_queryset(queryset, request)
+        serializer = SearchSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
+
 
 @api_view(['GET'])
 def paginationTest(request):
@@ -124,7 +153,7 @@ def rate(request, m, u, r):
 
 @api_view(['GET'])
 def getUser(request, u):
-    queryset = Links.objects.raw('SELECT l.movieid, l.tmdbid FROM link l JOIN ratings r ON r.movieid = l.movieid WHERE r.userid = %s ORDER BY r.timestamp DESC', [u]) [:20]
+    queryset = list(Links.objects.raw('SELECT l.movieid, l.tmdbid FROM link l JOIN ratings r ON r.movieid = l.movieid WHERE r.userid = %s ORDER BY r.timestamp DESC', [u]))
     # serializer_class = RatingsSerializer(queryset, many=True)
     paginator = PageNumberPagination()
     paginator.page_size = 4
@@ -156,7 +185,7 @@ def getRecommendation(request, u):
                                  '(SELECT movieid FROM ratings rt WHERE rt.userid = %s) ORDER BY r.rating DESC', [u, u]))
     # serializer_class = RatingsSerializer(queryset, many=True)
     paginator = PageNumberPagination()
-    paginator.page_size = 8
+    paginator.page_size = 5
     result_page = paginator.paginate_queryset(queryset, request)
     serializer = RatingsSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
@@ -256,6 +285,7 @@ def getCustomRec(request, u):
         "Scifi": [(results[0][6] / results[0][13])*(results[0][20]/results[0][21])]
     }
     sortedList = sorted(data.items(), key=operator.itemgetter(1), reverse=True)
+
     genre1 = sortedList[0][0]
     genre2 = sortedList[1][0]
     queryset = Titles.objects.filter(genre__icontains=genre1 and genre2).only('movieid')[:200]

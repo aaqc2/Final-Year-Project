@@ -376,8 +376,8 @@ p.big {
     }
 
 .movielink{
-      color: #FFFFFF;
-     font-weight: bold;
+    color: #FFFFFF;
+    font-weight: bold;
      /*font-size: 20px;*/
 
 }
@@ -389,6 +389,8 @@ p.big {
 
 .movieTitle{
     height: 55px;
+    width: 205px;
+    overflow: hidden;
     padding-right: 10px;
 
 }
@@ -495,12 +497,27 @@ p.big {
 
 /* NEW USER RATINGS */
 
-
-
+newuserrating-container{
+    overflow-x:auto;
+}
 .newuser-card  {
     color: white;
      margin: auto;
     width: 60%;
+}
+
+@media only screen and (max-width: 500px) {
+  .movie-genres{
+   width: 100%;
+  }
+}
+
+
+@media only screen and (max-width: 700px) {
+  .movie-genres{
+    /*width: %;*/
+       height: 100px;
+  }
 }
 
 .newusercard-body{
@@ -531,22 +548,25 @@ p.big {
        height: 150px;
 }
 
+@media only screen and (max-width: 700px) {
+  .movie-genres{
+    /*width: %;*/
+       height: 100px;
+  }
+}
+
 .genreImages {
   width: 140px;
     height: 160px;
 
 }
 
-@media only screen and (max-width: 700px) {
-  .genreImages{
-    width: 49.99999%;
-    margin: 6px 0;
-  }
-}
+
 
 @media only screen and (max-width: 500px) {
   .genreImages{
-    width: 100%;
+    width: 150px;
+       height: 100px;
   }
 }
 
@@ -568,3 +588,9 @@ td {
 
 }
 
+
+@media only screen and (max-width: 500px) {
+  h3 {
+    font-size: 16px;
+  }
+}
