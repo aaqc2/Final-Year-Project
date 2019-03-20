@@ -11,6 +11,7 @@ class LandingPage extends Component {
         super(props);
 
         this.state = {
+            userid: localStorage.getItem('id'),
             topRatedRow: [],
             recommendation: [],
             topRatedApi: 'http://127.0.0.1:8000/api/toprated',
@@ -36,13 +37,13 @@ class LandingPage extends Component {
     componentDidMount() {
         console.log('i am mounted');
         console.log(this.props.location.state);
-        this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${localStorage.getItem('id')}`}, this.getRecommendation);
+        this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${this.state.userid}`}, this.getRecommendation);
         this.getTopRated();
     }
 
 
     /** Extract our movie data and pass it to our MovieGenre Component. */
-    getMovieRows = (row, res, user) => {
+    getMovieRows = (row, res) => {
         let movieRows = [];
         console.log(res);
         res.map((movie) => {
@@ -50,7 +51,7 @@ class LandingPage extends Component {
                 const movieComponent = <MovieImages
                     id={movie.data.id}
                     row={row}
-                    userid={user}
+                    userid={this.state.userid}
                     poster={"https://image.tmdb.org/t/p/original" + movie.data.poster_path}
                     info={movie}/>
                 movieRows.push(movieComponent);
@@ -66,7 +67,6 @@ class LandingPage extends Component {
     getTopRated = () => {
         const row = 'toprated';
         let result = [];
-        const user = 1;
         fetch(this.state.topRatedApi)
             .then((response) => {
                 return response.json();
@@ -78,7 +78,7 @@ class LandingPage extends Component {
                         axios.get(url)
                             .then(res => {
                                 result.push(res);
-                                const movieRows = this.getMovieRows(row, result, user);
+                                const movieRows = this.getMovieRows(row, result);
                                 this.setState({topRatedRow: movieRows});
                             }).catch(error => {
                                 console.log(error);
@@ -112,11 +112,10 @@ class LandingPage extends Component {
     getRecommendation = () => {
         const row = 'recommendation';
         let result = [];
-        const user = localStorage.getItem('id');
         console.log(this.state.recommendationApi);
         fetch(this.state.recommendationApi)
-            .then((result) => {
-                return result.json();
+            .then((response) => {
+                return response.json();
             })
             .then((data) => {
                 data.results.map((id) => {
@@ -125,7 +124,7 @@ class LandingPage extends Component {
                         axios.get(url)
                             .then(res => {
                                 result.push(res);
-                                const movieRows = this.getMovieRows(row, result, user);
+                                const movieRows = this.getMovieRows(row, result);
                                 this.setState({recommendation: movieRows});
                             }).catch(error => {
                                 console.log(error);
