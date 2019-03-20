@@ -123,18 +123,14 @@ class RegisterPage extends Component {
                         <div className = "input, col-75">
                             <input type="password" placeholder="Confirm Password" name="confirmPassword" onChange={this.handleChange} required/>
                         </div>
-
-                        <br/>
-
-
-                        <br/>
+                        <br/><br/>
+                         <div className = "col-75">
+                        <p className = "register-text"> By registering you are agreeing to the NetLens Terms of Use and Privacy Policy </p>
+                    </div>
 
                         <button type="submit"value="Submit"> Register</button>
 
                     </form>
- <div className = " col-75">
-                        <p className = "register-text"> By registering you are agreeing to the NetLens Terms of Use and Privacy Policy </p>
-                    </div>
 
             </div>
 

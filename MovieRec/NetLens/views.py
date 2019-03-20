@@ -45,7 +45,7 @@ def showTopRated(request):
     queryset = Links.objects.select_related('movieid').annotate(avg_rating=Avg('movieid__ratings__rating')).values('tmdbid').annotate(sum_rating=Sum('movieid__ratings__rating')).order_by(F('sum_rating').desc(nulls_last=True))
     # serializer = RatingsSerializer(queryset, many=True)
     paginator = PageNumberPagination()
-    paginator.page_size = 5
+    paginator.page_size = 7
     result_page = paginator.paginate_queryset(queryset, request)
     serializer = RatingsSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
@@ -68,7 +68,7 @@ def showSearch(request):
             order = F('sum_rating').desc(nulls_last=True)
         queryset = Titles.objects.select_related('links').filter(title__icontains=title).values('title', 'genre', 'links__tmdbid').annotate(avg_rating=Avg('ratings__rating')).annotate(sum_rating=Sum('ratings__rating')).order_by(order)
         paginator = PageNumberPagination()
-        paginator.page_size = 8
+        paginator.page_size = 7
         result_page = paginator.paginate_queryset(queryset, request)
         serializer = SearchSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
@@ -85,7 +85,7 @@ def showSearchAndGenre(request):
     if request.method == 'GET':
         queryset = Titles.objects.select_related('links').filter(q, title__icontains=title).values('title', 'genre', 'links__tmdbid')
         paginator = PageNumberPagination()
-        paginator.page_size = 8
+        paginator.page_size = 7
         result_page = paginator.paginate_queryset(queryset, request)
         serializer = SearchSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
@@ -96,7 +96,7 @@ def showSearchAndGenre(request):
             order = F('sum_rating').desc(nulls_last=True)
         queryset = Titles.objects.select_related('links').filter(q, title__icontains=title).values('title', 'genre', 'links__tmdbid').annotate(avg_rating=Avg('ratings__rating')).annotate(sum_rating=Sum('ratings__rating')).order_by(order)
         paginator = PageNumberPagination()
-        paginator.page_size = 8
+        paginator.page_size = 7
         result_page = paginator.paginate_queryset(queryset, request)
         serializer = SearchSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
@@ -203,7 +203,7 @@ def getRecommendation(request, u):
                                       '(SELECT movieid FROM ratings rt WHERE rt.userid = %s) ORDER BY r.rating DESC', [u, u]))
     # serializer_class = RatingsSerializer(queryset, many=True)
     paginator = PageNumberPagination()
-    paginator.page_size = 5
+    paginator.page_size = 7
     result_page = paginator.paginate_queryset(queryset, request)
     serializer = RatingsSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
@@ -251,7 +251,7 @@ def getGenres(request):
         q |= Q(genre__icontains=genre)
     queryset = Titles.objects.filter(q).select_related('links').values('links__tmdbid')
     paginator = PageNumberPagination()
-    paginator.page_size = 5
+    paginator.page_size = 7
     result_page = paginator.paginate_queryset(queryset, request)
     serializer = GenreSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
