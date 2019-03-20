@@ -376,8 +376,8 @@ p.big {
     }
 
 .movielink{
-      color: #FFFFFF;
-     font-weight: bold;
+    color: #FFFFFF;
+    font-weight: bold;
      /*font-size: 20px;*/
 
 }
@@ -389,6 +389,8 @@ p.big {
 
 .movieTitle{
     height: 55px;
+    width: 205px;
+    overflow: hidden;
     padding-right: 10px;
 
 }
