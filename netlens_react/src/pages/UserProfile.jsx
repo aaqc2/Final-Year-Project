@@ -12,7 +12,7 @@ class UserProfile extends Component {
         this.state = {
         ratedList: [],
         //checkToken: " "
-        user: localStorage.getItem('id'),
+        userid: localStorage.getItem('id'),
         userRatedApi: '',
         hasUserRatedNext: false,
         hasUserRatedPrevious: false,
@@ -29,7 +29,7 @@ class UserProfile extends Component {
 
 
     componentWillMount() {
-       this.setState({userRatedApi:`http://127.0.0.1:8000/api/getUser/${this.state.user}`},this.getUserRating);
+       this.setState({userRatedApi:`http://127.0.0.1:8000/api/getUser/${this.state.userid}`},this.getUserRating);
        // this.getUserRating();
     }
 
@@ -44,7 +44,7 @@ class UserProfile extends Component {
 
 
     /** Extract our movie data and pass it to our MovieGenre Component. */
-    getMovieRows = (res, url, user) => {
+    getMovieRows = (res, url) => {
         const results = res;
         let movieRows = [];
         console.log(res);
@@ -53,7 +53,7 @@ class UserProfile extends Component {
             if (movie.data.poster_path !== null) {
                 const movieComponent = <MovieImages
                     id={movie.data.id}
-                    userid={user}
+                    userid={this.state.userid}
                     url={url}
                     poster={"https://image.tmdb.org/t/p/original" + movie.data.poster_path}
                     info={movie}/>
@@ -71,11 +71,6 @@ class UserProfile extends Component {
     getUserRating = () => {
         let result = [];
         let link = [];
-        let count = 0;
-        // const user = localStorage.getItem('id');
-        //const user = this.props.location.state.user;
-        // const api = 'http://127.0.0.1:8000/api/getUser/'+user;
-
         fetch(this.state.userRatedApi)
             .then((result) => {
 
@@ -89,11 +84,8 @@ class UserProfile extends Component {
                             .then(res => {
                                 result.push(res);
                                 link.push(url);
-                                if (count <= data.results.length - 1) {
-                                    const movieRows = this.getMovieRows(result, link, this.state.user);
-                                    this.setState({ratedList: movieRows});
-                                }
-                                count++;
+                                const movieRows = this.getMovieRows(result, link);
+                                this.setState({ratedList: movieRows});
                             }).catch(error => {
                             console.log(error);
                         })

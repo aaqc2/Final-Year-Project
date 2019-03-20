@@ -8,6 +8,7 @@ class ColdStartRatings extends Component {
  constructor(props) {
         super(props);
         this.state = {
+            userid: localStorage.getItem('id'),
             topRatedRow: [],
             recommendation: [],
             genreMovies: [],
@@ -87,7 +88,7 @@ class ColdStartRatings extends Component {
       };
 
     /** Extract our movie data and pass it to our MovieGenre Component. */
-    getMovieRows = (row, res, user) => {
+    getMovieRows = (row, res) => {
         const results = res;
         let movieRows = [];
         console.log(res);
@@ -96,7 +97,7 @@ class ColdStartRatings extends Component {
                 const movieComponent = <MovieImages
                     id={movie.data.id}
                     row={row}
-                    userid={user}
+                    userid={this.state.userid}
                     //url={url}
                     poster={"https://image.tmdb.org/t/p/original" + movie.data.poster_path}
                     info={movie}/>
@@ -111,8 +112,6 @@ class ColdStartRatings extends Component {
     getGenreMovies = () => {
         const row = 'movies';
         let result = [];
-        let count = 0;
-        const user = localStorage.getItem('id');
         fetch(this.state.genreApi)
             .then((result) => {
                 return result.json();
@@ -126,8 +125,7 @@ class ColdStartRatings extends Component {
                         .then(res => {
                             console.log(res);
                             result.push(res);
-                            console.log(count);
-                                const movieRows = this.getMovieRows(row, result, user);
+                                const movieRows = this.getMovieRows(row, result);
                                 this.setState({genreMovies: movieRows});
                         }).catch(error => {
                         console.log(error);
@@ -169,8 +167,6 @@ class ColdStartRatings extends Component {
     getTopRated = () => {
         const row = 'toprated';
         let result = [];
-        let count = 0;
-        const user = 1;
         fetch(this.state.topRatedApi)
             .then((result) => {
                 return result.json();
@@ -178,21 +174,17 @@ class ColdStartRatings extends Component {
             .then((data) => {
                 data.results.map((id) => {
                     Object.entries(id).forEach(([key, value]) => {
-                        if (value == null) {
-                            count++;
-                        } else {
-                            let url = '/movie/' + value + '?api_key=' + this.apiKey;
-                            axios.get(url)
-                                .then(res => {
-                                    console.log(res);
-                                    result.push(res);
-                                    const movieRows = this.getMovieRows(row, result, user);
-                                    this.setState({topRatedRow: movieRows});
-                                }).catch(error => {
+                        let url = '/movie/' + value + '?api_key=' + this.apiKey;
+                        axios.get(url)
+                            .then(res => {
+                                console.log(res);
+                                result.push(res);
+                                const movieRows = this.getMovieRows(row, result);
+                                this.setState({topRatedRow: movieRows});
+                            }).catch(error => {
                                 console.log(error);
 
                             })
-                        }
                     });
                 });
                 if (data.next !== null) {
@@ -206,7 +198,6 @@ class ColdStartRatings extends Component {
                     this.setState({hasTopRatedPrevious: false, previousTopRatedApi: ''});
                 }
             }).catch((err) => {
-            count++;
             console.log(err);
         });
 
