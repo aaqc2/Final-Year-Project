@@ -326,11 +326,24 @@ class ColdStartRatings extends Component {
         //      return alert ('You should select at least 1 genre!')
         //
         // }
-        return this.props.history.push({
-            pathname: '/LandingPage',
-            // state:{selectedValues : allSelected}
-        });
-    };
+          fetch(`http://127.0.0.1:8000/api/getCustomRec/${localStorage.getItem('id')}`)
+              .then((response) => {
+              return response;
+          })
+              .then((data) => {
+                      if(data.status==200){
+                          return this.props.history.push({
+                              pathname: '/LandingPage',
+                              // state:{selectedValues : allSelected}
+                          });
+                      }
+                  }
+
+
+              )
+
+
+      };
 
     /** Extract our movie data and pass it to our MovieGenre Component. */
     getMovieRows = (row, res, user) => {
@@ -358,7 +371,7 @@ class ColdStartRatings extends Component {
         const row = 'movies';
         let result = [];
         let count = 0;
-        const user = 1;
+        const user = localStorage.getItem('id');
         fetch(this.state.genreApi)
             .then((result) => {
                 return result.json();

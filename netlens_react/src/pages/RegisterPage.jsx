@@ -60,7 +60,7 @@ class RegisterPage extends Component {
           let id = data.userid;
 
           this.props.history.push({
-            pathname: '/LandingPage',
+            pathname: '/NewUserRatings',
             state: {user: id}
           })
       }

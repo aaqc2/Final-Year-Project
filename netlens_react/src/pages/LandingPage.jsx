@@ -135,8 +135,8 @@ class LandingPage extends Component {
         let link = [];
         let count = 0;
         // const api = 'http://127.0.0.1:8000/api/toprated';
-        //const user = this.props.location.state.user;
-        const user = 1;
+        const user = localStorage.getItem('id');
+        //const user = 1;
         fetch(this.state.topRatedApi)
             .then((result) => {
                 return result.json();
