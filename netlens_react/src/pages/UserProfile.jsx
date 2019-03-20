@@ -178,18 +178,18 @@ class UserProfile extends Component {
                                     <li className="list-group-item">Activity</li>
                                     <li className="list-group-item text-right"><span className="pull-left"><strong>Movies rated</strong></span> {this.state.numberOfMoviesRated}
                                     </li>
-                                    <li className="list-group-item text-right"><span
-                                        className="pull-left"><strong>Comments</strong></span> 13
-                                    </li>
+                                    {/*<li className="list-group-item text-right"><span*/}
+                                        {/*className="pull-left"><strong>Comments</strong></span> 13*/}
+                                    {/*</li>*/}
                                 </ul>
-                                <div className="panel panel-default">
-                                    <div className="panel-heading">Social Media</div>
-                                    <div className="panel-body">
-                                        <i className="fa fa-facebook fa-2x"/> <i className="fa fa-github fa-2x"/> <i
-                                        className="fa fa-twitter fa-2x"/> <i className="fa fa-pinterest fa-2x"/> <i
-                                        className="fa fa-google-plus fa-2x"/>
-                                    </div>
-                                </div>
+                                {/*<div className="panel panel-default">*/}
+                                    {/*<div className="panel-heading">Social Media</div>*/}
+                                    {/*<div className="panel-body">*/}
+                                        {/*<i className="fa fa-facebook fa-2x"/> <i className="fa fa-github fa-2x"/> <i*/}
+                                        {/*className="fa fa-twitter fa-2x"/> <i className="fa fa-pinterest fa-2x"/> <i*/}
+                                        {/*className="fa fa-google-plus fa-2x"/>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
                             </div>
                             {/*/col-3*/}
                             <div className="col-sm-9">
@@ -232,7 +232,7 @@ class UserProfile extends Component {
                 </div>
             </div>
             }
-                </div>
+            </div>
         );
     }
 }
