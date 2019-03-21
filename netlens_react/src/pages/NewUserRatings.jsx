@@ -18,6 +18,7 @@ class NewUserRatings extends Component {
         animatedMovieRow: [],
         romanceMovieRow: [],
         checkedOptions: {},
+        user: localStorage.getItem('id'),
     }
   }
 
@@ -206,7 +207,7 @@ class NewUserRatings extends Component {
             </header>
 
                 <div className="newuser-card">
-                    <h2> Welcome </h2>
+                    <h2> Welcome {localStorage.getItem('username')}  </h2>
                     <h3> To get started, tell us about your movie preferences. Using the checkboxs, select your top two favourite movie genres</h3>
 
                             <div className="newusercard-body">

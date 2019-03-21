@@ -10,7 +10,8 @@ class LandingPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userid: localStorage.getItem('id'),
+            // userid: localStorage.getItem('id'),
+            user: localStorage.getItem('id'),
             topRatedRow: [],
             recommendation: [],
             topRatedApi: 'http://127.0.0.1:8000/api/toprated',
@@ -165,7 +166,7 @@ class LandingPage extends Component {
         return (
             <div className="movieRow">
                 <Navbar/>
-                <h1> Welcome </h1>
+                <h1> Welcome {localStorage.getItem('username')} </h1>
 
                 {/* Render the recommendation list */}
                 <h1 className="movieRow_heading">Top Picks for you</h1>
