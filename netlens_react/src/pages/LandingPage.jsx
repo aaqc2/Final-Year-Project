@@ -13,7 +13,7 @@ class LandingPage extends Component {
             userid: localStorage.getItem('id'),
             topRatedRow: [],
             recommendation: [],
-            topRatedApi: 'http://127.0.0.1:8000/api/toprated',
+            topRatedApi: 'http://127.0.0.1:8000/api/toprated/',
             hasTopRatedNext: false,
             hasTopRatedPrevious: false,
             nextTopRatedApi: '',
@@ -66,7 +66,16 @@ class LandingPage extends Component {
     getTopRated = () => {
         const row = 'toprated';
         let result = [];
-        fetch(this.state.topRatedApi)
+        fetch(this.state.topRatedApi, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'width': window.screen.width,
+            },)
+        })
             .then((response) => {
                 return response.json();
             })
@@ -115,7 +124,16 @@ class LandingPage extends Component {
         const row = 'recommendation';
         let result = [];
         console.log(this.state.recommendationApi);
-        fetch(this.state.recommendationApi)
+        fetch(this.state.recommendationApi, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'width': window.screen.width,
+            },)
+        })
             .then((response) => {
                 return response.json();
             })

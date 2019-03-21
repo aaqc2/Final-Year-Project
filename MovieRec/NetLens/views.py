@@ -38,17 +38,30 @@ class ShowGenres(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'movieid'
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def showTopRated(request):
     # getMID = Titles.objects.values_list('movieid', flat=True).annotate(avg_rating=Avg('ratings__rating')).annotate(sum_rating=Sum('ratings__rating')).order_by(F('sum_rating').desc(nulls_last=True))
     # queryset = Links.objects.filter(movieid__in=list(getMID)).values('tmdbid')
     queryset = Links.objects.select_related('movieid').annotate(avg_rating=Avg('movieid__ratings__rating')).values('tmdbid').annotate(sum_rating=Sum('movieid__ratings__rating')).order_by(F('sum_rating').desc(nulls_last=True))
     # serializer = RatingsSerializer(queryset, many=True)
-    paginator = PageNumberPagination()
-    paginator.page_size = 7
-    result_page = paginator.paginate_queryset(queryset, request)
-    serializer = RatingsSerializer(result_page, many=True)
-    return paginator.get_paginated_response(serializer.data)
+    if request.method == 'GET':
+        paginator = PageNumberPagination()
+        paginator.page_size = 7
+        result_page = paginator.paginate_queryset(queryset, request)
+        serializer = RatingsSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+    if request.method == 'POST':
+        width = request.data.get('width')
+        paginator = PageNumberPagination()
+        if width > 1280:
+            paginator.page_size = 7
+        else:
+            paginator.page_size = 5
+        result_page = paginator.paginate_queryset(queryset, request)
+        serializer = RatingsSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
+
     # return Response(serializer.data)
 
 @api_view(['GET', 'POST'])
@@ -194,7 +207,7 @@ def AverageRating(request, tmdbid):
     serializer = AverageRatingSerializer(queryset, many=True)
     return Response(serializer.data)
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def getRecommendation(request, u):
     #queryset = Links.objects.raw('SELECT l.movieid, l.tmdbid FROM link l JOIN recommendations r ON l.movieid = r.movieid'
     #                             ' WHERE userid = %s ORDER BY r.rating DESC', [u])[:20]
@@ -202,11 +215,22 @@ def getRecommendation(request, u):
                                       ' l.movieid = r.movieid WHERE r.userid = %s AND r.movieid NOT IN '
                                       '(SELECT movieid FROM ratings rt WHERE rt.userid = %s) ORDER BY r.rating DESC', [u, u]))
     # serializer_class = RatingsSerializer(queryset, many=True)
-    paginator = PageNumberPagination()
-    paginator.page_size = 7
-    result_page = paginator.paginate_queryset(queryset, request)
-    serializer = RatingsSerializer(result_page, many=True)
-    return paginator.get_paginated_response(serializer.data)
+    if request.method == 'GET':
+        paginator = PageNumberPagination()
+        paginator.page_size = 7
+        result_page = paginator.paginate_queryset(queryset, request)
+        serializer = RatingsSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+    if request.method == 'POST':
+        width = request.data.get('width')
+        paginator = PageNumberPagination()
+        if width > 1280:
+            paginator.page_size = 7
+        else:
+            paginator.page_size = 5
+        result_page = paginator.paginate_queryset(queryset, request)
+        serializer = RatingsSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
     # return Response(serializer_class.data)
 
 @api_view(['POST'])
