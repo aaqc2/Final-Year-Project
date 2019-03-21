@@ -69,8 +69,9 @@ def showSearch(request):
     title = request.GET['q']
 
     if request.method == 'GET':
-        queryset = Titles.objects.filter(title__icontains=title).values('title', 'genre', 'links__tmdbid')
+        queryset = Titles.objects.filter(title__icontains=title).values('title', 'genre', 'links__tmdbid').order_by('-title')
         paginator = PageNumberPagination()
+        paginator.page_size = 7
         result_page = paginator.paginate_queryset(queryset, request)
         serializer = SearchSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
