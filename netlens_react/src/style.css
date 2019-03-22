@@ -426,6 +426,10 @@ p.big {
     border: 1px solid #888;
     width: 50%; /* Could be more or less, depending on screen size */
   }
+
+  .recommend-text {
+      color: white;
+  }
   
   @media screen and (max-width: 800px) {
     .login-container {
@@ -593,4 +597,41 @@ td {
   h3 {
     font-size: 16px;
   }
+}
+
+
+@media all and (max-width: 500px) {
+  table  {
+    display: block;}
+    td { width: 100% !important; }
+
+}
+
+/*// Non-Flex modernizer fallback*/
+/*.no-flexbox .Rtable {*/
+  /*display: block;*/
+  /*> .Rtable-cell { width: 100%; }*/
+  /*> .Rtable-cell--foot { margin-bottom: 1em; }*/
+
+
+/*.footer {*/
+    /*position:absolute;*/
+    /*left:0;*/
+    /*bottom:0;*/
+    /*right:0;*/
+/*}*/
+
+.site {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.site-content {
+    flex: 1 0 auto;
+    width: 100%;
+}
+.site-content:after {
+    display: block;
+    height: 0;
+    visibility: hidden;
 }

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import React, {Component} from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 import './style.css';
 import MovieInfo from './pages/MovieInfo.jsx';
@@ -13,23 +13,25 @@ import NewUserRatings from "./pages/NewUserRatings";
 import ColdStartRatings from "./pages/ColdStartRatings";
 
 class App extends Component {
-  render() {
-    return (
-      <Router>
-        <div>
-          <Route path="/Signin" component={Signin}/>
-          <Route path="/NewUserRatings" component={NewUserRatings}/>
-           <Route path="/ColdStartRatings" component={ColdStartRatings}/>
-          <Route path="/RegisterPage" component={RegisterPage}/> 
-          <Route exact path="/LandingPage" component={LandingPage}/>
-          <Route exact path="/info/:id" render={(props) => (<MovieInfo {...props} isAuthed={true} />)} />
-          <Route path="/userprofile" component={UserProfile}/>
-          <Route path="/advancedsearch" component={AdvancedSearch}/>
-          <Footer/>
-        </div>
-      </Router>
-    );
-  }
+    render() {
+        return (
+            <Router>
+                <div className="site">
+                    <div className="site-content">
+                        <Route path="/Signin" component={Signin}/>
+                        <Route path="/NewUserRatings" component={NewUserRatings}/>
+                        <Route path="/ColdStartRatings" component={ColdStartRatings}/>
+                        <Route path="/RegisterPage" component={RegisterPage}/>
+                        <Route exact path="/LandingPage" component={LandingPage}/>
+                        <Route exact path="/info/:id" render={(props) => (<MovieInfo {...props} isAuthed={true}/>)}/>
+                        <Route path="/userprofile" component={UserProfile}/>
+                        <Route path="/advancedsearch" component={AdvancedSearch}/>
+                    </div>
+                    <Footer/>
+                </div>
+            </Router>
+        );
+    }
 }
 
 export default App;
