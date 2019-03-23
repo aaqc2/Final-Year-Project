@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from '../baseUrl';
 import MovieImages from '../components/MovieImages';
-
+import { checkToken } from "../components/authenticateToken";
 
 
 class ColdStartRatings extends Component {
@@ -41,19 +41,28 @@ class ColdStartRatings extends Component {
         console.log(this.props.location.state);
        // this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${localStorage.getItem('id')}`}, this.getRecommendation);
         this.getTopRated();
-        if(this.props.location.state.selectedValues !== undefined) {
-            const {location: {state: {selectedValues}}} = this.props;
-            console.log(selectedValues);
-            let url = [];
-            Object.keys(selectedValues).map((gen) => {
-                console.log(gen, "genres");
-                url.push('&gen=' + gen);
-            });
-            this.setState({genreApi: `http://127.0.0.1:8000/api/genres/?${url}`},this.getGenreMovies)
+
+        if(this.props.location.state !== undefined ) {
+            if (this.props.location.state.selectedValues !== undefined) {
+                const {location: {state: {selectedValues}}} = this.props;
+                console.log(selectedValues);
+                let url = [];
+                Object.keys(selectedValues).map((gen) => {
+                    console.log(gen, "genres");
+                    url.push('&gen=' + gen);
+                });
+                this.setState({genreApi: `http://127.0.0.1:8000/api/genres/?${url}`}, this.getGenreMovies)
+            }
         }
     }
 
-
+    check() {
+        if(checkToken() == 'invalid') {
+            this.props.history.push({
+            pathname: '/Signin'
+          })
+        }
+    }
 
       handleSubmit = (e)  => {
         e.preventDefault();
@@ -217,45 +226,46 @@ class ColdStartRatings extends Component {
 
 
     render() {
-
-        console.log(this.state.genreMovies);
+        this.check();
         return (
+            <div>
+                {this.state &&
+                <div className="movieRow">
+                    <header className="header">
+                        <h1>TheMovieOracle</h1>
+                        <h5>personalised movie recommendations</h5>
+                    </header>
 
-            <div className="movieRow">
-               <header className="header">
-                <h1>TheMovieOracle</h1>
-                <h5>personalised movie recommendations</h5>
-            </header>
+                    <h1> Welcome </h1>
+                    <h3>To receive accurate recommendation, we need to understand your movie preferences.</h3>
+                    <h3> Provide ratings for the movies below </h3>
+                    <h1 className="movieRow_heading">Top Picks for you</h1>
+                    <div className="movieRow_container">
+                        {this.state.genreMovies}
+                    </div>
+                    <div>
+                        {this.state.hasGenrePrevious && <button className="btn btn-sm btn-primary"
+                                                                onClick={this.handlePreviousGenreClick}>Previous</button>}
+                        {this.state.hasGenreNext && <button className="nextButton btn btn-sm btn-primary"
+                                                            onClick={this.handleNextGenreClick}>Next</button>}
+                        <br/><br/>
+                    </div>
+                    <h1 className="movieRow_heading">Top Rated</h1>
 
-                <h1> Welcome </h1>
-                <h3>To receive accurate recommendation, we need to understand your movie preferences.</h3>
-               <h3> Provide ratings for the movies below </h3>
-                <h1 className="movieRow_heading">Top Picks for you</h1>
-                <div className="movieRow_container">
-                    {this.state.genreMovies}
+                    <div className="movieRow_container">
+                        {this.state.topRatedRow}
+                    </div>
+                    <div>
+                        {this.state.hasTopRatedPrevious && <button className="btn btn-sm btn-primary"
+                                                                   onClick={this.handlePreviousTopRatedClick}>Previous</button>}
+                        {this.state.hasTopRatedNext && <button className="nextButton btn btn-sm btn-primary"
+                                                               onClick={this.handleNextTopRatedClick}>Next</button>}
+                        <br/><br/>
+                    </div>
+                    <button className="newuser-submit" onClick={this.handleSubmit}> Next</button>
                 </div>
-                <div>
-                    {this.state.hasGenrePrevious && <button className="btn btn-sm btn-primary"
-                                                                     onClick={this.handlePreviousGenreClick}>Previous</button>}
-                    {this.state.hasGenreNext && <button className="nextButton btn btn-sm btn-primary"
-                                                                 onClick={this.handleNextGenreClick}>Next</button>}
-                    <br/><br/>
-                </div>
-                <h1 className="movieRow_heading">Top Rated</h1>
-
-                <div className="movieRow_container">
-                    {this.state.topRatedRow}
-                </div>
-                <div>
-                    {this.state.hasTopRatedPrevious && <button className="btn btn-sm btn-primary"
-                                                               onClick={this.handlePreviousTopRatedClick}>Previous</button>}
-                    {this.state.hasTopRatedNext && <button className="nextButton btn btn-sm btn-primary"
-                                                           onClick={this.handleNextTopRatedClick}>Next</button>}
-                    <br/><br/>
-                </div>
-                 <button className = "newuser-submit" onClick={this.handleSubmit}> Next </button>
+                }
             </div>
-
         );
     }
 }

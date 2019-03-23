@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from '../baseUrl'; 
 import MovieImages from '../components/MovieImages';
 import Navbar from "../components/Navbar";
+import {checkToken} from "../components/authenticateToken";
 
 
 
@@ -40,6 +41,13 @@ class LandingPage extends Component {
         this.getTopRated();
     }
 
+    check() {
+        if(checkToken() == 'invalid') {
+            this.props.history.push({
+            pathname: '/Signin'
+          })
+        }
+    }
 
     /** Extract our movie data and pass it to our MovieGenre Component. */
     getMovieRows = (row, res) => {
@@ -180,7 +188,10 @@ class LandingPage extends Component {
     R
 
     render() {
+        this.check();
         return (
+            <div>
+            { this.state &&
             <div className="movieRow">
                 <Navbar/>
                 <h1> Welcome </h1>
@@ -213,6 +224,8 @@ class LandingPage extends Component {
                                                            onClick={this.handleNextTopRatedClick}>Next</button>}
                     <br/><br/>
                 </div>
+                </div>
+                }
             </div>
 
 
