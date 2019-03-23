@@ -41,7 +41,7 @@ class NewUserRatings extends Component {
         })
         let  filtered = allValues.filter(value => value)
         console.log("Filtered", filtered)
-        if(filtered.length >= 2 && value ) { return alert ('Select a maximum of 2 genres') }
+        if(filtered.length >= 1 && value ) { return alert ('Select only one genre') }
 
         allSelected[selected] = value
         this.setState({
@@ -64,7 +64,7 @@ class NewUserRatings extends Component {
         })
 
         if (!allValues.some(this.checked)) {
-             return alert ('You should select at least 1 genre!')
+             return alert ('You should select 1 genre!')
 
         }
         return this.props.history.push({
@@ -206,9 +206,12 @@ class NewUserRatings extends Component {
                 <h5>personalised movie recommendations</h5>
             </header>
 
+
+
+
                 <div className="newuser-card">
                     <h2> Welcome {localStorage.getItem('username')}  </h2>
-                    <h3> To get started, tell us about your movie preferences. Using the checkboxs, select your top two favourite movie genres</h3>
+                    <h3> To get started, tell us about your movie preferences. Using the checkboxs, select your top favourite movie genre</h3>
 
                             <div className="newusercard-body">
                                 <form name="new_user_form" className="newuser-rating-form"   >
@@ -301,5 +304,8 @@ class NewUserRatings extends Component {
         );
       }
 }
+
+
+
 
 export default NewUserRatings;

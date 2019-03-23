@@ -545,6 +545,10 @@ newuserrating-container{
 
 }
 
+label {
+
+}
+
 .movie-genres{
      overflow-y: hidden;
        transition: transform 450ms;
@@ -583,15 +587,6 @@ newuserrating-container{
 }
 
 
-table, td {
-
-  border-collapse: collapse;
-}
-td {
-  padding: 15px;
-
-}
-
 
 @media only screen and (max-width: 500px) {
   h3 {
@@ -600,27 +595,60 @@ td {
 }
 
 
-@media all and (max-width: 500px) {
-  table  {
-    display: block;}
-    td { width: 100% !important; }
 
+
+
+
+
+table {
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
 }
 
-/*// Non-Flex modernizer fallback*/
-/*.no-flexbox .Rtable {*/
-  /*display: block;*/
-  /*> .Rtable-cell { width: 100%; }*/
-  /*> .Rtable-cell--foot { margin-bottom: 1em; }*/
+
+table tr {
+  padding: .35em;
+}
+
+table td {
+  padding: .625em;
+  text-align: center;
+}
 
 
-/*.footer {*/
-    /*position:absolute;*/
-    /*left:0;*/
-    /*bottom:0;*/
-    /*right:0;*/
-/*}*/
+@media screen and (max-width: 600px) {
+  table {
+    border: 0;
+  }
 
+  table caption {
+    font-size: 1.3em;
+  }
+
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625em;
+  }
+
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: .8em;
+    text-align: right;
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
+}
+
+
+
+/*STRUCTURE */
 .site {
     display: flex;
     flex-direction: column;
