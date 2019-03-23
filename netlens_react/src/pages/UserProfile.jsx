@@ -11,7 +11,6 @@ class UserProfile extends Component {
         /** Hold rated list movie row in an array */
         this.state = {
         ratedList: [],
-        //checkToken: " "
         userid: localStorage.getItem('id'),
         userRatedApi: '',
         hasUserRatedNext: false,
@@ -121,8 +120,6 @@ class UserProfile extends Component {
          this.check();
         return (
             <div>
-                {/*<span>{this.check()}</span>*/}
-                {/*{this.check()}*/}
             { this.state &&
             <div className="container">
                 <Navbar/>

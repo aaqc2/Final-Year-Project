@@ -28,7 +28,6 @@ def checkToken(request, token):
 
 class ListTitles(generics.ListCreateAPIView):
     queryset = Titles.objects.all()
-    # pagination_class = None
     serializer_class = TitlesSerializer
 
 
@@ -40,10 +39,7 @@ class ShowGenres(generics.RetrieveUpdateDestroyAPIView):
 
 @api_view(['GET', 'POST'])
 def showTopRated(request):
-    # getMID = Titles.objects.values_list('movieid', flat=True).annotate(avg_rating=Avg('ratings__rating')).annotate(sum_rating=Sum('ratings__rating')).order_by(F('sum_rating').desc(nulls_last=True))
-    # queryset = Links.objects.filter(movieid__in=list(getMID)).values('tmdbid')
     queryset = Links.objects.select_related('movieid').annotate(avg_rating=Avg('movieid__ratings__rating')).values('tmdbid').annotate(sum_rating=Sum('movieid__ratings__rating')).order_by(F('sum_rating').desc(nulls_last=True))
-    # serializer = RatingsSerializer(queryset, many=True)
     if request.method == 'GET':
         paginator = PageNumberPagination()
         paginator.page_size = 7
@@ -60,9 +56,6 @@ def showTopRated(request):
         result_page = paginator.paginate_queryset(queryset, request)
         serializer = RatingsSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
-
-
-    # return Response(serializer.data)
 
 @api_view(['GET', 'POST'])
 def showSearch(request):
@@ -86,8 +79,6 @@ def showSearch(request):
         result_page = paginator.paginate_queryset(queryset, request)
         serializer = SearchSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
-
-
 
 @api_view(['GET', 'POST'])
 def showSearchAndGenre(request):
@@ -114,8 +105,6 @@ def showSearchAndGenre(request):
         result_page = paginator.paginate_queryset(queryset, request)
         serializer = SearchSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
-
-
 
 @api_view(['GET'])
 def paginationTest(request):
@@ -157,7 +146,6 @@ def register(request):
                     'token': jwt_token,
                     'email': email
                 },
-                # jwt_token,
                 status=200,
                 content_type="application/json"
             )
@@ -170,14 +158,11 @@ def rate(request, m, u, r):
         rating = float(r)
     except ValueError:
         print("invald value")
-
     if Ratings.objects.filter(userid=userId, movieid=tMovie.movieid).exists():
         Ratings.objects.filter(userid=userId, movieid=tMovie.movieid).update(rating=rating, timestamp=datetime.now().timestamp())
     else:
         testrating = Ratings(userid=userId, movieid=tMovie.movieid, rating=rating, timestamp=datetime.now().timestamp())
         testrating.save(force_insert=True)
-
-
     queryset = Ratings.objects.filter(userid=userId, movieid=tMovie.movieid)
     serializer_class = UserRating(queryset, many=True)
     return Response(serializer_class.data)
@@ -186,7 +171,6 @@ def rate(request, m, u, r):
 @api_view(['GET'])
 def getUser(request, u):
     queryset = list(Links.objects.raw('SELECT l.movieid, l.tmdbid FROM link l JOIN ratings r ON r.movieid = l.movieid WHERE r.userid = %s ORDER BY r.timestamp DESC', [u]))
-    # serializer_class = RatingsSerializer(queryset, many=True)
     paginator = PageNumberPagination()
     paginator.page_size = 4
     result_page = paginator.paginate_queryset(queryset, request)
@@ -210,8 +194,6 @@ def AverageRating(request, tmdbid):
 
 @api_view(['GET', 'POST'])
 def getRecommendation(request, u):
-    #queryset = Links.objects.raw('SELECT l.movieid, l.tmdbid FROM link l JOIN recommendations r ON l.movieid = r.movieid'
-    #                             ' WHERE userid = %s ORDER BY r.rating DESC', [u])[:20]
     queryset = list(Links.objects.raw(' SELECT l.tmdbid, l.movieid FROM link l JOIN recommendations r ON '
                                       ' l.movieid = r.movieid WHERE r.userid = %s AND r.movieid NOT IN '
                                       '(SELECT movieid FROM ratings rt WHERE rt.userid = %s) ORDER BY r.rating DESC', [u, u]))
@@ -232,7 +214,6 @@ def getRecommendation(request, u):
         result_page = paginator.paginate_queryset(queryset, request)
         serializer = RatingsSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
-    # return Response(serializer_class.data)
 
 @api_view(['POST'])
 def login(request):
@@ -256,10 +237,7 @@ def login(request):
                         'username': user.username,
                         'token': jwt_token,
                         'email': user.email
-
-
                     },
-                    # jwt_token,
                     status=200,
                     content_type="application/json"
                 )

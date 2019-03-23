@@ -2,8 +2,10 @@
 
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import {Redirect} from 'react-router-dom'
-import Authentication from '../components/Authentication.jsx';
+// import {Redirect} from 'react-router-dom'
+
+// import Authentication from '../components/Authentication.jsx';
+
 
 
 class Login extends Component {
@@ -20,7 +22,6 @@ class Login extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.Auth = new Authentication();
     }
 
     handleChange(event) {
