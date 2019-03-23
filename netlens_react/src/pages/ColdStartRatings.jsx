@@ -5,17 +5,17 @@ import MovieImages from '../components/MovieImages';
 
 
 class ColdStartRatings extends Component {
- constructor(props) {
+    constructor(props) {
         super(props);
         this.state = {
             userid: localStorage.getItem('id'),
             genreMovies: [],
+             recommendation: [],
             genreApi: '',
             hasGenreNext: false,
             hasGenrePrevious: false,
             nextGenreApi: '',
             prevGenreApi: '',
-
         };
 
         this.handlePreviousGenreClick = this.handlePreviousGenreClick.bind(this);
@@ -43,21 +43,21 @@ class ColdStartRatings extends Component {
 
 
 
-      handleSubmit = (e)  => {
+    handleSubmit = (e)  => {
         e.preventDefault();
-          fetch(`http://127.0.0.1:8000/api/getCustomRec/${localStorage.getItem('id')}`)
-              .then((response) => {
-              return response;
-          })
-              .then((data) => {
-                      if(data.status==200){
-                          return this.props.history.push({
-                              pathname: '/LandingPage',
-                              // state:{selectedValues : allSelected}
-                          });
-                      }
-                  }
-              )};
+        fetch(`http://127.0.0.1:8000/api/getCustomRec/${localStorage.getItem('id')}`)
+            .then((response) => {
+                return response;
+            })
+            .then((data) => {
+                    if(data.status==200){
+                        return this.props.history.push({
+                            pathname: '/LandingPage',
+                            // state:{selectedValues : allSelected}
+                        });
+                    }
+                }
+            )};
 
     /** Extract our movie data and pass it to our MovieGenre Component. */
     getMovieRows = (row, res, user) => {
@@ -81,7 +81,7 @@ class ColdStartRatings extends Component {
 
     }
 
-   /**
+    /**
      * Send request for the genre movies
      */
 
@@ -101,8 +101,8 @@ class ColdStartRatings extends Component {
                         .then(res => {
                             console.log(res);
                             result.push(res);
-                                const movieRows = this.getMovieRows(row, result);
-                                this.setState({genreMovies: movieRows});
+                            const movieRows = this.getMovieRows(row, result);
+                            this.setState({genreMovies: movieRows});
                         }).catch(error => {
                         console.log(error);
                     });
@@ -119,8 +119,8 @@ class ColdStartRatings extends Component {
                 })
             })
             .catch((err) => {
-                    console.log(err);
-                });
+                console.log(err);
+            });
 
 
     };
@@ -157,9 +157,9 @@ class ColdStartRatings extends Component {
                                 const movieRows = this.getMovieRows(row, result);
                                 this.setState({topRatedRow: movieRows});
                             }).catch(error => {
-                                console.log(error);
+                            console.log(error);
 
-                            })
+                        })
                     });
                 });
                 if (data.next !== null) {
@@ -196,26 +196,26 @@ class ColdStartRatings extends Component {
         return (
 
             <div className="movieRow">
-               <header className="header">
-                <h1>TheMovieOracle</h1>
-                <h5>personalised movie recommendations</h5>
-            </header>
+                <header className="header">
+                    <h1>TheMovieOracle</h1>
+                    <h5>personalised movie recommendations</h5>
+                </header>
 
 
                 <h3>To receive accurate recommendation, we need to understand your movie preferences.</h3>
-               <h3> Provide ratings for the movies below </h3>
-                <h1 className="movieRow_heading">Top Picks for you</h1>
+                <h3> Provide ratings for the movies below </h3>
+                <h1 className="movieRow_heading"> </h1>
                 <div className="movieRow_container">
                     {this.state.genreMovies}
                 </div>
                 <div>
                     {this.state.hasGenrePrevious && <button className="btn btn-sm btn-primary"
-                                                                     onClick={this.handlePreviousGenreClick}>Previous</button>}
+                                                            onClick={this.handlePreviousGenreClick}>Previous</button>}
                     {this.state.hasGenreNext && <button className="nextButton btn btn-sm btn-primary"
-                                                                 onClick={this.handleNextGenreClick}>Next</button>}
+                                                        onClick={this.handleNextGenreClick}>Next</button>}
                     <br/><br/>
                 </div>
-                 <button className = "newuser-submit" onClick={this.handleSubmit}> Continue </button>
+                <button className = "newuser-submit" onClick={this.handleSubmit}> Continue </button>
             </div>
 
         );

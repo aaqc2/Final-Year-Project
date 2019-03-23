@@ -1,7 +1,8 @@
+
+
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {Redirect} from 'react-router-dom'
-// import homescreen from '../images/homescreen.png';
 import Authentication from '../components/Authentication.jsx';
 
 
@@ -48,10 +49,10 @@ class Login extends Component {
                 if (data.token != null) {
 
                     //saves token and id to local storage.
-                    localStorage.setItem('token', data.token['token'])
-                    localStorage.setItem('id', data.userid)
-                    localStorage.setItem('username', data.username)
-                    localStorage.setItem('email', data.email)
+                    localStorage.setItem('token', data.token['token']);
+                    localStorage.setItem('id', data.userid);
+                    localStorage.setItem('username', data.username);
+                    localStorage.setItem('email', data.email);
                     let id = data.userid;
 
                     this.props.history.push({
@@ -101,8 +102,8 @@ class Login extends Component {
                 </div>
                 <div className="container recommend-text">
                     <h3> recommendations </h3>
-                    <p> Struggle to find a movie you will enjoy? NetLens helps you find movies you will like. Simply
-                        provide ratings for movies, then NetLens recommends you movies which you will enjoy to watch
+                    <p> Struggle to find a movie you will enjoy? TheMovieOracle helps you find movies you will like. Simply
+                        provide ratings for movies, then let TheMovieOracle recommends you movies which you will enjoy to watch
                         :)</p>
                     {/* <img src={homescreen} alt="homescreen"/> */}
                 </div>

@@ -41,105 +41,105 @@ p.big {
 /* SEARCH BAR */
 
 .react-autosuggest__container {
-  position: relative;
-  margin: auto;
-  left: 15%;
+    position: relative;
+    margin: auto;
+    left: 15%;
 }
 
 .react-autosuggest__input {
-  width: 400px;
-  height: 30px;
-  padding: 10px 20px;
-  font-family: Helvetica, sans-serif;
-  font-weight: 300;
-  font-size: 14px;
-  color: #0e1111;
-  border: 1px solid #aaa;
-  border-radius: 15px;
+    width: 400px;
+    height: 30px;
+    padding: 10px 20px;
+    font-family: Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    color: #0e1111;
+    border: 1px solid #aaa;
+    border-radius: 15px;
 }
 
 .react-autosuggest__input:focus {
-  outline: none;
+    outline: none;
 }
 
 .react-autosuggest__container--open .react-autosuggest__input {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .react-autosuggest__suggestions-container {
-  display: none;
+    display: none;
 }
 
 .react-autosuggest__container--open .react-autosuggest__suggestions-container {
-  display: block;
-  position: absolute;
-  width: 400px;
-  border: 1px solid #aaa;
-  background-color: #fff;
-  font-family: Helvetica, sans-serif;
-  font-weight: 300;
-  font-size: 14px;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-  z-index: 2;
+    display: block;
+    position: absolute;
+    width: 400px;
+    border: 1px solid #aaa;
+    background-color: #fff;
+    font-family: Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    z-index: 2;
 }
 
 .react-autosuggest__suggestions-list {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
 }
 
 .react-autosuggest__suggestion {
-  cursor: pointer;
-  color: #0e1111;
-  padding: 5px 10px;
+    cursor: pointer;
+    color: #0e1111;
+    padding: 5px 10px;
 }
 
 .react-autosuggest__suggestion:not(:first-child) {
-  border-top: 1px solid #ddd;
+    border-top: 1px solid #ddd;
 }
 
 .react-autosuggest__suggestion--focused {
-  background-color: #0C7EAF;
-  color: #fff;
+    background-color: #0C7EAF;
+    color: #fff;
 }
 
 .suggestion-content {
-  display: flex;
-  align-items: center;
-  background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    background-repeat: no-repeat;
 }
 
 .dancounsell {
-  background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/48.jpg);
+    background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/48.jpg);
 }
 
 .ladylexy {
-  background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/48.jpg);
+    background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/48.jpg);
 }
 
 .mtnmissy {
-  background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/mtnmissy/48.jpg);
+    background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/mtnmissy/48.jpg);
 }
 
 .steveodom {
-  background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/steveodom/48.jpg);
+    background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/steveodom/48.jpg);
 }
 
 .name {
-  margin-left: 68px;
-  line-height: 45px;
+    margin-left: 68px;
+    line-height: 45px;
 }
 
 .highlight {
-  color: #ee0000;
-  font-weight: bold;
+    color: #ee0000;
+    font-weight: bold;
 }
 
 .react-autosuggest__suggestion--focused .highlight {
-  color: #120000;
+    color: #120000;
 }
 
 /* MOVIE INFORMATION */
@@ -250,15 +250,15 @@ p.big {
 
 
 .ratedlist-container {
-       overflow-y: hidden;
-       overflow-x: scroll;
-       display: flex;
-       column-gap: 1;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    display: flex;
+    column-gap: 1;
 }
 
 
 .ratedlist-container .movielink {
-   color: black;
+    color: black;
 
 }
 
@@ -270,20 +270,20 @@ p.big {
     min-height: 0;
     height: 20rem;
     width: 15.5rem;
-  }
+}
 
 .ratedlist-container .movieTitle{
     height: 55px;
     width: 155px;
     overflow: hidden;
     padding-right: 10px;
-  }
+}
 
-  .ratedlist-container .movie_image:hover  {
-       transform: scale(1.0);
-       opacity: 1;
+.ratedlist-container .movie_image:hover  {
+    transform: scale(1.0);
+    opacity: 1;
 
-    }
+}
 
 
 /* ADVANCED SEARCH */
@@ -320,7 +320,7 @@ p.big {
 
 .footer {
     /*position: absolute;*/
-     bottom: 0;
+    bottom: 0;
     width: 100%;
     height: 40px;
     line-height: 40px;
@@ -332,7 +332,7 @@ p.big {
     /*position: fixed;*/
 }
 
- /* MOVIE ROW-LANDING PAGE */
+/* MOVIE ROW-LANDING PAGE */
 .movieRow {
     background-color:#221f1f;
     color: #fff;
@@ -340,48 +340,48 @@ p.big {
     margin: auto;
     width: 100%;
     padding: 100px;
-  }
+}
 
 
 
-  .movieRow_heading {
-       padding-top: rem;
-       font-family: Arial, Helvetica, sans-serif;
-       font-size: 20px;
+.movieRow_heading {
+    padding-top: rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
 
 }
-    
-  
-  .movieRow_container {
-       transition: transform 450ms;
-       display: flex;
-       column-gap: 1;
-  }
+
+
+.movieRow_container {
+    transition: transform 450ms;
+    display: flex;
+    column-gap: 1;
+}
 
 
 
-  /* MOVIE IMAGES */
-  .movie_image{
+/* MOVIE IMAGES */
+.movie_image{
     cursor: pointer;
     transition: all 450ms;
     transform: center left;
     min-height: 0;
     height: 22rem;
     width: 20.5rem;
-  }
-    
-  .movie_image:hover  {
-       transform: scale(1.5);
-       opacity: 1;
-    }
+}
+
+.movie_image:hover  {
+    transform: scale(1.5);
+    opacity: 1;
+}
 
 .movielink{
     color: #FFFFFF;
     font-weight: bold;
-     /*font-size: 20px;*/
+    /*font-size: 20px;*/
 
 }
-  
+
 .movielink:hover{
     color: #3366ff;
 }
@@ -397,18 +397,18 @@ p.big {
 
 
 /* SIGN IN PAGE */
-    .header {
+.header {
     text-align: center;
     color: #FF0000;
     vertical-align: text-top;
 
-  }
+}
 
-  .header h5{
+.header h5{
     color: #FFFFFF;
-  }
+}
 
-  .wrapper{
+.wrapper{
     background: linear-gradient(90deg, #999999 0%,  #737373 50%, #4A4A4A 100%);;
     height:100%;
     background-size: cover;
@@ -417,102 +417,102 @@ p.big {
     width:auto;
     position: relative;
     padding-top: 70px;
-  }
-  
-  .login-container {
+}
+
+.login-container {
     padding: 25px;
     background: linear-gradient(90deg, #999999 0%,  #737373 50%, #4A4A4A 100%);
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;
     width: 50%; /* Could be more or less, depending on screen size */
-  }
+}
 
-  .recommend-text {
-      color: white;
-  }
-  
-  @media screen and (max-width: 800px) {
+.recommend-text {
+    color: white;
+}
+
+@media screen and (max-width: 800px) {
     .login-container {
-      width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
+        width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
     }
-  }
-  
-  
-  input{
+}
+
+
+input{
     width: 100%
-  }
+}
 
 
-  .register-link{
-      color:red;
-  }
-  
-  .col-md-12{
-  text-align: center;
-  position: absolute;
-  color: #ddd;
+.register-link{
+    color:red;
+}
 
-  }
-  
-  .col-md-12 img {
+.col-md-12{
+    text-align: center;
+    position: absolute;
+    color: #ddd;
+
+}
+
+.col-md-12 img {
     height: 50%;
     width: 50%;
     position: absolute;
 
-  }
+}
 
 
-  /* REGISTER PAGE  */
-  
-  .register-container{
+/* REGISTER PAGE  */
+
+.register-container{
     margin: 0 auto;
     border-radius: 4px;
     width: 75%;
     max-width: 900px;
     padding: 10px;
     padding-top: 70px;
-  }
+}
 
-  input{
+input{
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
     resize: vertical;
-  }
-  
-  
-  button[type=submit] {
+}
+
+
+button[type=submit] {
 
     width: 30%;
     margin-top: 10px;
-  }
+}
 
-  .col-75 {
+.col-75 {
     float: left;
     width: 75%;
     margin-top: 6px;
-  }
-  
-  .register-text{
-      color: white;
-  }
+}
+
+.register-text{
+    color: white;
+}
 
 
 /* NEW USER RATINGS */
 
 .newuser-card  {
     color: white;
-     margin: auto;
+    margin: auto;
     width: 60%;
 }
 
 
 
 @media only screen and (max-width: 500px) {
- .newuser-card{
-    width: 90%;
-  }
+    .newuser-card{
+        width: 90%;
+    }
 }
 
 
@@ -537,89 +537,88 @@ p.big {
 
 
 .movie-genres{
-     overflow-y: hidden;
-       transition: transform 450ms;
-       display: flex;
-       height: 150px;
+    overflow-y: hidden;
+    transition: transform 450ms;
+    display: flex;
+    height: 150px;
 }
 
 
 
 .genreImages {
-  width: 140px;
+    width: 140px;
     height: 160px;
 }
 
-.ne
-wuser-submit {
-     background-color: #e7e7e7;
+.newuser-submit {
+    background-color: #e7e7e7;
     color: black;
-   display:block;
+    display:block;
     font-size: 16px;
 }
 
 
 
 @media only screen and (max-width: 500px) {
-  h3 {
-    font-size: 16px;
-  }
+    h3 {
+        font-size: 16px;
+    }
 }
 
 
 
 table {
-  border-collapse: collapse;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  table-layout: fixed;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
 }
 
 
 table tr {
-  padding: .35em;
+    padding: .35em;
 }
 
 table td {
-  padding: .625em;
-  /*text-align: center;*/
+    padding: .625em;
+    /*text-align: center;*/
 }
 
 
 @media screen and (max-width: 600px) {
-  table {
-    border: 0;
-  }
+    table {
+        border: 0;
+    }
 
-  table caption {
-    font-size: 1.3em;
-  }
+    table caption {
+        font-size: 1.3em;
+    }
 
-  table tr {
-    border-bottom: 3px solid #ddd;
-    display: block;
-    margin-bottom: .625em;
-  }
+    table tr {
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: .625em;
+    }
 
-  table td {
-    border-bottom: 1px solid #ddd;
-    display: block;
-    font-size: .8em;
-    /*text-align: right;*/
-  }
+    table td {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: .8em;
+        /*text-align: right;*/
+    }
 
-  table td:last-child {
-    border-bottom: 0;
-  }
+    table td:last-child {
+        border-bottom: 0;
+    }
 }
 
 
 @media only screen and (max-width: 500px) {
-  .movie-genres{
-   width: 100%;
-       height: 150px;
-  }
+    .movie-genres{
+        width: 100%;
+        height: 150px;
+    }
 }
 
 

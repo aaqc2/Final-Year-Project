@@ -37,7 +37,7 @@ class LandingPage extends Component {
     componentDidMount() {
         console.log('i am mounted');
         console.log(this.props.location.state);
-        this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${this.state.userid}`}, this.getRecommendation);
+        this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${this.state.user}`}, this.getRecommendation);
         this.getTopRated();
     }
 
@@ -51,7 +51,7 @@ class LandingPage extends Component {
                 const movieComponent = <MovieImages
                     id={movie.data.id}
                     row={row}
-                    userid={this.state.userid}
+                    userid={this.state.user}
                     poster={"https://image.tmdb.org/t/p/original" + movie.data.poster_path}
                     info={movie}/>
                 movieRows.push(movieComponent);
