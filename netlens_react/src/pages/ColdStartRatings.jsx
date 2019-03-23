@@ -37,10 +37,10 @@ class ColdStartRatings extends Component {
             if (this.props.location.state.selectedValues !== undefined) {
                 const {location: {state: {selectedValues}}} = this.props;
                 console.log(selectedValues);
-                let url = [];
+                let url = '';
                 Object.keys(selectedValues).map((gen) => {
                     console.log(gen, "genres");
-                    url.push('&gen=' + gen);
+                    url += '&gen=' + gen;
                 });
                 this.setState({genreApi: `http://127.0.0.1:8000/api/genres/?${url}`}, this.getGenreMovies)
             }
