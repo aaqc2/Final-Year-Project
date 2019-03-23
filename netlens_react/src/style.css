@@ -501,28 +501,20 @@ p.big {
 
 /* NEW USER RATINGS */
 
-newuserrating-container{
-    overflow-x:auto;
-}
 .newuser-card  {
     color: white;
      margin: auto;
     width: 60%;
 }
 
+
+
 @media only screen and (max-width: 500px) {
-  .movie-genres{
-   width: 100%;
+ .newuser-card{
+    width: 90%;
   }
 }
 
-
-@media only screen and (max-width: 700px) {
-  .movie-genres{
-    /*width: %;*/
-       height: 100px;
-  }
-}
 
 .newusercard-body{
 
@@ -531,19 +523,18 @@ newuserrating-container{
     align-self: center;
 }
 
-.movie-genres{
-    cursor: pointer;
-    transition: all 450ms;
-    transform: center left;
-    min-height: 0;
-
-
-}
-
 .newuser-rating-form{
     margin: auto;
 
 }
+
+
+.movie-genres{
+    cursor: pointer;
+    transition: all 450ms;
+    min-height: 0;
+}
+
 
 .movie-genres{
      overflow-y: hidden;
@@ -552,45 +543,21 @@ newuserrating-container{
        height: 150px;
 }
 
-@media only screen and (max-width: 700px) {
-  .movie-genres{
-    /*width: %;*/
-       height: 100px;
-  }
-}
+
 
 .genreImages {
   width: 140px;
     height: 160px;
-
 }
 
-
-
-@media only screen and (max-width: 500px) {
-  .genreImages{
-    width: 150px;
-       height: 100px;
-  }
-}
-
-
-.newuser-submit {
+.ne
+wuser-submit {
      background-color: #e7e7e7;
     color: black;
    display:block;
     font-size: 16px;
 }
 
-
-table, td {
-
-  border-collapse: collapse;
-}
-td {
-  padding: 15px;
-
-}
 
 
 @media only screen and (max-width: 500px) {
@@ -599,13 +566,71 @@ td {
   }
 }
 
-/*.footer {*/
-    /*position:absolute;*/
-    /*left:0;*/
-    /*bottom:0;*/
-    /*right:0;*/
-/*}*/
 
+
+table {
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+
+table tr {
+  padding: .35em;
+}
+
+table td {
+  padding: .625em;
+  /*text-align: center;*/
+}
+
+
+@media screen and (max-width: 600px) {
+  table {
+    border: 0;
+  }
+
+  table caption {
+    font-size: 1.3em;
+  }
+
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625em;
+  }
+
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: .8em;
+    /*text-align: right;*/
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
+}
+
+
+@media only screen and (max-width: 500px) {
+  .movie-genres{
+   width: 100%;
+       height: 150px;
+  }
+}
+
+
+@media only screen and (max-width: 500px) {
+    .genreImages {
+        width: 100px;
+        height: 140px;
+    }
+}
+
+/*STRUCTURE */
 .site {
     display: flex;
     flex-direction: column;

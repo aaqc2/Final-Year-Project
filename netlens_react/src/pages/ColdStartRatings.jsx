@@ -5,44 +5,35 @@ import { checkToken } from "../components/authenticateToken";
 
 
 class ColdStartRatings extends Component {
- constructor(props) {
+    constructor(props) {
         super(props);
         this.state = {
             userid: localStorage.getItem('id'),
-            topRatedRow: [],
-            recommendation: [],
             genreMovies: [],
-            topRatedApi: 'http://127.0.0.1:8000/api/toprated',
-            hasTopRatedNext: false,
-            hasTopRatedPrevious: false,
-            nextTopRatedApi: '',
-            prevTopRatedApi: '',
             genreApi: '',
             hasGenreNext: false,
             hasGenrePrevious: false,
             nextGenreApi: '',
             prevGenreApi: '',
+
         };
-        this.handlePreviousTopRatedClick = this.handlePreviousTopRatedClick.bind(this);
-        this.handleNextTopRatedClick = this.handleNextTopRatedClick.bind(this);
+
         this.handlePreviousGenreClick = this.handlePreviousGenreClick.bind(this);
         this.handleNextGenreClick = this.handleNextGenreClick.bind(this);
     };
 
     apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
-    /** Hold each genre movie row in an array */
-
-
 
     /** Make all API calls as soon as the MovieGenreRow component mounts. */
 
     componentDidMount() {
         console.log('i am mounted');
         console.log(this.props.location.state);
-       // this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${localStorage.getItem('id')}`}, this.getRecommendation);
+
+        // this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${localStorage.getItem('id')}`}, this.getRecommendation);
         this.getTopRated();
 
-        if(this.props.location.state !== undefined ) {
+        if (this.props.location.state !== undefined) {
             if (this.props.location.state.selectedValues !== undefined) {
                 const {location: {state: {selectedValues}}} = this.props;
                 console.log(selectedValues);
@@ -57,47 +48,32 @@ class ColdStartRatings extends Component {
     }
 
     check() {
-        if(checkToken() == 'invalid') {
+        if (checkToken() == 'invalid') {
             this.props.history.push({
-            pathname: '/Signin'
-          })
+                pathname: '/Signin'
+            })
         }
     }
 
-      handleSubmit = (e)  => {
+    handleSubmit = (e) => {
         e.preventDefault();
-        // let value = e.target.checked
-        // let allSelected = this.state.checkedOptions;
-        //
-        // let allValues = Object.keys(allSelected).map(key => {
-        //     return allSelected[key]
-        // })
-        //
-        // if (!allValues.some(this.checked)) {
-        //      return alert ('You should select at least 1 genre!')
-        //
-        // }
-          fetch(`http://127.0.0.1:8000/api/getCustomRec/${localStorage.getItem('id')}`)
-              .then((response) => {
-              return response;
-          })
-              .then((data) => {
-                      if(data.status==200){
-                          return this.props.history.push({
-                              pathname: '/LandingPage',
-                              // state:{selectedValues : allSelected}
-                          });
-                      }
-                  }
-
-
-              )
-
-
-      };
+        fetch(`http://127.0.0.1:8000/api/getCustomRec/${localStorage.getItem('id')}`)
+            .then((response) => {
+                return response;
+            })
+            .then((data) => {
+                    if (data.status == 200) {
+                        return this.props.history.push({
+                            pathname: '/LandingPage',
+                            // state:{selectedValues : allSelected}
+                        });
+                    }
+                }
+            )
+    };
 
     /** Extract our movie data and pass it to our MovieGenre Component. */
-    getMovieRows = (row, res) => {
+    getMovieRows = (row, res, user) => {
         const results = res;
         let movieRows = [];
         console.log(res);
@@ -106,6 +82,7 @@ class ColdStartRatings extends Component {
                 const movieComponent = <MovieImages
                     id={movie.data.id}
                     row={row}
+                    userid={user}
                     userid={this.state.userid}
                     //url={url}
                     poster={"https://image.tmdb.org/t/p/original" + movie.data.poster_path}
@@ -117,6 +94,9 @@ class ColdStartRatings extends Component {
 
     }
 
+    /**
+     * Send request for the genre movies
+     */
 
     getGenreMovies = () => {
         const row = 'movies';
@@ -134,8 +114,8 @@ class ColdStartRatings extends Component {
                         .then(res => {
                             console.log(res);
                             result.push(res);
-                                const movieRows = this.getMovieRows(row, result);
-                                this.setState({genreMovies: movieRows});
+                            const movieRows = this.getMovieRows(row, result);
+                            this.setState({genreMovies: movieRows});
                         }).catch(error => {
                         console.log(error);
                     });
@@ -152,23 +132,20 @@ class ColdStartRatings extends Component {
                 })
             })
             .catch((err) => {
-                    console.log(err);
-                });
+                console.log(err);
+            });
 
 
     };
 
-    handleNextGenreClick()
-    {
+    handleNextGenreClick() {
         this.setState({genreApi: this.state.nextGenreApi}, this.getGenreMovies);
     }
 
 
-    handlePreviousGenreClick()
-    {
+    handlePreviousGenreClick() {
         this.setState({genreApi: this.state.previousGenreApi}, this.getGenreMovies);
     };
-
 
     /**
      * Send request for movies that are top rated
@@ -191,9 +168,9 @@ class ColdStartRatings extends Component {
                                 const movieRows = this.getMovieRows(row, result);
                                 this.setState({topRatedRow: movieRows});
                             }).catch(error => {
-                                console.log(error);
+                            console.log(error);
 
-                            })
+                        })
                     });
                 });
                 if (data.next !== null) {
@@ -221,8 +198,6 @@ class ColdStartRatings extends Component {
         // this.getSearchQuery();
         this.setState({topRatedApi: this.state.previousTopRatedApi}, this.getTopRated);
     };
-
-
 
 
     render() {

@@ -27,7 +27,6 @@ class App extends Component {
                         <Route path="/userprofile" component={UserProfile}/>
                         <Route path="/advancedsearch" component={AdvancedSearch}/>
                     </div>
-                    div>
                     <Footer/>
                 </div>
             </Router>

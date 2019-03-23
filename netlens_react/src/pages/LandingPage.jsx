@@ -12,6 +12,7 @@ class LandingPage extends Component {
         super(props);
         this.state = {
             userid: localStorage.getItem('id'),
+            user: localStorage.getItem('id'),
             topRatedRow: [],
             recommendation: [],
             topRatedApi: 'http://127.0.0.1:8000/api/toprated/',
@@ -35,6 +36,7 @@ class LandingPage extends Component {
     /** Make all API calls as soon as the MovieGenreRow component mounts. */
 
     componentDidMount() {
+        this.check()
         console.log('i am mounted');
         console.log(this.props.location.state);
         this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${this.state.userid}`}, this.getRecommendation);
@@ -188,13 +190,14 @@ class LandingPage extends Component {
     R
 
     render() {
-        this.check();
+        //this.check();
+        //console.log("i am rendering");
         return (
             <div>
             { this.state &&
             <div className="movieRow">
                 <Navbar/>
-                <h1> Welcome </h1>
+                <h1> Welcome {localStorage.getItem('username')} </h1>
 
                 {/* Render the recommendation list */}
                 <h1 className="movieRow_heading">Top Picks for you</h1>
