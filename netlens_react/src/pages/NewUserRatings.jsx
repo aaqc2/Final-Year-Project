@@ -211,7 +211,7 @@ class NewUserRatings extends Component {
 
                 <div className="newuser-card">
                     <h2> Welcome {localStorage.getItem('username')}  </h2>
-                    <h3> To get started, tell us about your movie preferences. Using the checkboxs, select your top favourite movie genre</h3>
+                    <h3> To get started, tell us about your movie preferences. Using the checkboxs, select your favourite movie genre</h3>
 
                             <div className="newusercard-body">
                                 <form name="new_user_form" className="newuser-rating-form"   >
@@ -221,7 +221,9 @@ class NewUserRatings extends Component {
                                         <tr>
                                             <td>
                                                 <div >
-                                                    <input type="checkbox"
+                                                    <input
+                                                           id="action"
+                                                           type="checkbox"
                                                            name="action"
                                                            onChange={this.changeCheckbox}
                                                            checked = {this.state.checkedOptions.action || false}
@@ -232,7 +234,9 @@ class NewUserRatings extends Component {
                                             </td>
                                              <td>
                                                  <div>
-                                                    <input type="checkbox"
+                                                    <input
+                                                           id="Animated"
+                                                           type="checkbox"
                                                            name="animation"
                                                            onChange={this.changeCheckbox}
                                                            checked = {this.state.checkedOptions.animation || false}
@@ -246,9 +250,11 @@ class NewUserRatings extends Component {
                                         <tr>
                                               <td>
                                                 <div>
-                                                    <input type="checkbox"
+                                                    <input
+                                                           id="Thriller"
+                                                           type="checkbox"
                                                            name="horror"
-                                                            onChange={this.changeCheckbox}
+                                                           onChange={this.changeCheckbox}
                                                            checked = {this.state.checkedOptions.horror || false}
                                                     />
                                                     <label  htmlFor="Thriller">Thriller</label>
@@ -257,7 +263,9 @@ class NewUserRatings extends Component {
                                             </td>
                                             <td>
                                                 <div>
-                                                    <input type="checkbox"
+                                                    <input
+                                                          id="Romance"
+                                                           type="checkbox"
                                                            name="romance"
                                                            onChange={this.changeCheckbox}
                                                            checked = {this.state.checkedOptions.romance || false}
@@ -272,7 +280,9 @@ class NewUserRatings extends Component {
 
                                             <td>
                                                 <div>
-                                                   <input type="checkbox"
+                                                   <input
+                                                           id="Drama"
+                                                           type="checkbox"
                                                            name="drama"
                                                            onChange={this.changeCheckbox}
                                                            checked = {this.state.checkedOptions.drama || false}
@@ -284,10 +294,12 @@ class NewUserRatings extends Component {
 
                                             <td>
                                             <div>
-                                                <input type="checkbox"
-                                                           name="comedy"
-                                                           onChange={this.changeCheckbox}
-                                                           checked = {this.state.checkedOptions.comedy|| false}
+                                                <input
+                                                       id="comedy"
+                                                       type="checkbox"
+                                                       name="comedy"
+                                                       onChange={this.changeCheckbox}
+                                                       checked = {this.state.checkedOptions.comedy|| false}
                                                            />
                                                 <label htmlFor="Comedy" >Comedy</label>
                                                  <div className="movie-genres"> {this.state.comedyMovieRow} </div>
