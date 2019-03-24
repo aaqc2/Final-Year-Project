@@ -27,7 +27,7 @@ class ColdStartRatings extends Component {
     /** Make all API calls as soon as the MovieGenreRow component mounts. */
 
     componentDidMount() {
-        console.log('i am mounted');
+        //console.log('i am mounted');
         console.log(this.props.location.state);
 
         // this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${localStorage.getItem('id')}`}, this.getRecommendation);
@@ -45,6 +45,7 @@ class ColdStartRatings extends Component {
                 this.setState({genreApi: `http://127.0.0.1:8000/api/genres/?${url}`}, this.getGenreMovies)
             }
         }
+        this.check();
     }
 
     check() {
@@ -59,20 +60,35 @@ class ColdStartRatings extends Component {
     handleSubmit = (e)  => {
 
         e.preventDefault();
-        fetch(`http://127.0.0.1:8000/api/getCustomRec/${localStorage.getItem('id')}`)
+        fetch(`http://127.0.0.1:8000/api/getNumMovies/${localStorage.getItem('id')}`)
             .then((response) => {
-                return response;
+                console.log(response)
+                return response.json();
             })
             .then((data) => {
-
-                    if (data.status == 200) {
-                        return this.props.history.push({
-                            pathname: '/LandingPage',
-                            // state:{selectedValues : allSelected}
-                        });
-                    }
+                console.log(data);
+                if(data <= 0){
+                    return alert ('Please rate at least 1 movie!');
                 }
-            )};
+                else{
+                    fetch(`http://127.0.0.1:8000/api/getCustomRec/${localStorage.getItem('id')}`)
+                        .then((response) => {
+                            return response;
+                        })
+                        .then((data) => {
+
+                                if (data.status == 200) {
+                                    return this.props.history.push({
+                                        pathname: '/LandingPage',
+                                        // state:{selectedValues : allSelected}
+                                    });
+                                }
+                            }
+                        )
+                }
+            })
+
+        };
 
 
     /** Extract our movie data and pass it to our MovieGenre Component. */
@@ -204,7 +220,7 @@ class ColdStartRatings extends Component {
 
 
     render() {
-        this.check();
+
         return (
             <div className="movieRow">
                 <header className="header">
