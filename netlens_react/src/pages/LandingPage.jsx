@@ -1,3 +1,8 @@
+/**
+ * Landing page - This page is rendered directly for registered users. For new users, this page is rendered after the first initial 2 steps.
+ * This is the main page, where the movie recommednation for that user is rendered.
+ */
+
 import React, { Component } from "react";
 import axios from '../baseUrl'; 
 import MovieImages from '../components/MovieImages';

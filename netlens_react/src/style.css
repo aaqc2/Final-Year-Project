@@ -1,5 +1,5 @@
 body {
-    /*padding-top: 50px;*/
+    padding-top: 50px;
     position: relative;
     background: #221f1f;
 }
@@ -111,6 +111,47 @@ p.big {
     align-items: center;
     background-repeat: no-repeat;
 }
+
+
+@media screen and (max-width: 800px) {
+    .react-autosuggest__input {
+        width: 100%;
+
+
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .react-autosuggest__container {
+        position: inherit;
+        padding-top: 20px;
+         padding-bottom: 10px;
+         margin: 0;
+          width: 90%;
+          display: block;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .searchButton{
+         position: absolute;
+          display: block;
+
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .navbar-toggler{
+          position: inherit;
+        margin: 0;
+
+
+    }
+}
+
+
+
+
 
 .dancounsell {
     background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/48.jpg);

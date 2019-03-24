@@ -20,12 +20,13 @@ class Navbar extends Component {
                             <h5 className="slogan">personalised movie recommendations</h5>
                         </div>
 
+
                         <div className="mx-auto my-auto d-inline w-100">
                             <SearchBar/>
                         </div>
-                    <br/>
-                       <Link className="btn btn-sm btn-primary" to="/advancedsearch" id="advanced_search">
+                      <Link className=" searchButton  btn btn-sm btn-primary" to="/advancedsearch" id="advanced_search">
                         Search</Link>
+                    <br/>
 
 
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
