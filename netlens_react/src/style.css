@@ -150,13 +150,12 @@ p.big {
     }
 }
 
-@media screen and (max-width: 800px) {
-    .searchButton{
 
+    .searchButton{
         position: absolute;
         float: right;
         /*margin-left: 80%;*/
-    }
+        visibility: hidden;
 }
 
 @media screen and (max-width: 800px) {
