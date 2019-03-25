@@ -32,7 +32,7 @@ class ColdStartRatings extends Component {
     /** Make all API calls as soon as the MovieGenreRow component mounts. */
 
     componentDidMount() {
-        console.log('i am mounted');
+        //console.log('i am mounted');
         console.log(this.props.location.state);
 
         if (this.props.location.state !== undefined) {
@@ -47,6 +47,7 @@ class ColdStartRatings extends Component {
                 this.setState({genreApi: `http://127.0.0.1:8000/api/genres/?${url}`}, this.getGenreMovies)
             }
         }
+        this.check();
     }
 
     check() {
@@ -61,32 +62,36 @@ class ColdStartRatings extends Component {
     handleSubmit = (e)  => {
 
         e.preventDefault();
-         let value = e.target.checked
-        let allSelected = this.state.checkedOptions;
+        fetch(`http://127.0.0.1:8000/api/getNumMovies/${localStorage.getItem('id')}`)
 
-        let allValues = Object.keys(allSelected).map(key => {
-            return allSelected[key]
-        })
-
-        if (!allValues.some(this.checked)) {
-            return alert ('You should select at least 1 genre!')
-
-        }
-
-        fetch(`http://127.0.0.1:8000/api/getCustomRec/${localStorage.getItem('id')}`)
             .then((response) => {
-                return response;
+                console.log(response)
+                return response.json();
             })
             .then((data) => {
-
-                    if (data.status == 200) {
-                        return this.props.history.push({
-                            pathname: '/LandingPage',
-
-                        });
-                    }
+                console.log(data);
+                if(data <= 0){
+                    return alert ('Please rate at least 1 movie!');
                 }
-            )};
+                else{
+                    fetch(`http://127.0.0.1:8000/api/getCustomRec/${localStorage.getItem('id')}`)
+                        .then((response) => {
+                            return response;
+                        })
+                        .then((data) => {
+
+                                if (data.status == 200) {
+                                    return this.props.history.push({
+                                        pathname: '/LandingPage',
+                                        // state:{selectedValues : allSelected}
+                                    });
+                                }
+                            }
+                        )
+                }
+            })
+
+        };
 
 
     /** Extract our movie data and pass it to our MovieGenre Component. */
@@ -174,7 +179,7 @@ class ColdStartRatings extends Component {
      * Render the movies based on the genre selected
      */
     render() {
-        this.check();
+
         return (
             <div className="movieRow">
                 <header className="header">
@@ -191,9 +196,9 @@ class ColdStartRatings extends Component {
                 </div>
                 <div>
                     {this.state.hasGenrePrevious && <button className="btn btn-sm btn-primary"
-                                                            onClick={this.handlePreviousGenreClick}>Previous</button>}
+                                                            onClick={this.handlePreviousGenreClick}>View previous</button>}
                     {this.state.hasGenreNext && <button className="nextButton btn btn-sm btn-primary"
-                                                        onClick={this.handleNextGenreClick}>Next</button>}
+                                                        onClick={this.handleNextGenreClick}>View more</button>}
                     <br/><br/>
                 </div>
                 <button className = "newuser-submit" onClick={this.handleSubmit}> Continue </button>

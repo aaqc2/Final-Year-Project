@@ -252,13 +252,13 @@ class NewUserRatings extends Component {
                                     <td>
                                         <div>
                                             <input
-                                                id="Thriller"
+                                                id="horror"
                                                 type="checkbox"
                                                 name="horror"
                                                 onChange={this.changeCheckbox}
                                                 checked = {this.state.checkedOptions.horror || false}
                                             />
-                                            <label  htmlFor="Thriller">Thriller</label>
+                                            <label  htmlFor="horror">Horror</label>
                                             <div className="movie-genres"> {this.state.horrorMovieRow} </div>
                                         </div>
                                     </td>
