@@ -4,6 +4,7 @@ from django.db import connection
 import jwt
 import json
 import operator
+from random import sample
 from rest_framework.response import Response
 from rest_framework import generics, status
 from .models import Titles, Ratings, Users, Links, Recommendations
@@ -17,6 +18,7 @@ from passlib.hash import pbkdf2_sha256
 from django.conf import settings
 from django.http import HttpResponse
 from django.db import connection
+from django.core.cache import cache
 # Create your views here.
 
 def checkToken(request, token):
@@ -250,18 +252,23 @@ def login(request):
 
 @api_view(['GET'])
 def getGenres(request):
-    genres = request.GET.getlist('gen')
-    q = Q()
-    for genre in genres:
-        q |= Q(genre__icontains=genre)
-    queryset = Titles.objects.filter(q).select_related('links').values('links__tmdbid')
+    #if not request.session.get('random'):
+    #    request.session['random'] = True
+    randomList = cache.get('shuffle')
+    if not randomList:
+        genres = request.GET.getlist('gen')
+        q = Q()
+        for genre in genres:
+            q |= Q(genre__icontains=genre)
+        queryset = list(Titles.objects.filter(q).select_related('links').values('links__tmdbid'))
+        result = sample(queryset, len(queryset))
+        cache.set('shuffle', result, 7200)
+
     paginator = PageNumberPagination()
     paginator.page_size = 7
-    result_page = paginator.paginate_queryset(queryset, request)
+    result_page = paginator.paginate_queryset(cache.get('shuffle'), request)
     serializer = GenreSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
-    # serializer = TitlesSerializer(queryset, many=True)
-    # return Response(serializer.data)
 
 
 @api_view(['GET'])
@@ -271,6 +278,7 @@ def getNumMovies(request, u):
 
 @api_view(['GET'])
 def getCustomRec(self, u):
+    cache.clear()
     user = Users.objects.get(pk=u)
     cursor = connection.cursor()
     query = ("SELECT SUM((CASE WHEN genre LIKE '%%Romance%%' THEN 1 ELSE 0 end) * r.rating) AS Romance, "
@@ -285,7 +293,7 @@ def getCustomRec(self, u):
              " SUM((CASE WHEN genre LIKE '%%Comedy%%' THEN 1 ELSE 0 end) * 5) AS RComedy,"
              " SUM((CASE WHEN genre LIKE '%%Drama%%' THEN 1 ELSE 0 end) * 5) AS RDrama,"
              " SUM((CASE WHEN genre LIKE '%%Horror%%' THEN 1 ELSE 0 end) * 5) AS RHorror,"
-             " SUM((CASE WHEN genre LIKE '%%Thrille%%' THEN 1 ELSE 0 end) * 5) AS RThriller,"
+             " SUM((CASE WHEN genre LIKE '%%Thriller%%' THEN 1 ELSE 0 end) * 5) AS RThriller,"
              " SUM((CASE WHEN genre LIKE '%%Sci-Fi%%' THEN 1 ELSE 0 end) * 5) AS RSciFi,"
              " SUM((CASE WHEN GENRE LIKE '%%Romance%%' THEN 1 ELSE 0 end)) AS TRomance,"
              " SUM((CASE WHEN GENRE LIKE '%%Action%%' THEN 1 ELSE 0 end)) AS TAction,"

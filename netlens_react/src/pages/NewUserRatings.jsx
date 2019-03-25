@@ -1,3 +1,8 @@
+/**
+ * NEWUserRatings Page -  first page that is rendered when a new user registers. This allows the user to pick 2 of their fav genres.
+ * So that we can narrow the preferences down in order to present options to rate movies from their choice of genre
+ */
+
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import GenreImages from "../components/GenreImages";
@@ -247,13 +252,13 @@ class NewUserRatings extends Component {
                                     <td>
                                         <div>
                                             <input
-                                                id="Thriller"
+                                                id="horror"
                                                 type="checkbox"
                                                 name="horror"
                                                 onChange={this.changeCheckbox}
                                                 checked = {this.state.checkedOptions.horror || false}
                                             />
-                                            <label  htmlFor="Thriller">Thriller</label>
+                                            <label  htmlFor="horror">Horror</label>
                                             <div className="movie-genres"> {this.state.horrorMovieRow} </div>
                                         </div>
                                     </td>
