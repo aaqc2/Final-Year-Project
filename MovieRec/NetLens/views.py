@@ -59,7 +59,7 @@ def showTopRated(request):
         serializer = RatingsSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
 
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
 def showSearch(request):
     title = request.GET['q']
     if 'orderby' in request.GET:
@@ -73,7 +73,7 @@ def showSearch(request):
     serializer = SearchSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
 
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
 def showSearchAndGenre(request):
     title = request.GET['q']
     if 'orderby' in request.GET:
