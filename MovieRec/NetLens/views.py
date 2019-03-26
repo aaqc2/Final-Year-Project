@@ -62,46 +62,34 @@ def showTopRated(request):
 @api_view(['GET', 'POST'])
 def showSearch(request):
     title = request.GET['q']
-    if request.method == 'GET':
-        queryset = Titles.objects.filter(title__icontains=title).values('title', 'genre', 'links__tmdbid').order_by('-title')
-        paginator = PageNumberPagination()
-        paginator.page_size = 7
-        result_page = paginator.paginate_queryset(queryset, request)
-        serializer = SearchSerializer(result_page, many=True)
-        return paginator.get_paginated_response(serializer.data)
-
-    if request.method == 'POST':
-        order = request.data.get('orderby')
-        queryset = Titles.objects.annotate(avg_rating=Avg('ratings__rating'), count_rating=Count('ratings__movieid')).filter(title__icontains=title, count_rating__gte=50).values('title', 'genre', 'links__tmdbid').order_by(order)
-        paginator = PageNumberPagination()
-        paginator.page_size = 7
-        result_page = paginator.paginate_queryset(queryset, request)
-        serializer = SearchSerializer(result_page, many=True)
-        return paginator.get_paginated_response(serializer.data)
+    if 'orderby' in request.GET:
+        orderby = request.GET['orderby']
+    else:
+        orderby = 'movieid'
+    queryset = Titles.objects.annotate(avg_rating=Avg('ratings__rating'), count_rating=Count('ratings__movieid')).filter(title__icontains=title, count_rating__gte=50).values('title', 'genre', 'links__tmdbid').order_by(orderby)
+    paginator = PageNumberPagination()
+    paginator.page_size = 7
+    result_page = paginator.paginate_queryset(queryset, request)
+    serializer = SearchSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 @api_view(['GET', 'POST'])
 def showSearchAndGenre(request):
     title = request.GET['q']
+    if 'orderby' in request.GET:
+        orderby = request.GET['orderby']
+    else:
+        orderby = 'movieid'
     genres = request.GET.getlist('gen')
     gen = Q()
     for genre in genres:
         gen |= Q(genre__contains=genre)
-    if request.method == 'GET':
-        queryset = Titles.objects.filter(gen, title__icontains=title).values('title', 'genre', 'links__tmdbid')
-        paginator = PageNumberPagination()
-        paginator.page_size = 7
-        result_page = paginator.paginate_queryset(queryset, request)
-        serializer = SearchSerializer(result_page, many=True)
-        return paginator.get_paginated_response(serializer.data)
-
-    if request.method == 'POST':
-        order = request.data.get('orderby')
-        queryset = Titles.objects.annotate(avg_rating=Avg('ratings__rating'), count_rating=Count('ratings__movieid')).filter(gen, title__icontains=title, count_rating__gte=50).values('title', 'genre', 'links__tmdbid').order_by(order)
-        paginator = PageNumberPagination()
-        paginator.page_size = 7
-        result_page = paginator.paginate_queryset(queryset, request)
-        serializer = SearchSerializer(result_page, many=True)
-        return paginator.get_paginated_response(serializer.data)
+    queryset = Titles.objects.annotate(avg_rating=Avg('ratings__rating'), count_rating=Count('ratings__movieid')).filter(gen, title__icontains=title, count_rating__gte=50).values('title', 'genre', 'links__tmdbid').order_by(orderby)
+    paginator = PageNumberPagination()
+    paginator.page_size = 7
+    result_page = paginator.paginate_queryset(queryset, request)
+    serializer = SearchSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 @api_view(['GET'])
 def paginationTest(request):
