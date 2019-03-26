@@ -62,7 +62,6 @@ def showTopRated(request):
 @api_view(['GET', 'POST'])
 def showSearch(request):
     title = request.GET['q']
-
     if request.method == 'GET':
         queryset = Titles.objects.filter(title__icontains=title).values('title', 'genre', 'links__tmdbid').order_by('-title')
         paginator = PageNumberPagination()
@@ -73,10 +72,7 @@ def showSearch(request):
 
     if request.method == 'POST':
         order = request.data.get('orderby')
-        if(order == "-avg_rating"):
-            queryset = Titles.objects.annotate(avg_rating=Avg('ratings__rating'), count_rating=Count('ratings__movieid')).filter(title__icontains=title, count_rating__gte=50).values('title', 'genre', 'links__tmdbid').order_by(order)
-        else:
-            queryset = Titles.objects.filter(title__icontains=title).values('title', 'genre', 'links__tmdbid').annotate(avg_rating=Avg('ratings__rating')).order_by(order)
+        queryset = Titles.objects.annotate(avg_rating=Avg('ratings__rating'), count_rating=Count('ratings__movieid')).filter(title__icontains=title, count_rating__gte=50).values('title', 'genre', 'links__tmdbid').order_by(order)
         paginator = PageNumberPagination()
         paginator.page_size = 7
         result_page = paginator.paginate_queryset(queryset, request)
@@ -87,11 +83,11 @@ def showSearch(request):
 def showSearchAndGenre(request):
     title = request.GET['q']
     genres = request.GET.getlist('gen')
-    q = Q()
+    gen = Q()
     for genre in genres:
-        q |= Q(genre__contains=genre)
+        gen |= Q(genre__contains=genre)
     if request.method == 'GET':
-        queryset = Titles.objects.filter(q, title__icontains=title).values('title', 'genre', 'links__tmdbid')
+        queryset = Titles.objects.filter(gen, title__icontains=title).values('title', 'genre', 'links__tmdbid')
         paginator = PageNumberPagination()
         paginator.page_size = 7
         result_page = paginator.paginate_queryset(queryset, request)
@@ -100,10 +96,7 @@ def showSearchAndGenre(request):
 
     if request.method == 'POST':
         order = request.data.get('orderby')
-        if (order == "-avg_rating"):
-            queryset = Titles.objects.annotate(avg_rating=Avg('ratings__rating'),count_rating=Count('ratings__movieid')).filter(title__icontains=title,count_rating__gte=50).values('title', 'genre', 'links__tmdbid').order_by(order)
-        else:
-            queryset = Titles.objects.filter(title__icontains=title).values('title', 'genre', 'links__tmdbid').annotate( avg_rating=Avg('ratings__rating')).order_by(order)
+        queryset = Titles.objects.annotate(avg_rating=Avg('ratings__rating'), count_rating=Count('ratings__movieid')).filter(gen, title__icontains=title, count_rating__gte=50).values('title', 'genre', 'links__tmdbid').order_by(order)
         paginator = PageNumberPagination()
         paginator.page_size = 7
         result_page = paginator.paginate_queryset(queryset, request)
