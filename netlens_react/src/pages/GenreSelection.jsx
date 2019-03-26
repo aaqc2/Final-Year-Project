@@ -10,7 +10,7 @@ import axios from "../baseUrl";
 
 
 
-class NewUserRatings extends Component {
+class GenreSelection extends Component {
 
     constructor(props) {
         super(props);
@@ -321,4 +321,4 @@ class NewUserRatings extends Component {
 
 
 
-export default NewUserRatings;
+export default GenreSelection;
