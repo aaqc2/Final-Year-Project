@@ -1,7 +1,15 @@
-/**
- * NEWUserRatings Page -  first page that is rendered when a new user registers. This allows the user to pick 2 of their fav genres.
- * So that we can narrow the preferences down in order to present options to rate movies from their choice of genre
- */
+/*
+
+This is first page that is rendered when a new user is registered.
+    This is the first step in understanding the user, so that we can make recommendations and tackle the cold start problem.
+    This allows the user to pick 2 of their favourite genres before proceeding on to the next page.
+    This step enables us to narrow the user’s movie preferences according to genres. Once the checkbox’s are selected,
+    the user can move to the next page where user will be presented with options to rate movies from their choice of genre.
+
+
+*/
+
+
 
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
@@ -20,7 +28,7 @@ class GenreSelection extends Component {
             comedyMovieRow: [],
             horrorMovieRow: [],
             actionMovieRow: [],
-            animatedMovieRow: [],
+            thrillerMovieRow: [],
             romanceMovieRow: [],
             checkedOptions: {},
             user: localStorage.getItem('id'),
@@ -87,7 +95,7 @@ class GenreSelection extends Component {
         this.getActionMovies();
         this.getHorrorMovies();
         this.getRomanceMovies();
-        this.getAnimatedMovies();
+        this.getThillerMovies();
 
     }
 
@@ -184,18 +192,19 @@ class GenreSelection extends Component {
             })
     }
 
-    getAnimatedMovies = () => {
-        const url = "/discover/movie?api_key=4f65322e8d193ba9623a9e7ab5caa01e&with_genres=16";
+    getThillerMovies = () => {
+        const url = "/discover/movie?api_key=4f65322e8d193ba9623a9e7ab5caa01e&with_genres=53";
 
         axios.get(url)
             .then(res => {
                 const movieRows = this.getMovieRows(res, url);
-                this.setState({ animatedMovieRow: movieRows });
+                this.setState({ thrillerMovieRow: movieRows });
             })
             .catch(error => {
                 console.log(error);
             })
     }
+
 
 
     render() {
@@ -206,9 +215,6 @@ class GenreSelection extends Component {
                     <h1>TheMovieOracle</h1>
                     <h5>personalised movie recommendations</h5>
                 </header>
-
-
-
 
                 <div className="newuser-card">
                     <h2> Welcome {localStorage.getItem('username')}  </h2>
@@ -236,14 +242,14 @@ class GenreSelection extends Component {
                                     <td>
                                         <div>
                                             <input
-                                                id="Animated"
+                                                id="thriller"
                                                 type="checkbox"
-                                                name="animation"
+                                                name="thriller"
                                                 onChange={this.changeCheckbox}
-                                                checked = {this.state.checkedOptions.animation || false}
+                                                checked = {this.state.checkedOptions.thriller || false}
                                             />
-                                            <label  htmlFor="Animated">Animated</label>
-                                            <div className="movie-genres"> {this.state.animatedMovieRow} </div>
+                                            <label  htmlFor="Animated">Thriller</label>
+                                            <div className="movie-genres"> {this.state.thrillerMovieRow} </div>
                                         </div>
                                     </td>
                                 </tr>

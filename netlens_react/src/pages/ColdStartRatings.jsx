@@ -1,5 +1,5 @@
 /**
- * ColdStartRatings - Page is rendered after the newUserRaing page.
+ * ColdStartRatings - Page is rendered after the GenreSelection page.
  * This page help in getting direct rating from the users to build the recommednation model and address the cold start problem
  */
 
@@ -59,8 +59,9 @@ class ColdStartRatings extends Component {
     }
 
 
-    handleSubmit = (e)  => {
 
+ /** When the continue button is pressed, check that at least one movie has been rate. Then move to the landing page */
+    handleSubmit = (e)  => {
         e.preventDefault();
         fetch(`http://127.0.0.1:8000/api/getNumMovies/${localStorage.getItem('id')}`)
 
