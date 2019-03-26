@@ -55,7 +55,7 @@ class LandingPage extends Component {
     }
 
     check() {
-        if(checkToken() == 'invalid') {
+        if(checkToken() === 'invalid') {
             this.props.history.push({
             pathname: '/Signin'
           })
@@ -196,9 +196,6 @@ class LandingPage extends Component {
         this.setState({recommendationApi: this.state.previousRecommendationApi}, this.getRecommendation);
     };
 
-
-
-    R
 
     render() {
         //this.check();
