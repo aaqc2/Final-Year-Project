@@ -260,7 +260,7 @@ def getGenres(request):
             q |= Q(genre__icontains=genre)
         queryset = list(Titles.objects.filter(q).select_related('links').values('links__tmdbid'))
         result = sample(queryset, len(queryset))
-        cache.set('shuffle', result, 7200)
+        cache.set('shuffle', result, 3600)
 
     paginator = PageNumberPagination()
     paginator.page_size = 7
@@ -319,13 +319,14 @@ def getCustomRec(self, u):
         "Drama": [(results[0][3] / replacement[3])*(results[0][17]/results[0][21])],
         "Horror": [(results[0][4] / replacement[4])*(results[0][18]/results[0][21])],
         "Thriller": [(results[0][5] / replacement[5])*(results[0][19]/results[0][21])],
-        "Scifi": [(results[0][6] / replacement[6])*(results[0][20]/results[0][21])]
+        "Sci-Fi": [(results[0][6] / replacement[6])*(results[0][20]/results[0][21])]
     }
     sortedList = sorted(data.items(), key=operator.itemgetter(1), reverse=True)
 
     genre1 = sortedList[0][0]
     genre2 = sortedList[1][0]
-    queryset = list(Titles.objects.filter(genre__icontains=genre1 or genre2).values_list('movieid', flat=True))[:200]
+    genre3 = sortedList[6][0]
+    queryset = list(Titles.objects.filter(Q(genre__icontains=genre1) | Q(genre__icontains=genre2)).exclude(genre__icontains=genre3).values_list('movieid', flat=True))[:200]
     i = 0
     while i < len(queryset):
         title = Titles.objects.get(pk=queryset[i])
