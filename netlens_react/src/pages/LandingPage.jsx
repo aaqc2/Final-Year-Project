@@ -22,7 +22,6 @@ class LandingPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userid: localStorage.getItem('id'),
             user: localStorage.getItem('id'),
             topRatedRow: [],
             recommendation: [],
@@ -43,23 +42,18 @@ class LandingPage extends Component {
         this.handleNextRecommendationClick = this.handleNextRecommendationClick.bind(this);
     };
 
+    componentWillMount() {
+        checkToken();
+    }
+
 
     /** Make all API calls as soon as the MovieGenreRow component mounts. */
 
     componentDidMount() {
-        this.check()
         console.log('i am mounted');
         console.log(this.props.location.state);
         this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${this.state.user}?width=${window.screen.width}`}, this.getRecommendation);
         this.getTopRated();
-    }
-
-    check() {
-        if(checkToken() === 'invalid') {
-            this.props.history.push({
-            pathname: '/Signin'
-          })
-        }
     }
 
     /** Extract our movie data and pass it to our MovieGenre Component. */

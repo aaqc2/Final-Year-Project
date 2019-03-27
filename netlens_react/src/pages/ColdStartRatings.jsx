@@ -10,6 +10,7 @@ import { checkToken } from "../components/authenticateToken";
 
 
 class ColdStartRatings extends Component {
+    apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
     constructor(props) {
         super(props);
         this.state = {
@@ -27,7 +28,11 @@ class ColdStartRatings extends Component {
         this.handleNextGenreClick = this.handleNextGenreClick.bind(this);
     };
 
-    apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
+
+
+    componentWillMount() {
+        checkToken();
+    }
 
     /** Make all API calls as soon as the MovieGenreRow component mounts. */
 
@@ -47,17 +52,7 @@ class ColdStartRatings extends Component {
                 this.setState({genreApi: `http://127.0.0.1:8000/api/genres/?${url}`}, this.getGenreMovies)
             }
         }
-        this.check();
     }
-
-    check() {
-        if (checkToken() == 'invalid') {
-            this.props.history.push({
-                pathname: '/Signin'
-            })
-        }
-    }
-
 
 
  /** When the continue button is pressed, check that at least one movie has been rate. Then move to the landing page */

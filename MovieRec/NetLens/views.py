@@ -205,7 +205,7 @@ def login(request):
                 payload = {
                     'id': user.userid,
                     'iat': datetime.now(),
-                    'exp': datetime.now() + timedelta(hours=6)
+                    'exp': datetime.now() + timedelta(seconds=5)
                 }
                 jwt_token = {'token': jwt.encode(payload, secret)}
                 return Response(
