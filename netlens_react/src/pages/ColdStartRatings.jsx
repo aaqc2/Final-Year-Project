@@ -71,8 +71,8 @@ class ColdStartRatings extends Component {
             })
             .then((data) => {
                 console.log(data);
-                if(data <= 0){
-                    return alert ('Please rate at least 1 movie!');
+                if(data <= 2){
+                    return alert ('Please rate at least 3 movies!');
                 }
                 else{
                     fetch(`http://127.0.0.1:8000/api/getCustomRec/${localStorage.getItem('id')}`)
