@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Navbar from "../components/Navbar";
 import UserStarRating from '../components/UserStarRating.jsx';
 import AverageRating from '../components/AverageRating.jsx';
+import { checkToken } from "../components/authenticateToken";
 
 class MovieInfo extends Component {
     constructor(props) {
@@ -13,6 +14,7 @@ class MovieInfo extends Component {
 
 
     componentWillMount() {
+        checkToken();
         this.setState = {info: this.props.match.params.id};
         console.log("information:" + this.props.match.params.id);
         this.loadMovieInfo();

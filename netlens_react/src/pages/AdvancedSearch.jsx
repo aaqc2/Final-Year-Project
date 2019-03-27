@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Navbar from "../components/Navbar";
 import axios from "../baseUrl";
+import {checkToken} from "../components/authenticateToken";
 
 // import { TablePagination } from 'react-pagination-table';
 
@@ -33,6 +34,10 @@ class AdvancedSearch extends Component {
         this.handleNextGenreClick = this.handleNextGenreClick.bind(this);
         this.getSearchQuery = this.getSearchQuery.bind(this);
         this.getFilter = this.getFilter.bind(this);
+    }
+
+    componentWillMount() {
+        checkToken();
     }
 
     componentDidMount() {

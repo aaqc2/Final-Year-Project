@@ -1,8 +1,6 @@
-let check = 'checking';
 
 const checkToken = function () {
     let token = localStorage.getItem('token');
-    if (token != null) {
         // console.log(token)
         fetch('http://127.0.0.1:8000/api/check/' + token)
             .then((result) => {
@@ -10,20 +8,18 @@ const checkToken = function () {
             })
             .then((data) => {
                 console.log(data.status);
-                if (data.status == 200) {
-                    check = 'valid';
-                    console.log(check);
-                } else {
-                    check = 'invalid';
-                    console.log(check);
+                if (data.status !== 200) {
+                    localStorage.clear();
+                    window.location.replace("../Signin");
+
                 }
             })
-        //console.log(check);
-    }
-    else {
-        check = 'invalid';
-    }
-    return check;
+    // if(token == null){
+    //     localStorage.clear();
+    //     window.onload = function() {
+    //         window.location.replace("../Signin");
+    //     }
+    // }
 };
 
 export {checkToken};

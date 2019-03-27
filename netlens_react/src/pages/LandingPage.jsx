@@ -22,11 +22,10 @@ class LandingPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userid: localStorage.getItem('id'),
             user: localStorage.getItem('id'),
             topRatedRow: [],
             recommendation: [],
-            topRatedApi: 'http://127.0.0.1:8000/api/toprated/',
+            topRatedApi: `http://127.0.0.1:8000/api/toprated/?width=${window.screen.width}`,
             hasTopRatedNext: false,
             hasTopRatedPrevious: false,
             nextTopRatedApi: '',
@@ -43,23 +42,18 @@ class LandingPage extends Component {
         this.handleNextRecommendationClick = this.handleNextRecommendationClick.bind(this);
     };
 
+    componentWillMount() {
+        checkToken();
+    }
+
 
     /** Make all API calls as soon as the MovieGenreRow component mounts. */
 
     componentDidMount() {
-        this.check()
         console.log('i am mounted');
         console.log(this.props.location.state);
-        this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${this.state.user}`}, this.getRecommendation);
+        this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${this.state.user}?width=${window.screen.width}`}, this.getRecommendation);
         this.getTopRated();
-    }
-
-    check() {
-        if(checkToken() === 'invalid') {
-            this.props.history.push({
-            pathname: '/Signin'
-          })
-        }
     }
 
     /** Extract our movie data and pass it to our MovieGenre Component. */
@@ -87,17 +81,8 @@ class LandingPage extends Component {
     getTopRated = () => {
         const row = 'toprated';
         let result = [];
-        fetch(this.state.topRatedApi, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'width': window.screen.width,
-            },)
-        })
-            .then((response) => {
+        fetch(this.state.topRatedApi)
+            .then(response => {
                 return response.json();
             })
             .then((data) => {
@@ -145,16 +130,7 @@ class LandingPage extends Component {
         const row = 'recommendation';
         let result = [];
         console.log(this.state.recommendationApi);
-        fetch(this.state.recommendationApi, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'width': window.screen.width,
-            },)
-        })
+        fetch(this.state.recommendationApi)
             .then((response) => {
                 return response.json();
             })

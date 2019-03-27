@@ -28,16 +28,9 @@ class UserProfile extends Component {
 
 
     componentWillMount() {
-       this.setState({userRatedApi:`http://127.0.0.1:8000/api/getUser/${this.state.userid}`},this.getUserRating);
+        checkToken();
+        this.setState({userRatedApi:`http://127.0.0.1:8000/api/getUser/${this.state.userid}`},this.getUserRating);
        // this.getUserRating();
-    }
-
-    check() {
-        if(checkToken() == 'invalid') {
-            this.props.history.push({
-            pathname: '/Signin'
-          })
-        }
     }
 
 
@@ -117,7 +110,6 @@ class UserProfile extends Component {
 
 
     render() {
-         this.check();
         return (
             <div>
             { this.state &&

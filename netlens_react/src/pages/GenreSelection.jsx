@@ -15,6 +15,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import GenreImages from "../components/GenreImages";
 import axios from "../baseUrl";
+import { checkToken } from "../components/authenticateToken";
 
 
 
@@ -90,6 +91,7 @@ class GenreSelection extends Component {
 
     /** Make all API calls as soon as the MovieGenreRow component mounts. */
     componentWillMount() {
+        checkToken();
         this.getDramaMovies();
         this.getComedyMovies();
         this.getActionMovies();
