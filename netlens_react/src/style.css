@@ -1,5 +1,5 @@
 body {
-    /*padding-top: 50px;*/
+    padding-top: 50px;
     position: relative;
     background: #221f1f;
 }
@@ -36,6 +36,24 @@ p.big {
     position: absolute;
     top: 55px;
 
+}
+
+@media screen and (max-width: 800px) {
+   .navbar-brand{
+       padding-top: 5px;
+       margin: auto;
+
+}
+}
+
+
+@media screen and (max-width: 800px) {
+   /*.navbar-brand .slogan{*/
+    .slogan{
+        padding-top: 5px;
+       margin: auto;
+
+}
 }
 
 /* SEARCH BAR */
@@ -111,6 +129,47 @@ p.big {
     align-items: center;
     background-repeat: no-repeat;
 }
+
+
+@media screen and (max-width: 800px) {
+    .react-autosuggest__input {
+        width: 100%;
+
+
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .react-autosuggest__container {
+        position: inherit;
+        padding-top: 20px;
+         padding-bottom: 10px;
+         margin: auto;
+          width: 90%;
+          display: block;
+    }
+}
+
+
+    .searchButton{
+        position: absolute;
+        float: right;
+        /*margin-left: 80%;*/
+        visibility: hidden;
+}
+
+@media screen and (max-width: 800px) {
+    .navbar-toggler{
+          position: inherit;
+        margin: 0;
+
+
+    }
+}
+
+
+
+
 
 .dancounsell {
     background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/48.jpg);
@@ -295,7 +354,7 @@ p.big {
 }
 
 .movieList {
-    overflow: auto;
+    overflow:  hidden;
     position: relative;
     padding-top: 45px;
     padding-left: 30px;
@@ -314,6 +373,16 @@ p.big {
 .nextButton {
     position: absolute;
     left: 90%;
+}
+
+
+.movieList img {
+     height: 22rem;
+    width: 20.5rem;
+}
+
+.movieList a {
+
 }
 
 /* FOOTER */
@@ -337,15 +406,15 @@ p.big {
     background-color:#221f1f;
     color: #fff;
     margin-top: 100px;
-    margin: auto;
-    width: 100%;
-    padding: 100px;
+    /*margin: auto;*/
+    /*width: 100%;*/
+    padding-top: 50px;
+    padding-left: 50px;
 }
 
 
 
 .movieRow_heading {
-    padding-top: rem;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
 
@@ -394,6 +463,48 @@ p.big {
     padding-right: 10px;
 
 }
+
+
+/* responsive */
+
+@media screen and (max-width: 800px) {
+   .movie_image{
+       width: 100%;
+       height: 50%;
+
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .movieRow {
+        /*background-color:red;*/
+        color: #fff;
+        width: 100%;
+        padding-left: 5%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .movieRow_container {
+        /*background-color:red;*/
+        color: #fff;
+        width: 100%;
+        /*padding: 100px;*/
+    }
+}
+
+
+@media screen and (max-width: 800px) {
+   .movie_image:hover  {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+    }
+
+
+
+
 
 
 /* SIGN IN PAGE */

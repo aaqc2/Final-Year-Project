@@ -1,3 +1,8 @@
+/**
+ * ColdStartRatings - Page is rendered after the GenreSelection page.
+ * This page help in getting direct rating from the users to build the recommednation model and address the cold start problem
+ */
+
 import React, { Component } from "react";
 import axios from '../baseUrl';
 import MovieImages from '../components/MovieImages';
@@ -30,9 +35,6 @@ class ColdStartRatings extends Component {
         //console.log('i am mounted');
         console.log(this.props.location.state);
 
-        // this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${localStorage.getItem('id')}`}, this.getRecommendation);
-        this.getTopRated();
-
         if (this.props.location.state !== undefined) {
             if (this.props.location.state.selectedValues !== undefined) {
                 const {location: {state: {selectedValues}}} = this.props;
@@ -57,10 +59,12 @@ class ColdStartRatings extends Component {
     }
 
 
-    handleSubmit = (e)  => {
 
+ /** When the continue button is pressed, check that at least one movie has been rate. Then move to the landing page */
+    handleSubmit = (e)  => {
         e.preventDefault();
         fetch(`http://127.0.0.1:8000/api/getNumMovies/${localStorage.getItem('id')}`)
+
             .then((response) => {
                 console.log(response)
                 return response.json();
@@ -157,6 +161,11 @@ class ColdStartRatings extends Component {
 
     };
 
+     /**
+     * Pagination
+     */
+
+
     handleNextGenreClick() {
         this.setState({genreApi: this.state.nextGenreApi}, this.getGenreMovies);
     }
@@ -166,59 +175,10 @@ class ColdStartRatings extends Component {
         this.setState({genreApi: this.state.previousGenreApi}, this.getGenreMovies);
     };
 
-    /**
-     * Send request for movies that are top rated
+
+     /**
+     * Render the movies based on the genre selected
      */
-    getTopRated = () => {
-        const row = 'toprated';
-        let result = [];
-        fetch(this.state.topRatedApi)
-            .then((result) => {
-                return result.json();
-            })
-            .then((data) => {
-                data.results.map((id) => {
-                    Object.entries(id).forEach(([key, value]) => {
-                        let url = '/movie/' + value + '?api_key=' + this.apiKey;
-                        axios.get(url)
-                            .then(res => {
-                                console.log(res);
-                                result.push(res);
-                                const movieRows = this.getMovieRows(row, result);
-                                this.setState({topRatedRow: movieRows});
-                            }).catch(error => {
-                            console.log(error);
-
-                        })
-                    });
-                });
-                if (data.next !== null) {
-                    this.setState({hasTopRatedNext: true, nextTopRatedApi: data.next});
-                } else {
-                    this.setState({hasTopRatedNext: false, nextTopRatedApi: ''});
-                }
-                if (data.previous !== null) {
-                    this.setState({hasTopRatedPrevious: true, previousTopRatedApi: data.previous});
-                } else {
-                    this.setState({hasTopRatedPrevious: false, previousTopRatedApi: ''});
-                }
-            }).catch((err) => {
-            console.log(err);
-        });
-
-    };
-
-    handleNextTopRatedClick() {
-        this.setState({topRatedApi: this.state.nextTopRatedApi}, this.getTopRated);
-    }
-
-    handlePreviousTopRatedClick() {
-        // this.state.api = this.state.previousApi;
-        // this.getSearchQuery();
-        this.setState({topRatedApi: this.state.previousTopRatedApi}, this.getTopRated);
-    };
-
-
     render() {
 
         return (
@@ -237,9 +197,9 @@ class ColdStartRatings extends Component {
                 </div>
                 <div>
                     {this.state.hasGenrePrevious && <button className="btn btn-sm btn-primary"
-                                                            onClick={this.handlePreviousGenreClick}>Previous</button>}
+                                                            onClick={this.handlePreviousGenreClick}>View previous</button>}
                     {this.state.hasGenreNext && <button className="nextButton btn btn-sm btn-primary"
-                                                        onClick={this.handleNextGenreClick}>Next</button>}
+                                                        onClick={this.handleNextGenreClick}>View more</button>}
                     <br/><br/>
                 </div>
                 <button className = "newuser-submit" onClick={this.handleSubmit}> Continue </button>

@@ -1,3 +1,6 @@
+/**
+ * NOT USED
+ */
 import decode from 'jwt-decode';
 
 class Authentication{

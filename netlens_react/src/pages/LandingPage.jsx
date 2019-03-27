@@ -1,3 +1,14 @@
+
+/*
+Landing page
+This page is rendered directly for registered users. For new users, this page is rendered after the first initial 2 steps.
+This is the main page, where the movie recommendations for that user is rendered.
+
+
+*/
+
+
+
 import React, { Component } from "react";
 import axios from '../baseUrl'; 
 import MovieImages from '../components/MovieImages';
@@ -44,7 +55,7 @@ class LandingPage extends Component {
     }
 
     check() {
-        if(checkToken() == 'invalid') {
+        if(checkToken() === 'invalid') {
             this.props.history.push({
             pathname: '/Signin'
           })
@@ -185,9 +196,6 @@ class LandingPage extends Component {
         this.setState({recommendationApi: this.state.previousRecommendationApi}, this.getRecommendation);
     };
 
-
-
-    R
 
     render() {
         //this.check();
