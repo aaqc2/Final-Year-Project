@@ -1,3 +1,7 @@
+ /**
+  *  User profile page which display the details of user(username and email), the movies that the user has rated
+  *  and the number of movies the user has rated.
+  **/
 import React, {Component} from 'react';
 import MovieImages from "../components/MovieImages";
 import axios from "../baseUrl";
@@ -6,6 +10,7 @@ import { checkToken } from "../components/authenticateToken";
 
 
 class UserProfile extends Component {
+    apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
     constructor(props) {
         super(props);
         /** Hold rated list movie row in an array */
@@ -20,17 +25,19 @@ class UserProfile extends Component {
         numberOfMoviesRated: 0
         };
 
+        //bind the functions which handle click
         this.handlePreviousClick = this.handlePreviousClick.bind(this);
         this.handleNextClick = this.handleNextClick.bind(this);
     }
-    apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
 
 
+    /** Check user's token if it is still valid before the first render
+     * and set the api for retrieve user rated movies to userRateApi state with callback function of getUserRating function
+     * */
 
     componentWillMount() {
         checkToken();
         this.setState({userRatedApi:`http://127.0.0.1:8000/api/getUser/${this.state.userid}`},this.getUserRating);
-       // this.getUserRating();
     }
 
 
@@ -39,22 +46,20 @@ class UserProfile extends Component {
     getMovieRows = (res, url) => {
         const results = res;
         let movieRows = [];
-        console.log(res);
         results.map((movie) => {
-            console.log("asd");
             if (movie.data.poster_path !== null) {
                 const movieComponent = <MovieImages
                     id={movie.data.id}
                     userid={this.state.userid}
                     url={url}
                     poster={"https://image.tmdb.org/t/p/original" + movie.data.poster_path}
-                    info={movie}/>
+                    info={movie}/>;
                 movieRows.push(movieComponent);
             }
         });
         return movieRows;
 
-    }
+    };
 
 
     /**
@@ -83,7 +88,12 @@ class UserProfile extends Component {
                         })
                     });
                 });
+                // count the number of movies user has rated
                 this.setState({numberOfMoviesRated: data.count});
+
+                // check if it has next/previous pages for the results
+                // and setState so that the buttons point to the next/previous page respectively
+                // and ready to do api call for next/previous page when click
                 if (data.next !== null) {
                     this.setState({hasUserRatedNext: true, nextUserRatedApi: data.next});
                 } else {
@@ -100,10 +110,12 @@ class UserProfile extends Component {
 
     };
 
+    /** Handle the next button on movie rows when next button is clicked. */
     handleNextClick() {
         this.setState({userRatedApi: this.state.nextUserRatedApi}, this.getUserRating);
     }
 
+    /** Handle the previous button on top rated movie rows when previous button is clicked. */
     handlePreviousClick() {
         this.setState({userRatedApi: this.state.previousUserRatedApi}, this.getUserRating);
     }
@@ -126,8 +138,6 @@ class UserProfile extends Component {
                                 <div className="text-center">
                                     <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
                                          className="avatar img-circle img-thumbnail" alt="avatar"/>
-                                    {/*<h5>Upload a photo</h5>*/}
-                                    {/*<input type="file" className="text-center center-block file-upload"/>*/}
                                 </div>
                                 <br/>
                                 <div className="panel panel-default">
@@ -139,50 +149,30 @@ class UserProfile extends Component {
                                     <li className="list-group-item">Activity</li>
                                     <li className="list-group-item text-right"><span className="pull-left"><strong>Movies rated</strong></span> {this.state.numberOfMoviesRated}
                                     </li>
-                                    {/*<li className="list-group-item text-right"><span*/}
-                                        {/*className="pull-left"><strong>Comments</strong></span> 13*/}
-                                    {/*</li>*/}
                                 </ul>
-                                {/*<div className="panel panel-default">*/}
-                                    {/*<div className="panel-heading">Social Media</div>*/}
-                                    {/*<div className="panel-body">*/}
-                                        {/*<i className="fa fa-facebook fa-2x"/> <i className="fa fa-github fa-2x"/> <i*/}
-                                        {/*className="fa fa-twitter fa-2x"/> <i className="fa fa-pinterest fa-2x"/> <i*/}
-                                        {/*className="fa fa-google-plus fa-2x"/>*/}
-                                    {/*</div>*/}
-                                {/*</div>*/}
                             </div>
                             {/*/col-3*/}
                             <div className="col-sm-9">
                                 <ul className="nav nav-tabs">
                                     <li className="active"><a data-toggle="tab" href="#tab1">Your rated movies</a></li>
-                                    {/*<li><a data-toggle="tab" href="#tab2">Statistics </a></li>*/}
                                 </ul>
                                 <div className="tab-content">
                                     <div className="tab-pane active" id="tab1">
                                         <div id="Buttons">
+                                                {/*paginator to get the previous movies */}
                                                 {this.state.hasUserRatedPrevious && <button className="btn btn-sm btn-primary"
                                                                      onClick={this.handlePreviousClick}>Previous</button>}
+
+                                                 {/*paginator to get next set of  movies */}
                                                 {this.state.hasUserRatedNext && <button className="nextButton btn btn-sm btn-primary"
                                                                  onClick={this.handleNextClick}>Next</button>}
                                                 <br/><br/>
                                         </div>
                                         <div className="ratedlist-container">
+                                            {/* show the list of movies the user has rated*/}
                                             {this.state.ratedList}
                                         </div>
                                     </div>
-                                    {/*/tab-pane*/}
-
-                                    {/*<div className="tab-pane" id="tab2">*/}
-                                        {/*<br/><br/>Rating statistics 1*/}
-                                    {/*</div>*/}
-                                    {/*/tab-pane*/}
-
-                                    {/*<div className="tab-pane" id="tab3">*/}
-                                        {/*<br/><br/>Rating statistics 2*/}
-                                    {/*</div>*/}
-                                    {/*/tab-pane*/}
-
                                 </div>
                                 {/*/tab-content*/}
                             </div>

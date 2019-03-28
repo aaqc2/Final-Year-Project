@@ -34,22 +34,21 @@ class LandingPage extends Component {
             nextRecommendationApi: '',
             prevRecommendationApi: '',
         };
+        //bind the functions which handle click
         this.handlePreviousTopRatedClick = this.handlePreviousTopRatedClick.bind(this);
         this.handleNextTopRatedClick = this.handleNextTopRatedClick.bind(this);
         this.handlePreviousRecommendationClick = this.handlePreviousRecommendationClick.bind(this);
         this.handleNextRecommendationClick = this.handleNextRecommendationClick.bind(this);
     };
 
+    /** Check user's token if it is still valid before the first render. */
     componentWillMount() {
         checkToken();
     }
 
 
     /** Make all API calls as soon as the MovieGenreRow component mounts. */
-
     componentDidMount() {
-        console.log('i am mounted');
-        console.log(this.props.location.state);
         this.setState({recommendationApi: `http://127.0.0.1:8000/api/recommendation/${this.state.user}?width=${window.screen.width}`}, this.getRecommendation);
         this.getTopRated();
     }
@@ -65,7 +64,7 @@ class LandingPage extends Component {
                     row={row}
                     userid={this.state.user}
                     poster={"https://image.tmdb.org/t/p/original" + movie.data.poster_path}
-                    info={movie}/>
+                    info={movie}/>;
                 movieRows.push(movieComponent);
             }
         });
@@ -98,7 +97,9 @@ class LandingPage extends Component {
                     });
                 });
 
-
+                // check if it has next/previous pages for the results
+                // and setState so that the buttons point to the next/previous page respectively
+                // and ready to do api call for next/previous page when click
                 if (data.next !== null) {
                     this.setState({hasTopRatedNext: true, nextTopRatedApi: data.next});
                 } else {
@@ -115,15 +116,17 @@ class LandingPage extends Component {
 
     };
 
-
+    /** Handle the next button on top rated movie rows when next button is clicked. */
     handleNextTopRatedClick() {
         this.setState({topRatedApi: this.state.nextTopRatedApi}, this.getTopRated);
     }
 
+    /** Handle the previous button on top rated movie rows when previous button is clicked. */
     handlePreviousTopRatedClick() {
         this.setState({topRatedApi: this.state.previousTopRatedApi}, this.getTopRated);
     };
 
+    /** Send request for movies that are recommended to the user. */
     getRecommendation = () => {
         const row = 'recommendation';
         let result = [];
@@ -162,18 +165,18 @@ class LandingPage extends Component {
 
     };
 
+    /** Handle the next button on top rated movie rows when next button is clicked. */
     handleNextRecommendationClick() {
         this.setState({recommendationApi: this.state.nextRecommendationApi}, this.getRecommendation);
     }
 
+    /** Handle the previous button on recommended movie rows when previous button is clicked. */
     handlePreviousRecommendationClick() {
         this.setState({recommendationApi: this.state.previousRecommendationApi}, this.getRecommendation);
     };
 
 
     render() {
-        //this.check();
-        //console.log("i am rendering");
         return (
             <div>
             { this.state &&
@@ -203,8 +206,11 @@ class LandingPage extends Component {
                     {this.state.topRatedRow}
                 </div>
                 <div>
+                    {/*paginator to get the previous movies */}
                     {this.state.hasTopRatedPrevious && <button className="btn btn-sm btn-primary"
                                                                onClick={this.handlePreviousTopRatedClick}>Previous</button>}
+
+                    {/*paginator to get next set of  movies */}
                     {this.state.hasTopRatedNext && <button className="nextButton btn btn-sm btn-primary"
                                                            onClick={this.handleNextTopRatedClick}>Next</button>}
                     <br/><br/>

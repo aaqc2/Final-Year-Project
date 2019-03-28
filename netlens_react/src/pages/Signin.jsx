@@ -1,16 +1,9 @@
-/*
-
-Signin page
-
-
-
-
-*/
+/**
+  *  User sign in page
+  **/
 
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-// import {Redirect} from 'react-router-dom'
-// import Authentication from '../components/Authentication.jsx';
 
 
 
@@ -26,16 +19,21 @@ class Login extends Component {
 
         };
 
+        //bind the functions which handle changes
         this.handleChange = this.handleChange.bind(this);
+        //bind the functions which handle click(submit button)
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    /** Keep track of the changes of input on textboxes. */
     handleChange(event) {
         this.setState({[event.target.name]: event.target.value});
     }
 
+    /** handle the submit button when it was clicked. */
     handleSubmit(event) {
         event.preventDefault();
+        //api call function to login with post method with submitted username and password
         fetch('http://127.0.0.1:8000/login/', {
             method: 'POST',
             headers: {
@@ -51,21 +49,21 @@ class Login extends Component {
                 return response.json();
             })
             .then((data) => {
-                console.log(data);
+                //token will be given in response
                 if (data.token != null) {
-
-                    //saves token and id to local storage.
+                    // token, userid, username and email is stored to local storage.
                     localStorage.setItem('token', data.token['token']);
                     localStorage.setItem('id', data.userid);
                     localStorage.setItem('username', data.username);
                     localStorage.setItem('email', data.email);
                     let id = data.userid;
-
+                    // redirect user to landing page
                     this.props.history.push({
                         pathname: '/LandingPage',
                         state: {user: id}
                     })
                 } else {
+                    // display error message if user fails to login and no token is given
                     this.setState({msg: data});
                 }
 
@@ -89,6 +87,7 @@ class Login extends Component {
                         <h4> Don't have an account? <Link className="register-link" to="/RegisterPage">Register
                             now</Link></h4>
                         <div id="signinBox">
+                            {/* error message to be displayed if user failed to login */}
                             {this.state.msg}
                             <form onSubmit={this.handleSubmit}>
                                 <div className="input">
@@ -111,7 +110,6 @@ class Login extends Component {
                     <p> Struggle to find a movie you will enjoy? TheMovieOracle helps you find movies you will like. Simply
                         provide ratings for movies, then let TheMovieOracle recommends you movies which you will enjoy to watch
                         :)</p>
-                    {/* <img src={homescreen} alt="homescreen"/> */}
                 </div>
             </div>
         );

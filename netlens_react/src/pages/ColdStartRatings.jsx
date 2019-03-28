@@ -23,30 +23,25 @@ class ColdStartRatings extends Component {
             nextGenreApi: '',
             prevGenreApi: '',
         };
-
+        //bind the functions which handle click
         this.handlePreviousGenreClick = this.handlePreviousGenreClick.bind(this);
         this.handleNextGenreClick = this.handleNextGenreClick.bind(this);
     };
 
 
-
+    /** Check user's token if it is still valid before the first render. */
     componentWillMount() {
         checkToken();
     }
 
     /** Make all API calls as soon as the MovieGenreRow component mounts. */
-
     componentDidMount() {
-        //console.log('i am mounted');
-        console.log(this.props.location.state);
-
         if (this.props.location.state !== undefined) {
+            //check if any genre is selected
             if (this.props.location.state.selectedValues !== undefined) {
                 const {location: {state: {selectedValues}}} = this.props;
-                console.log(selectedValues);
                 let url = '';
                 Object.keys(selectedValues).map((gen) => {
-                    console.log(gen, "genres");
                     url += '&gen=' + gen;
                 });
                 this.setState({genreApi: `http://127.0.0.1:8000/api/genres/?${url}`}, this.getGenreMovies)
@@ -61,11 +56,10 @@ class ColdStartRatings extends Component {
         fetch(`http://127.0.0.1:8000/api/getNumMovies/${localStorage.getItem('id')}`)
 
             .then((response) => {
-                console.log(response)
                 return response.json();
             })
             .then((data) => {
-                console.log(data);
+                // check if at least 3 movies are rated
                 if(data <= 2){
                     return alert ('Please rate at least 3 movies!');
                 }
@@ -75,11 +69,10 @@ class ColdStartRatings extends Component {
                             return response;
                         })
                         .then((data) => {
-
-                                if (data.status == 200) {
+                                // redirect user to landing page
+                                if (data.status === 200) {
                                     return this.props.history.push({
                                         pathname: '/LandingPage',
-                                        // state:{selectedValues : allSelected}
                                     });
                                 }
                             }
@@ -94,7 +87,6 @@ class ColdStartRatings extends Component {
     getMovieRows = (row, res, user) => {
         const results = res;
         let movieRows = [];
-        console.log(res);
         results.map((movie) => {
             if (movie.data.poster_path != null) {
                 const movieComponent = <MovieImages
@@ -110,7 +102,7 @@ class ColdStartRatings extends Component {
         });
         return movieRows;
 
-    }
+    };
 
     /**
      * Send request for the genre movies
@@ -124,19 +116,20 @@ class ColdStartRatings extends Component {
                 return result.json();
             })
             .then((data) => {
-                console.log(data.results);
-                // result.push(data.results);
                 data.results.map((movie) => {
                     let url = '/movie/' + movie.links__tmdbid + '?api_key=' + this.apiKey;
                     axios.get(url)
                         .then(res => {
-                            console.log(res);
                             result.push(res);
                             const movieRows = this.getMovieRows(row, result);
                             this.setState({genreMovies: movieRows});
                         }).catch(error => {
                         console.log(error);
                     });
+
+                    // check if it has next/previous pages for the results
+                    // and setState so that the buttons point to the next/previous page respectively
+                    // and ready to do api call for next/previous page when click
                     if (data.next !== null) {
                         this.setState({hasGenreNext: true, nextGenreApi: data.next});
                     } else {
@@ -160,12 +153,12 @@ class ColdStartRatings extends Component {
      * Pagination
      */
 
-
+    /** Handle the next button on movie rows when next button is clicked. */
     handleNextGenreClick() {
         this.setState({genreApi: this.state.nextGenreApi}, this.getGenreMovies);
     }
 
-
+    /** Handle the previous button on movie rows when previous button is clicked. */
     handlePreviousGenreClick() {
         this.setState({genreApi: this.state.previousGenreApi}, this.getGenreMovies);
     };

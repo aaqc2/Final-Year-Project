@@ -12,19 +12,23 @@ class MovieInfo extends Component {
         };
     }
 
-
+    /** Check user's token if it is still valid
+     *  and load the movie info
+     * before the first render. */
     componentWillMount() {
         checkToken();
+        // initialise info state to store the tmdbid of movies
         this.setState = {info: this.props.match.params.id};
-        console.log("information:" + this.props.match.params.id);
         this.loadMovieInfo();
     }
 
+    /** Retrieve the movie info by passing the tmdbid to the tmdb api.
+     *  and display the movie info
+     * */
     loadMovieInfo () {
         let apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
         let baseURL = 'https://api.themoviedb.org/3/';
         let baseImageURL = 'http://image.tmdb.org/t/p/';
-        // let configData = null;
         var title, release, revenue, runtime, languages, genres, tagline, overview, str, str_poster;
 
         let getConfig = function () {
@@ -35,15 +39,14 @@ class MovieInfo extends Component {
                 })
                 .then((data) => {
                     baseImageURL = data.images.secure_base_url;
-                    // configData = data.images;
-                    console.log('config fetched');
                     loadData()
                 })
                 .catch(function (err) {
                     alert(err);
                 });
-        }
+        };
 
+        /** Structure the movie api into our webpage for display with the movie details retrieve from tmdb. */
         let loadData = function () {
             let url = "".concat(baseURL, 'movie/', document.getElementsByClassName('tmdbid')[0].id, '?api_key=', apiKey);
             fetch(url)
@@ -59,7 +62,6 @@ class MovieInfo extends Component {
                     else {
                          title = data.title
                     }
-                    console.log(title);
                     document.getElementById('movie_title').innerHTML = title;
 
                     let posterurl = "".concat(baseImageURL, 'w342', data.poster_path);
@@ -97,12 +99,11 @@ class MovieInfo extends Component {
                     overview = data.overview;
                     document.getElementById('movie_overview').innerHTML = overview;
                 })
-        }
+        };
         getConfig();
     }
 
     render() {
-        console.log(this.props);
         return (
             <div className="container">
                 <br /><br /><br />

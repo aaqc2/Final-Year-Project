@@ -1,14 +1,6 @@
-/*
-
-
-
-
-*/
-
-
-
-
-
+/**
+  *  New user registration page
+  **/
 
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
@@ -26,23 +18,29 @@ class RegisterPage extends Component {
          msg:''
     };
 
+    //bind the functions which handle changes
     this.handleChange = this.handleChange.bind(this);
+    //bind the functions which handle click(submit button)
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  /** Keep track of the changes of input on textboxes. */
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
   }
 
+  /** handle the submit button when it was clicked. */
   handleSubmit (event) {
     const { password, confirmPassword } = this.state;
-    console.log(password)
-      console.log(confirmPassword)
     // perform all neccassary validations
+
+    //check if the password provided is the same as the confirmation password
     if (password !== confirmPassword) {
+        //display error message if it is different
         alert("Passwords do not match");
     } else {
         event.preventDefault();
+        // api call to register user with username, email and password send with post method
         fetch('http://127.0.0.1:8000/api/register/', {
         method: 'POST',
         headers: {
@@ -60,23 +58,22 @@ class RegisterPage extends Component {
     })
     .then((data) => {
       console.log(data);
-      //change if statement
-         console.log('response');
-             if(data.token != null ) {
-
-          //saves token and id to local storage.
-          localStorage.setItem('token', data.token['token'])
-          localStorage.setItem('id', data.userid)
-          localStorage.setItem('username', data.username)
-          localStorage.setItem('email', data.email)
+         //if the token is provided (token is given in response)
+        if(data.token != null ) {
+          //saves token and userid, username and email to local storage.
+          localStorage.setItem('token', data.token['token']);
+          localStorage.setItem('id', data.userid);
+          localStorage.setItem('username', data.username);
+          localStorage.setItem('email', data.email);
           let id = data.userid;
-
+          // redirect user tp GenreSelection page to select their favourite movie genres
           this.props.history.push({
             pathname: '/GenreSelection',
             state: {user: id}
           })
       }
       else {
+          //error message if no valid token is given
           this.setState({msg: data});
       }
 
@@ -84,25 +81,6 @@ class RegisterPage extends Component {
     .catch((error) => {
         console.error(error);
     });
-    //   if(typeof data === 'object' ) {
-    //       let id ='';
-    //       data.map((item) => {
-    //         id = item.userid
-    //         console.log(id);
-    //       });
-    //       this.props.history.push({
-    //         pathname: '/LandingPage',
-    //         state: {user: id}
-    //       })
-    //   }
-    //   else {
-    //       this.setState({msg: data});
-    //   }
-    //
-    // })
-    // .catch((error) => {
-    //     console.error(error);
-    // });
     }
   }
 

@@ -9,7 +9,6 @@
   *  */
 
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import GenreImages from "../components/GenreImages";
 import axios from "../baseUrl";
 import { checkToken } from "../components/authenticateToken";
@@ -20,6 +19,7 @@ class GenreSelection extends Component {
 
     constructor(props) {
         super(props);
+        //bind the functions which handle changes
         this.changeCheckbox = this.changeCheckbox.bind(this);
         this.state = {
             dramaMovieRow: [],
@@ -33,7 +33,7 @@ class GenreSelection extends Component {
         }
     }
 
-
+    /** Keep track of the changes of check boxes. */
     onChange = checkedValues => {
         console.log("CheckedValues", checkedValues)
         this.setState(() => {
@@ -42,20 +42,23 @@ class GenreSelection extends Component {
     };
 
 
-//stores the values of the checksbox so that it be passed to the next page. Ensure that no more than 2 checkboxs are selected
+//stores the values of the checkbox so that it be passed to the next page. Ensure that no more than 2 checkboxs are selected
     changeCheckbox(e) {
-        console.log("Changing checkbox", e.target.name, e.target.checked)
-        let selected = e.target.name
-        let value = e.target.checked
-        let allSelected = this.state.checkedOptions
+        console.log("Changing checkbox", e.target.name, e.target.checked);
+        let selected = e.target.name;
+        let value = e.target.checked;
+        let allSelected = this.state.checkedOptions;
         let allValues = Object.keys(allSelected).map(key => {
             return allSelected[key]
-        })
-        let  filtered = allValues.filter(value => value)
-        console.log("Filtered", filtered)
-        if(filtered.length >= 2 && value ) { return alert ('You can only select a maximum of 2 genres') } // check to make sure that no more than 2 checkboxs are selected.
+        });
+        let  filtered = allValues.filter(value => value);
+        console.log("Filtered", filtered);
+        // check to make sure that no more than 2 checkboxs are selected.
+        if(filtered.length >= 2 && value ) {
+            return alert ('You can only select a maximum of 2 genres')
+        }
 
-        allSelected[selected] = value
+        allSelected[selected] = value;
         this.setState({
             checkedOptions: allSelected
         })
@@ -69,12 +72,11 @@ class GenreSelection extends Component {
 
     handleSubmit = (e)  => {
         e.preventDefault();
-        let value = e.target.checked
         let allSelected = this.state.checkedOptions;
 
         let allValues = Object.keys(allSelected).map(key => {
             return allSelected[key]
-        })
+        });
 
         // check to make sure that alleast one genre is selected
 
@@ -92,7 +94,9 @@ class GenreSelection extends Component {
 
 
 
-    /** Make all API calls as soon as the MovieGenreRow component mounts. */
+    /** Make all API calls and check if the user token is valid
+     * before the first render.
+     **/
     componentWillMount() {
         checkToken();
         this.getDramaMovies();
@@ -118,16 +122,16 @@ class GenreSelection extends Component {
                     key={movie.id}
                     url={url}
                     posterUrl={movieImageUrl}
-                    movie={movie} />
+                    movie={movie} />;
                 movieRows.push(movieComponent);
                 movieRows.splice(3, 1)
 
             }
-        })
+        });
         console.log(movieRows.length);
         return movieRows;
 
-    }
+    };
 
 
 
@@ -143,7 +147,7 @@ class GenreSelection extends Component {
             .catch(error => {
                 console.log(error);
             });
-    }
+    };
 
 
     // API call to retrieve the action movie posters
@@ -158,7 +162,7 @@ class GenreSelection extends Component {
             .catch(error => {
                 console.log(error);
             })
-    }
+    };
 
     // API call to retrieve the comedy movie posters
     getComedyMovies = () => {
@@ -172,7 +176,7 @@ class GenreSelection extends Component {
             .catch(error => {
                 console.log(error);
             })
-    }
+    };
 
     // API call to retrieve the horror movie posters
     getHorrorMovies = () => {
@@ -186,9 +190,9 @@ class GenreSelection extends Component {
             .catch(error => {
                 console.log(error);
             })
-    }
+    };
 
-// API call to retrieve the romace movie posters
+// API call to retrieve the romance movie posters
     getRomanceMovies = () => {
         const url = "/discover/movie?api_key=4f65322e8d193ba9623a9e7ab5caa01e&with_genres=10749";
 
@@ -200,7 +204,7 @@ class GenreSelection extends Component {
             .catch(error => {
                 console.log(error);
             })
-    }
+    };
 
 
 // API call to retrieve the Thriller movie posters
@@ -215,12 +219,11 @@ class GenreSelection extends Component {
             .catch(error => {
                 console.log(error);
             })
-    }
+    };
 
 
 
     render() {
-        // console.log(this.props, 'checkedboxs test')
         return (
             <div  className="newuserrating-container">
 
