@@ -1,3 +1,8 @@
+/**
+ *  Displays information about the selected movie, allows user to input/change rating
+ *  Retrieves movie information from TMDb
+ */
+
 import React, { Component } from 'react';
 import Navbar from "../components/Navbar";
 import UserStarRating from '../components/UserStarRating.jsx';
@@ -31,6 +36,7 @@ class MovieInfo extends Component {
         let baseImageURL = 'http://image.tmdb.org/t/p/';
         var title, release, revenue, runtime, languages, genres, tagline, overview, str, str_poster;
 
+        // gets the base configuration for displaying movie posters (standard across all movies)
         let getConfig = function () {
             let url = "".concat(baseURL, 'configuration?api_key=', apiKey, '&query=The+Dark+Knight'); //change to movie_id parameter
             fetch(url)
@@ -46,6 +52,7 @@ class MovieInfo extends Component {
                 });
         };
 
+
         /** Structure the movie api into our webpage for display with the movie details retrieve from tmdb. */
         let loadData = function () {
             let url = "".concat(baseURL, 'movie/', document.getElementsByClassName('tmdbid')[0].id, '?api_key=', apiKey);
@@ -56,6 +63,7 @@ class MovieInfo extends Component {
                 .then((data) => {
                     console.log(data);
 
+                    // renders the information in specified containers
                     if(data.original_language !== "en") {
                         title = data.title + " (" + data.original_title + ")";
                     }
@@ -123,10 +131,12 @@ class MovieInfo extends Component {
                                                     <div className="card-block">
                                                         <div className="tmdbid" id={this.props.match.params.id}> </div>
                                                         <h2 id="movie_title" className="card-title">title</h2>
+                                                          {/* INPUT STAR RATING */}
                                                           <AverageRating tmdbid={this.props.match.params.id} userid={this.state.userid} />
                                                            <UserStarRating tmdbid={this.props.match.params.id} userid={this.state.userid} />
                                                         {/*<StarRating tmdbid={this.props.match.params.id} userid={this.props.location.state.userid}/>*/}
                                                         <b>
+                                                            {/* INFORMATION CONTAINERS*/}
                                                             <p id="release" className="big"></p>
 
                                                             <p id="revenue" className="big"></p>

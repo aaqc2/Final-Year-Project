@@ -1,7 +1,10 @@
+
  /**
-  *  User profile page which display the details of user(username and email), the movies that the user has rated
+  *  User profile page of signed-in account which display
+  *  the details of user(username and email), list of movies already rated by the user, enables modification of ratings
   *  and the number of movies the user has rated.
   **/
+
 import React, {Component} from 'react';
 import MovieImages from "../components/MovieImages";
 import axios from "../baseUrl";
@@ -88,12 +91,14 @@ class UserProfile extends Component {
                         })
                     });
                 });
+
                 // count the number of movies user has rated
                 this.setState({numberOfMoviesRated: data.count});
 
                 // check if it has next/previous pages for the results
                 // and setState so that the buttons point to the next/previous page respectively
                 // and ready to do api call for next/previous page when click
+                // sets state for pagination
                 if (data.next !== null) {
                     this.setState({hasUserRatedNext: true, nextUserRatedApi: data.next});
                 } else {
@@ -131,21 +136,25 @@ class UserProfile extends Component {
                 <div className="card">
                     <div className="container user_profile">
                         <div className="row">
+                            {/* DISPLAYS USERNAME */}
                             <div className="col-sm-10"><h1>{localStorage.getItem('username')}</h1></div>
                         </div>
                         <div className="row">
                             <div className="col-sm-3">{/*left col*/}
                                 <div className="text-center">
+                                    {/* DISPLAYS AVATAR IMAGE */}
                                     <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
                                          className="avatar img-circle img-thumbnail" alt="avatar"/>
                                 </div>
                                 <br/>
                                 <div className="panel panel-default">
+                                    {/* USER EMAIL ADDRESS */}
                                     <div className="panel-heading">Email address <i className="fas fa-envelope"></i>
                                     </div>
                                     <div className="panel-body">{localStorage.getItem('email')}</div>
                                 </div>
                                 <ul className="list-group">
+                                    {/* COUNT FOR RATED MOVIES */}
                                     <li className="list-group-item">Activity</li>
                                     <li className="list-group-item text-right"><span className="pull-left"><strong>Movies rated</strong></span> {this.state.numberOfMoviesRated}
                                     </li>
@@ -158,6 +167,7 @@ class UserProfile extends Component {
                                 </ul>
                                 <div className="tab-content">
                                     <div className="tab-pane active" id="tab1">
+                                        {/* DISPLAYS LIST OF RATED MOVIES */}
                                         <div id="Buttons">
                                                 {/*paginator to get the previous movies */}
                                                 {this.state.hasUserRatedPrevious && <button className="btn btn-sm btn-primary"
