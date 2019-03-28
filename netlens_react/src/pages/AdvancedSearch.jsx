@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Navbar from "../components/Navbar";
 import axios from "../baseUrl";
+import {checkToken} from "../components/authenticateToken";
 
 // import { TablePagination } from 'react-pagination-table';
 
@@ -23,7 +24,8 @@ class AdvancedSearch extends Component {
             prevGenreApi: '',
             genrePage: false,
             selected: '',
-            orderby: 'movieid'
+            genre:'',
+            orderby: ''
         };
         this.handleChange = this.handleChange.bind(this);
         this.handlePreviousClick = this.handlePreviousClick.bind(this);
@@ -32,6 +34,10 @@ class AdvancedSearch extends Component {
         this.handleNextGenreClick = this.handleNextGenreClick.bind(this);
         this.getSearchQuery = this.getSearchQuery.bind(this);
         this.getFilter = this.getFilter.bind(this);
+    }
+
+    componentWillMount() {
+        checkToken();
     }
 
     componentDidMount() {
@@ -61,16 +67,7 @@ class AdvancedSearch extends Component {
         document.querySelectorAll('input[type=checkbox]').forEach(checkboxes => checkboxes.checked = false); //uncheck checkbox
         this.setState({movieList: []});
         let result = [];
-        fetch(this.state.api, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-             },
-            body: JSON.stringify({
-                'orderby': this.state.orderby,
-            },)
-        })
+        fetch(this.state.api)
             .then((result) => {
                 return result.json();
             })
@@ -180,9 +177,10 @@ class AdvancedSearch extends Component {
                 });
                 this.setState(
                     {
+                        genre: genre,
                         genrePage: true,
                         selected: selected,
-                        genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + genre}`
+                        genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + this.state.genre}`
                     },
                     this.getFilter
                 )
@@ -246,16 +244,7 @@ class AdvancedSearch extends Component {
         // this.setState({genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + genre}`});
         // let api = `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + genre}`;
         this.setState({genreMovieList: []})
-        fetch(this.state.genreApi, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-             },
-            body: JSON.stringify({
-                'orderby': this.state.orderby,
-            },)
-        })
+        fetch(this.state.genreApi)
             .then((result) => {
                 return result.json();
             })
@@ -311,7 +300,7 @@ class AdvancedSearch extends Component {
     }
 
     sortResults(order) {
-        var results, i, rows, changing, a, b, changePosition;
+        var results, i, rows, changing, changePosition;
         results = document.getElementById('movieList');
         console.log(results);
         changing = true;
@@ -328,10 +317,10 @@ class AdvancedSearch extends Component {
                     //     changePosition = true;
                     //     break;
                     if(this.state.genrePage) {
-                        this.setState({orderby: 'title'}, this.getFilter)
+                        this.setState({genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + this.state.genre}&orderby=title`}, this.getFilter)
                     }
                     else {
-                        this.setState({orderby: 'title'}, this.getSearchQuery)
+                        this.setState({api: `http://127.0.0.1:8000/api/search/?q=${this.props.location.state.value}&orderby=title`}, this.getSearchQuery)
                     }
                     // }
                 }
@@ -344,10 +333,10 @@ class AdvancedSearch extends Component {
                     // }
                     document.getElementById('movieList').innerHTML = "";
                     if(this.state.genrePage) {
-                        this.setState({orderby: '-title'}, this.getFilter)
+                        this.setState({genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + this.state.genre}&orderby=-title`}, this.getFilter)
                     }
                     else {
-                        this.setState({orderby: '-title'}, this.getSearchQuery)
+                        this.setState({api: `http://127.0.0.1:8000/api/search/?q=${this.props.location.state.value}&orderby=-title`}, this.getSearchQuery)
                     }
                     // this.setState({orderby: '-title'}, this.getSearchQuery)
                 }
@@ -368,10 +357,10 @@ class AdvancedSearch extends Component {
                     // }
                     document.getElementById('movieList').innerHTML = "";
                     if(this.state.genrePage) {
-                        this.setState({orderby: '-avg_rating'}, this.getFilter)
+                        this.setState({genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + this.state.genre}&orderby=-avg_rating`}, this.getFilter)
                     }
                     else {
-                        this.setState({orderby: '-avg_rating'}, this.getSearchQuery)
+                        this.setState({api: `http://127.0.0.1:8000/api/search/?q=${this.props.location.state.value}&orderby=-avg_rating`}, this.getSearchQuery)
                     }
                     // this.setState({orderby: '-avg_rating'}, this.getSearchQuery)
                 }
@@ -458,9 +447,9 @@ class AdvancedSearch extends Component {
                                 <button className="btn btn-sm btn-danger"
                                         onClick={() => this.sortResults('za')}>Sort Z-A
                                 </button>
-                                <button className="btn btn-sm btn-danger"
-                                        onClick={() => this.sortResults('date')}>Sort by release date
-                                </button>
+                                {/*<button className="btn btn-sm btn-danger"*/}
+                                        {/*onClick={() => this.sortResults('date')}>Sort by release date*/}
+                                {/*</button>*/}
                                 <button className="btn btn-sm btn-danger"
                                         onClick={() => this.sortResults('vote')}>Sort by vote average
                                 </button>

@@ -1,5 +1,5 @@
 /**
- * ColdStartRatings - Page is rendered after the newUserRaing page.
+ * ColdStartRatings - Page is rendered after the GenreSelection page.
  * This page help in getting direct rating from the users to build the recommednation model and address the cold start problem
  */
 
@@ -10,6 +10,7 @@ import { checkToken } from "../components/authenticateToken";
 
 
 class ColdStartRatings extends Component {
+    apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
     constructor(props) {
         super(props);
         this.state = {
@@ -27,7 +28,11 @@ class ColdStartRatings extends Component {
         this.handleNextGenreClick = this.handleNextGenreClick.bind(this);
     };
 
-    apiKey = '4f65322e8d193ba9623a9e7ab5caa01e';
+
+
+    componentWillMount() {
+        checkToken();
+    }
 
     /** Make all API calls as soon as the MovieGenreRow component mounts. */
 
@@ -47,20 +52,11 @@ class ColdStartRatings extends Component {
                 this.setState({genreApi: `http://127.0.0.1:8000/api/genres/?${url}`}, this.getGenreMovies)
             }
         }
-        this.check();
-    }
-
-    check() {
-        if (checkToken() == 'invalid') {
-            this.props.history.push({
-                pathname: '/Signin'
-            })
-        }
     }
 
 
+ /** When the continue button is pressed, check that at least one movie has been rate. Then move to the landing page */
     handleSubmit = (e)  => {
-
         e.preventDefault();
         fetch(`http://127.0.0.1:8000/api/getNumMovies/${localStorage.getItem('id')}`)
 
@@ -70,8 +66,8 @@ class ColdStartRatings extends Component {
             })
             .then((data) => {
                 console.log(data);
-                if(data <= 0){
-                    return alert ('Please rate at least 1 movie!');
+                if(data <= 2){
+                    return alert ('Please rate at least 3 movies!');
                 }
                 else{
                     fetch(`http://127.0.0.1:8000/api/getCustomRec/${localStorage.getItem('id')}`)
