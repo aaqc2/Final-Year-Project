@@ -1,3 +1,8 @@
+/**
+ *  Displays the search bar with advanced options for filter and sorting
+ *  Includes autosuggestion feature
+ */
+
 import React, {Component} from 'react';
 import Navbar from "../components/Navbar";
 import axios from "../baseUrl";
@@ -35,13 +40,14 @@ class AdvancedSearch extends Component {
     }
 
     componentWillMount() {
+        // validates token for signed-in user
         checkToken();
     }
 
     componentDidMount() {
         if (this.props.location.state !== undefined) {
+            // retrieves search query and stores api link in state
             this.setState({api: `http://127.0.0.1:8000/api/search/?q=${this.props.location.state.value}`}, this.getSearchQuery);
-
         }
     }
 
@@ -78,6 +84,7 @@ class AdvancedSearch extends Component {
                 let promises = [];
                 let list = "";
                 for (let i = 0; i < this.state.movieList.length; i++) {
+                    // generates tmdb api link to retrive movie information
                     let url = '/movie/' + this.state.movieList[i].links__tmdbid + '?api_key=4f65322e8d193ba9623a9e7ab5caa01e';
                     promises.push(axios.get(url));
 
@@ -87,6 +94,7 @@ class AdvancedSearch extends Component {
                         result.push(res);
                         res.map(res => {
                             if(res.data !== undefined) {
+                                // adds movie poster, title and other information to a table row
                                 if (res.data.original_language !== "en") {
                                     list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td>" +
                                         "<td><a href='/info/" + res.data.id + "'>" + res.data.title + " (" + res.data.original_title + ")" + "</td>" +
@@ -99,6 +107,7 @@ class AdvancedSearch extends Component {
                                         "<td style='display:none;'>" + res.data.release_date + "</td>" +
                                         "<td style='display:none;'>" + res.data.vote_average + "</td></tr>";
                                 }
+                                // appends the movie row onto the end of table
                                 document.getElementById('movieList').insertAdjacentHTML('beforeend', list);
                                 list += "<tr><td><a href='/info/" + res.data.tmdbid + "'>" + res.data.title + "</a></td>" +
                                     "<td>" + res.data.title + "</td><td></td><td></td></tr>";
@@ -107,6 +116,7 @@ class AdvancedSearch extends Component {
                     }).catch(error => {
                     console.log(error);
                     });
+                // sets state for pagination
                 if (data.next !== null) {
                     this.setState({hasNext: true, nextApi: data.next});
                 } else {
@@ -132,6 +142,7 @@ class AdvancedSearch extends Component {
 
 
     handleChange() {
+        // retrieves genre name from the selected checkboxes
         let selected = [];
         // this.setState({selected: []});
         document.getElementById('movieList').innerHTML = "";
@@ -166,6 +177,7 @@ class AdvancedSearch extends Component {
             console.log(cbSciFi.id);
         }
         console.log(selected);
+        // generates api link to retrieve list of movies based on selected genres
         if (this.state.movieList.length >= 1) {
             // let result = [];
             if (selected.length >= 1) {
@@ -233,6 +245,7 @@ class AdvancedSearch extends Component {
     }
 
     getFilter() {
+        // displays list of movies from api request
         document.getElementById('movieList').innerHTML = "";
         let result = [];
         // let genre = [];
@@ -264,6 +277,7 @@ class AdvancedSearch extends Component {
                         result.push(res);
                         res.map(res => {
                             if(res.data !== undefined) {
+                                // adds movie poster, title and other information to a table row
                                 if (res.data.original_language !== "en") {
                                     list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td>" +
                                         "<td><a href='/info/" + res.data.id + "'>" + res.data.title + " (" + res.data.original_title + ")" + "</td>" +
@@ -276,6 +290,7 @@ class AdvancedSearch extends Component {
                                         "<td style='display:none;'>" + res.data.release_date + "</td>" +
                                         "<td style='display:none;'>" + res.data.vote_average + "</td></tr>";
                                 }
+                                // appends the movie row onto the end of table
                                 document.getElementById('movieList').insertAdjacentHTML('beforeend', list);
                                 list += "<tr><td><a href='/info/" + res.data.tmdbid + "'>" + res.data.title + "</a></td>" +
                                     "<td>" + res.data.title + "</td><td></td><td></td></tr>";
@@ -284,6 +299,7 @@ class AdvancedSearch extends Component {
                     }).catch(error => {
                         console.log(error);
                     });
+                //sets state for pagination
                 if (data.next !== null) {
                     this.setState({hasGenreNext: true, nextGenreApi: data.next});
                 } else {
@@ -314,6 +330,8 @@ class AdvancedSearch extends Component {
                     // if (a.innerHTML.toLowerCase() > b.innerHTML.toLowerCase()) {
                     //     changePosition = true;
                     //     break;
+
+                    // api call for sorting movie titles from A-Z
                     if(this.state.genrePage) {
                         this.setState({genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + this.state.genre}&orderby=title`}, this.getFilter)
                     }
@@ -330,6 +348,8 @@ class AdvancedSearch extends Component {
                     //     break;
                     // }
                     document.getElementById('movieList').innerHTML = "";
+
+                    // api call for sorting movie titles from Z-A
                     if(this.state.genrePage) {
                         this.setState({genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + this.state.genre}&orderby=-title`}, this.getFilter)
                     }
@@ -354,6 +374,7 @@ class AdvancedSearch extends Component {
                     //     break;
                     // }
                     document.getElementById('movieList').innerHTML = "";
+                    // api call for sorting movie titles based on vote average
                     if(this.state.genrePage) {
                         this.setState({genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + this.state.genre}&orderby=-avg_rating`}, this.getFilter)
                     }
@@ -363,6 +384,7 @@ class AdvancedSearch extends Component {
                     // this.setState({orderby: '-avg_rating'}, this.getSearchQuery)
                 }
             }
+            // changes position of row
             if (changePosition) {
                 rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
                 changing = true;
@@ -439,6 +461,7 @@ class AdvancedSearch extends Component {
                         </header>
                         <div className="filter-content">
                             <div className="card-body">
+                                {/* SORT BUTTONS */}
                                 <button className="btn btn-sm btn-danger"
                                         onClick={() => this.sortResults('az')}>Sort A-Z
                                 </button>
@@ -465,6 +488,7 @@ class AdvancedSearch extends Component {
                     {/* card-group-item.// */}
                 </div>
                 <div class="movieList">
+                    {/* DISPLAY PAGINATION BUTTONS */}
                     <div id="topButtons">
                         {this.state.hasPrevious && !this.state.genrePage &&
                         <button className="btn btn-sm btn-primary" onClick={this.handlePreviousClick}>Previous</button>}

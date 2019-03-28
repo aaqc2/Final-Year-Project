@@ -1,3 +1,7 @@
+/**
+ *  Root component of React app
+ */
+
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 
@@ -15,9 +19,11 @@ import GenreSelection from "./pages/GenreSelection";
 class App extends Component {
     render() {
         return (
+            // all paths for page routing
             <Router>
                 <div className="site">
                     <div className="site-content">
+                        {/* container for site content */}
                         <Route path="/Signin" component={Signin}/>
                         <Route path="/GenreSelection" component={GenreSelection}/>
                         <Route path="/ColdStartRatings" component={ColdStartRatings}/>
