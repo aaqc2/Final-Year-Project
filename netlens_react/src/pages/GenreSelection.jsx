@@ -1,15 +1,12 @@
-/*
 
-This is first page that is rendered when a new user is registered.
-    This is the first step in understanding the user, so that we can make recommendations and tackle the cold start problem.
-    This allows the user to pick 2 of their favourite genres before proceeding on to the next page.
-    This step enables us to narrow the user’s movie preferences according to genres. Once the checkbox’s are selected,
-    the user can move to the next page where user will be presented with options to rate movies from their choice of genre.
-
-
-*/
-
-
+ /**
+  * *  This is first page that is rendered when a new user is registered.
+ *   This is the first step in understanding the user, so that we can make recommendations and tackle the cold start problem.
+ *  This allows the user to pick 2 of their favourite genres before proceeding on to the next page.
+ *  This step enables us to narrow the user’s movie preferences according to genres. Once the checkbox’s are selected,
+ *  the user can move to the next page where user will be presented with options to rate movies from their choice of genre.
+  *  TMDB API calls are made to retrieve the posters
+  *  */
 
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
@@ -45,6 +42,7 @@ class GenreSelection extends Component {
     };
 
 
+//stores the values of the checksbox so that it be passed to the next page. Ensure that no more than 2 checkboxs are selected
     changeCheckbox(e) {
         console.log("Changing checkbox", e.target.name, e.target.checked)
         let selected = e.target.name
@@ -55,13 +53,14 @@ class GenreSelection extends Component {
         })
         let  filtered = allValues.filter(value => value)
         console.log("Filtered", filtered)
-        if(filtered.length >= 2 && value ) { return alert ('You can only select a maximum of 2 genres') }
+        if(filtered.length >= 2 && value ) { return alert ('You can only select a maximum of 2 genres') } // check to make sure that no more than 2 checkboxs are selected.
 
         allSelected[selected] = value
         this.setState({
             checkedOptions: allSelected
         })
     }
+
 
     checked = (element) => {
         // checks whether an element is checked
@@ -77,10 +76,14 @@ class GenreSelection extends Component {
             return allSelected[key]
         })
 
+        // check to make sure that alleast one genre is selected
+
         if (!allValues.some(this.checked)) {
             return alert ('You should select at least 1 genre!')
 
         }
+
+        // goes to the cold start rating page, and passes the checkbox values(genres) to the next page
         return this.props.history.push({
             pathname: '/ColdStartRatings',
             state:{selectedValues : allSelected}
@@ -142,6 +145,8 @@ class GenreSelection extends Component {
             });
     }
 
+
+    // API call to retrieve the action movie posters
     getActionMovies = () => {
         const url = "/discover/movie?api_key=4f65322e8d193ba9623a9e7ab5caa01e&with_genres=28";
 
@@ -155,6 +160,7 @@ class GenreSelection extends Component {
             })
     }
 
+    // API call to retrieve the comedy movie posters
     getComedyMovies = () => {
         const url = "/discover/movie?api_key=224ce27b38a3805ecf6f6c36eb3ba9d0&with_genres=35";
 
@@ -168,6 +174,7 @@ class GenreSelection extends Component {
             })
     }
 
+    // API call to retrieve the horror movie posters
     getHorrorMovies = () => {
         const url = "/discover/movie?api_key=4f65322e8d193ba9623a9e7ab5caa01e&with_genres=27";
 
@@ -181,6 +188,7 @@ class GenreSelection extends Component {
             })
     }
 
+// API call to retrieve the romace movie posters
     getRomanceMovies = () => {
         const url = "/discover/movie?api_key=4f65322e8d193ba9623a9e7ab5caa01e&with_genres=10749";
 
@@ -194,6 +202,8 @@ class GenreSelection extends Component {
             })
     }
 
+
+// API call to retrieve the Thriller movie posters
     getThillerMovies = () => {
         const url = "/discover/movie?api_key=4f65322e8d193ba9623a9e7ab5caa01e&with_genres=53";
 
@@ -210,23 +220,28 @@ class GenreSelection extends Component {
 
 
     render() {
-        console.log(this.props, 'checkedboxs test')
+        // console.log(this.props, 'checkedboxs test')
         return (
             <div  className="newuserrating-container">
+
+                {/*display header without the navbar*/}
                 <header className="header">
                     <h1>TheMovieOracle</h1>
                     <h5>personalised movie recommendations</h5>
                 </header>
 
                 <div className="newuser-card">
+
+                    {/*retrieve the username stored in the token to present to the user*/}
                     <h2> Welcome {localStorage.getItem('username')}  </h2>
                     <h3> To get started, tell us about your movie preferences. Using the checkboxs, select a maximum of 2 genres</h3>
 
                     <div className="newusercard-body">
                         <form name="new_user_form" className="newuser-rating-form"   >
+
+                            {/*table which holds the movie posters */}
                             <table>
                                 <tbody>
-
                                 <tr>
                                     <td>
                                         <div >
@@ -317,6 +332,9 @@ class GenreSelection extends Component {
                                 </tr>
                                 </tbody>
                             </table>
+
+
+                            {/* button to move to the next page - calls handlesubmit */}
                             <button className = "newuser-submit" onClick={this.handleSubmit}> Next </button>
                         </form>
                     </div>

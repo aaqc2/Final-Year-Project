@@ -178,6 +178,7 @@ class ColdStartRatings extends Component {
 
         return (
             <div className="movieRow">
+                {/*render the header without the navbar*/}
                 <header className="header">
                     <h1>TheMovieOracle</h1>
                     <h5>personalised movie recommendations</h5>
@@ -187,16 +188,25 @@ class ColdStartRatings extends Component {
                 <h3>To receive accurate recommendation, we need to understand your movie preferences.</h3>
                 <h3> Provide ratings for the movies below </h3>
                 <h1 className="movieRow_heading"> </h1>
+
+                 {/*render the movies based on the genres selected from the previous screen*/}
                 <div className="movieRow_container">
                     {this.state.genreMovies}
                 </div>
                 <div>
+
+                    {/*paginator to get the previous movies */}
                     {this.state.hasGenrePrevious && <button className="btn btn-sm btn-primary"
                                                             onClick={this.handlePreviousGenreClick}>View previous</button>}
+
+                     {/*paginator to get next set of  movies */}
                     {this.state.hasGenreNext && <button className="nextButton btn btn-sm btn-primary"
                                                         onClick={this.handleNextGenreClick}>View more</button>}
                     <br/><br/>
                 </div>
+
+
+                {/*When pressed, checks that the users has rated atleast 3 movies, then goes to the landing page */}
                 <button className = "newuser-submit" onClick={this.handleSubmit}> Continue </button>
             </div>
         );
