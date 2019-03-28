@@ -1,38 +1,13 @@
+/**
+ *  Provide Autosuggestion for search bar
+ *  and redirect user to advanced search page when user pressed enter
+ *  with the results of movie containing the input in movie title
+ */
+
 import React, {Component} from 'react';
-import AdvancedSearch from '../pages/AdvancedSearch';
 import Autosuggest from 'react-autosuggest';
 import {Redirect} from 'react-router-dom';
 
-// List of movies to auto-suggest
-// let movies = [];
-// const api = 'http://127.0.0.1:8000/api';
-// fetch(api)
-//     .then((result) => {
-//       console.log(result);
-//       return result.json();
-//     })
-//     .then((data) => {
-//       data.map((item) => {
-//         movies.push({
-//             title: item.title
-//         })
-//         //create search page
-//         //when movie is searched, redirect to search page
-//       });
-//     })
-//     .catch((err) => {
-//             console.log(err);
-//     });
-
-// Calculate suggestions for any given input value
-// const getSuggestions = value => {
-//   const keywords = value.trim().toLowerCase();
-//   const keyLength = keywords.length;
-//
-//   return keyLength === 0 ? [] : movies.filter(mov =>
-//     mov.title.toLowerCase().slice(0, keyLength) === keywords
-//   );
-// };
 
 // Populate the input based on the clicked suggestion
 const getSuggestionValue = suggestion => suggestion;
@@ -48,7 +23,9 @@ const renderSuggestion = suggestion => (
 class SearchBar extends Component {
     constructor(props) {
         super(props);
+        // bind the function
         this.onKeyPress = this.onKeyPress.bind(this);
+        // initiate states
         this.state = {
             value: '',
             suggestions: [],
@@ -58,14 +35,16 @@ class SearchBar extends Component {
     }
 
     onKeyPress = (event) => {
+        // when enter is pressed
         if (event.key === 'Enter') {
+            // set fireRedirect to true and keyword to the value(letter/word input on search bar)
             this.setState({fireRedirect: true, keyword: this.state.value});
-            // return <AdvancedSearch value={this.state.value}/>
-            // this.setState({keyword: value});
         }
     };
 
+    // Check the changes of input in search bar
     onChange = (event, {newValue}) => {
+        // update the state to the latest changes
         this.setState({
             value: newValue
         });
@@ -77,19 +56,22 @@ class SearchBar extends Component {
 
     // Update suggestions
     onSuggestionsFetchRequested = ({value}) => {
+        // reset the suggestion array
         this.setState({
             suggestions: []
         });
+
+        // api call to search function with the input given
         fetch(`http://127.0.0.1:8000/api/search/?q=${value}`)
             .then(response => response.json())
             .then(data => {
+                // loop through the array of results retrieve from response
                 data.results.map((item) => {
+                    // update the suggestion array to all the title of movies retrieved from response
                     this.setState(
                         prevState => ({
                             suggestions: [...prevState.suggestions, item.title]
                         }));
-                    //create search page
-                    //when movie is searched, redirect to search page
                 });
             })
     };
@@ -102,7 +84,6 @@ class SearchBar extends Component {
     };
 
     render() {
-        console.log(this.state.keyword);
         const {value, suggestions} = this.state;
         const {fireRedirect} = this.state;
         // Pass all props to the input.
@@ -113,8 +94,10 @@ class SearchBar extends Component {
             onKeyPress: this.onKeyPress
         };
 
-        if (this.state.fireRedirect) {
+        // if fireRedirect is true
+        if (fireRedirect) {
             return (
+                // redirect to advancedsearch page passing the input as state
                 <Redirect to={{
                     pathname: '/advancedsearch',
                     state: {value: this.state.keyword}

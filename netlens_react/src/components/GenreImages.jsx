@@ -1,6 +1,6 @@
 
 /**
- * Used for the genreSelection page to get the movie posters from TMBI for the different genres
+ * Used for the genreSelection page to get the movie posters from TMDB for the different genres
  */
 
 import React, { Component } from 'react';

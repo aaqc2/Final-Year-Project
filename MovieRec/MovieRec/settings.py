@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'corsheaders'
 ]
 
-# this permission is temporary for now
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
@@ -104,6 +103,7 @@ WSGI_APPLICATION = 'MovieRec.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+# Backup database access to penguin
 # DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.postgresql_psycopg2',

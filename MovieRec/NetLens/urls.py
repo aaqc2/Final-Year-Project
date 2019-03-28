@@ -3,18 +3,14 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.ListTitles.as_view()),
-    path('<int:movieid>/', views.ShowGenres.as_view()),
     path('toprated/', views.showTopRated),
     path('search/', views.showSearch),
-    path('page/', views.paginationTest),
     path('register/', views.register),
-    path('rate/<int:m>/<int:u>/<str:r>', views.rate),
+    path('rate/', views.rate),
     path('getUser/<int:u>/', views.getUser),
     path('getUser/<int:u>/<int:tmdbId>', views.getUserRating),
     path('avgrate/<int:tmdbid>', views.AverageRating),
     path('recommendation/<int:u>', views.getRecommendation),
-    # path('login/', views.login),
     path('genres/', views.getGenres),
     path('check/<str:token>', views.checkToken),
     path('titleandgenre/', views.showSearchAndGenre),

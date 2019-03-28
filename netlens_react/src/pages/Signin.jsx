@@ -19,7 +19,7 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
+            username: '',
             password: '',
             msg: '',
             numberOfMoviesRated: 0
@@ -43,7 +43,7 @@ class Login extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                'email': this.state.email,
+                'username': this.state.username,
                 'password': this.state.password,
             },)
         })
@@ -71,7 +71,7 @@ class Login extends Component {
 
             })
             .catch((error) => {
-                console.error(error);
+                console.log(error);
             });
 
     }
@@ -92,7 +92,7 @@ class Login extends Component {
                             {this.state.msg}
                             <form onSubmit={this.handleSubmit}>
                                 <div className="input">
-                                    <input type="text" placeholder="Enter username" name="email"
+                                    <input type="text" placeholder="Enter username" name="username"
                                            onChange={this.handleChange} required/>
                                 </div>
                                 <br/>

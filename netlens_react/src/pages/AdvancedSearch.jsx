@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import Navbar from "../components/Navbar";
 import axios from "../baseUrl";
-
-// import { TablePagination } from 'react-pagination-table';
+import {checkToken} from "../components/authenticateToken";
 
 
 class AdvancedSearch extends Component {
@@ -23,7 +22,8 @@ class AdvancedSearch extends Component {
             prevGenreApi: '',
             genrePage: false,
             selected: '',
-            orderby: 'movieid'
+            genre:'',
+            orderby: ''
         };
         this.handleChange = this.handleChange.bind(this);
         this.handlePreviousClick = this.handlePreviousClick.bind(this);
@@ -32,6 +32,10 @@ class AdvancedSearch extends Component {
         this.handleNextGenreClick = this.handleNextGenreClick.bind(this);
         this.getSearchQuery = this.getSearchQuery.bind(this);
         this.getFilter = this.getFilter.bind(this);
+    }
+
+    componentWillMount() {
+        checkToken();
     }
 
     componentDidMount() {
@@ -61,16 +65,7 @@ class AdvancedSearch extends Component {
         document.querySelectorAll('input[type=checkbox]').forEach(checkboxes => checkboxes.checked = false); //uncheck checkbox
         this.setState({movieList: []});
         let result = [];
-        fetch(this.state.api, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-             },
-            body: JSON.stringify({
-                'orderby': this.state.orderby,
-            },)
-        })
+        fetch(this.state.api)
             .then((result) => {
                 return result.json();
             })
@@ -78,34 +73,40 @@ class AdvancedSearch extends Component {
                 data.results.map((item) => {
                     this.state.movieList.push(item);
                 });
+
                 //displays list of movies
+                let promises = [];
                 let list = "";
                 for (let i = 0; i < this.state.movieList.length; i++) {
                     let url = '/movie/' + this.state.movieList[i].links__tmdbid + '?api_key=4f65322e8d193ba9623a9e7ab5caa01e';
-                    axios.get(url)
-                        .then(res => {
-                            result.push(res);
-                            if(res.data.original_language !== "en") {
-                                list = "<tr><td><a href='/info/" + res.data.id + "'><img className='movie_image' src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td>" +
-                                "<td><a href='/info/" + res.data.id + "'>" + res.data.title + " (" + res.data.original_title + ")" +"</td>" +
-                                "<td style='display:none;'>" + res.data.release_date + "</td>" +
-                                "<td style='display:none;'>" + res.data.vote_average + "</td></tr>";
-                            }
-                            else {
-                                list = "<tr><td><a href='/info/" + res.data.id + "'><img className='movie_image' src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td>" +
-                                "<td><a href='/info/" + res.data.id + "'>" + res.data.original_title + "</a></td>" +
-                                "<td style='display:none;'>" + res.data.release_date + "</td>" +
-                                "<td style='display:none;'>" + res.data.vote_average + "</td></tr>";
-                            }
-                            // console.log(list);
-                            document.getElementById('movieList').insertAdjacentHTML('beforeend', list);
-                        }).catch(error => {
-                        console.log(error);
-                    })
-                    list += "<tr><td><a href='/info/" + this.state.movieList[i].links__tmdbid + "'>" + this.state.movieList[i].title + "</a></td>" +
-                        "<td>" + this.state.movieList[i].title + "</td><td></td><td></td></tr>";
+                    promises.push(axios.get(url));
 
                 }
+                Promise.all(promises.map(promise => promise.catch(e => e)))
+                    .then(res => {
+                        result.push(res);
+                        res.map(res => {
+                            if(res.data !== undefined) {
+                                if (res.data.original_language !== "en") {
+                                    list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td>" +
+                                        "<td><a href='/info/" + res.data.id + "'>" + res.data.title + " (" + res.data.original_title + ")" + "</td>" +
+                                        "<td style='display:none;'>" + res.data.release_date + "</td>" +
+                                        "<td style='display:none;'>" + res.data.vote_average + "</td></tr>";
+                                }
+                                else {
+                                    list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td>" +
+                                        "<td><a href='/info/" + res.data.id + "'>" + res.data.original_title + "</a></td>" +
+                                        "<td style='display:none;'>" + res.data.release_date + "</td>" +
+                                        "<td style='display:none;'>" + res.data.vote_average + "</td></tr>";
+                                }
+                                document.getElementById('movieList').insertAdjacentHTML('beforeend', list);
+                                list += "<tr><td><a href='/info/" + res.data.tmdbid + "'>" + res.data.title + "</a></td>" +
+                                    "<td>" + res.data.title + "</td><td></td><td></td></tr>";
+                            }
+                        });
+                    }).catch(error => {
+                    console.log(error);
+                    });
                 if (data.next !== null) {
                     this.setState({hasNext: true, nextApi: data.next});
                 } else {
@@ -174,9 +175,10 @@ class AdvancedSearch extends Component {
                 });
                 this.setState(
                     {
+                        genre: genre,
                         genrePage: true,
                         selected: selected,
-                        genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + genre}`
+                        genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + this.state.genre}`
                     },
                     this.getFilter
                 )
@@ -239,17 +241,8 @@ class AdvancedSearch extends Component {
         // });
         // this.setState({genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + genre}`});
         // let api = `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + genre}`;
-        this.setState({genreMovieList: []})
-        fetch(this.state.genreApi, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-             },
-            body: JSON.stringify({
-                'orderby': this.state.orderby,
-            },)
-        })
+        this.setState({genreMovieList: []});
+        fetch(this.state.genreApi)
             .then((result) => {
                 return result.json();
             })
@@ -257,34 +250,40 @@ class AdvancedSearch extends Component {
                 data.results.map((item) => {
                     this.state.genreMovieList.push(item);
                 });
-                console.log(this.state.genreApi)
+
+                //displays list of movies
+                let promises = [];
                 let list = "";
                 for (let i = 0; i < this.state.genreMovieList.length; i++) {
                     let url = '/movie/' + this.state.genreMovieList[i].links__tmdbid + '?api_key=4f65322e8d193ba9623a9e7ab5caa01e';
-                    axios.get(url)
-                        .then(res => {
-                            result.push(res);
-                            if(res.data.original_language !== "en") {
-                                list = "<tr><td><a href='/info/" + res.data.id + "'><img className='movie_image' src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td>" +
-                                "<td><a href='/info/" + res.data.id + "'>" + res.data.title + " (" + res.data.original_title + ")" +"</td>" +
-                                "<td style='display:none;'>" + res.data.release_date + "</a></td>" +
-                                "<td style='display:none;'>" + res.data.vote_average + "</td></tr>";
-                            }
-                            else {
-                                list = "<tr><td><a href='/info/" + res.data.id + "'><img className='movie_image' src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td>" +
-                                "<td><a href='/info/" + res.data.id + "'>" + res.data.original_title + "</a></td>" +
-                                "<td style='display:none;'>" + res.data.release_date + "</td>" +
-                                "<td style='display:none;'>" + res.data.vote_average + "</td></tr>";
-                            }
-                            // console.log(list);
-                            document.getElementById('movieList').insertAdjacentHTML('beforeend', list);
-                        }).catch(error => {
-                        console.log(error);
-                    })
-                    list += "<tr><td><a href='/info/" + this.state.genreMovieList[i].links__tmdbid + "'>" + this.state.genreMovieList[i].title + "</a></td>" +
-                        "<td>" + this.state.movieList[i].title + "</td><td></td><td></td></tr>";
+                    promises.push(axios.get(url));
 
                 }
+                Promise.all(promises.map(promise => promise.catch(e => e)))
+                    .then(res => {
+                        result.push(res);
+                        res.map(res => {
+                            if(res.data !== undefined) {
+                                if (res.data.original_language !== "en") {
+                                    list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td>" +
+                                        "<td><a href='/info/" + res.data.id + "'>" + res.data.title + " (" + res.data.original_title + ")" + "</td>" +
+                                        "<td style='display:none;'>" + res.data.release_date + "</td>" +
+                                        "<td style='display:none;'>" + res.data.vote_average + "</td></tr>";
+                                }
+                                else {
+                                    list = "<tr><td><a href='/info/" + res.data.id + "'><img src='https://image.tmdb.org/t/p/w300" + res.data.poster_path + "' alt=''></a></td>" +
+                                        "<td><a href='/info/" + res.data.id + "'>" + res.data.original_title + "</a></td>" +
+                                        "<td style='display:none;'>" + res.data.release_date + "</td>" +
+                                        "<td style='display:none;'>" + res.data.vote_average + "</td></tr>";
+                                }
+                                document.getElementById('movieList').insertAdjacentHTML('beforeend', list);
+                                list += "<tr><td><a href='/info/" + res.data.tmdbid + "'>" + res.data.title + "</a></td>" +
+                                    "<td>" + res.data.title + "</td><td></td><td></td></tr>";
+                            }
+                        });
+                    }).catch(error => {
+                        console.log(error);
+                    });
                 if (data.next !== null) {
                     this.setState({hasGenreNext: true, nextGenreApi: data.next});
                 } else {
@@ -299,7 +298,7 @@ class AdvancedSearch extends Component {
     }
 
     sortResults(order) {
-        var results, i, rows, changing, a, b, changePosition;
+        var results, i, rows, changing, changePosition;
         results = document.getElementById('movieList');
         console.log(results);
         changing = true;
@@ -316,10 +315,10 @@ class AdvancedSearch extends Component {
                     //     changePosition = true;
                     //     break;
                     if(this.state.genrePage) {
-                        this.setState({orderby: 'title'}, this.getFilter)
+                        this.setState({genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + this.state.genre}&orderby=title`}, this.getFilter)
                     }
                     else {
-                        this.setState({orderby: 'title'}, this.getSearchQuery)
+                        this.setState({api: `http://127.0.0.1:8000/api/search/?q=${this.props.location.state.value}&orderby=title`}, this.getSearchQuery)
                     }
                     // }
                 }
@@ -332,10 +331,10 @@ class AdvancedSearch extends Component {
                     // }
                     document.getElementById('movieList').innerHTML = "";
                     if(this.state.genrePage) {
-                        this.setState({orderby: '-title'}, this.getFilter)
+                        this.setState({genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + this.state.genre}&orderby=-title`}, this.getFilter)
                     }
                     else {
-                        this.setState({orderby: '-title'}, this.getSearchQuery)
+                        this.setState({api: `http://127.0.0.1:8000/api/search/?q=${this.props.location.state.value}&orderby=-title`}, this.getSearchQuery)
                     }
                     // this.setState({orderby: '-title'}, this.getSearchQuery)
                 }
@@ -356,10 +355,10 @@ class AdvancedSearch extends Component {
                     // }
                     document.getElementById('movieList').innerHTML = "";
                     if(this.state.genrePage) {
-                        this.setState({orderby: '-avg_rating'}, this.getFilter)
+                        this.setState({genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + this.state.genre}&orderby=-avg_rating`}, this.getFilter)
                     }
                     else {
-                        this.setState({orderby: '-avg_rating'}, this.getSearchQuery)
+                        this.setState({api: `http://127.0.0.1:8000/api/search/?q=${this.props.location.state.value}&orderby=-avg_rating`}, this.getSearchQuery)
                     }
                     // this.setState({orderby: '-avg_rating'}, this.getSearchQuery)
                 }
@@ -440,15 +439,15 @@ class AdvancedSearch extends Component {
                         </header>
                         <div className="filter-content">
                             <div className="card-body">
-                                {/*<button className="btn btn-sm btn-danger"*/}
-                                        {/*onClick={() => this.sortResults('az')}>Sort A-Z*/}
-                                {/*</button>*/}
-                                {/*<button className="btn btn-sm btn-danger"*/}
-                                        {/*onClick={() => this.sortResults('za')}>Sort Z-A*/}
-                                {/*</button>*/}
                                 <button className="btn btn-sm btn-danger"
-                                        onClick={() => this.sortResults('date')}>Sort by release date
+                                        onClick={() => this.sortResults('az')}>Sort A-Z
                                 </button>
+                                <button className="btn btn-sm btn-danger"
+                                        onClick={() => this.sortResults('za')}>Sort Z-A
+                                </button>
+                                {/*<button className="btn btn-sm btn-danger"*/}
+                                        {/*onClick={() => this.sortResults('date')}>Sort by release date*/}
+                                {/*</button>*/}
                                 <button className="btn btn-sm btn-danger"
                                         onClick={() => this.sortResults('vote')}>Sort by vote average
                                 </button>
