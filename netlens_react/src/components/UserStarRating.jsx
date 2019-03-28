@@ -1,3 +1,7 @@
+/**
+ *  Display rating the user rated for the movies
+ */
+
 import React, { Component } from 'react';
 import StarRatingComponent from 'react-star-rating-component';
 import '../style.css';
@@ -13,14 +17,14 @@ class UserStarRating extends Component {
 
     async componentDidMount() {
       try {
-          const res = await fetch(`http://127.0.0.1:8000/api/avgrate/${this.props.tmdbid}`);
-          const avg = await res.json();
-          // console.log(this.props);
+          // call api to retrieve the ratings of movie the user has rated
           const user = await fetch(`http://127.0.0.1:8000/api/getUser/${this.props.userid}/${this.props.tmdbid}`);
           let rating = await user.json();
+          // if no rating is obtained, set it to zero
           if (rating.length <= 0){
               rating = [{rating: 0}];
           }
+
           this.setState({
               rating_user: rating
           });
@@ -29,10 +33,6 @@ class UserStarRating extends Component {
           console.log(e);
       }
   }
-
-    onStarClick(nextValue, prevValue, name) {
-        this.setState({ rating_user: nextValue });
-    }
 
     async onStarClickHalfStar(nextValue, prevValue, name, e) {
         const xPos = (e.pageX - e.currentTarget.getBoundingClientRect().left) / e.currentTarget.offsetWidth;

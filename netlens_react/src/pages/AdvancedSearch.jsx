@@ -3,8 +3,6 @@ import Navbar from "../components/Navbar";
 import axios from "../baseUrl";
 import {checkToken} from "../components/authenticateToken";
 
-// import { TablePagination } from 'react-pagination-table';
-
 
 class AdvancedSearch extends Component {
     constructor(props) {
@@ -243,7 +241,7 @@ class AdvancedSearch extends Component {
         // });
         // this.setState({genreApi: `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + genre}`});
         // let api = `http://127.0.0.1:8000/api/titleandgenre/?q=${this.props.location.state.value + genre}`;
-        this.setState({genreMovieList: []})
+        this.setState({genreMovieList: []});
         fetch(this.state.genreApi)
             .then((result) => {
                 return result.json();

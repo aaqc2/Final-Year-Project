@@ -21,6 +21,7 @@ from django.core.cache import cache
 
 # functions to check if the token that is given to the users is still valid
 # in order to continue using the webapp
+@api_view(['GET'])
 def checkToken(request, token):
     try:
         jwt.decode(token, settings.SECRET_KEY)
