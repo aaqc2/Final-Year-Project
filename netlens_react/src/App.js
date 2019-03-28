@@ -24,15 +24,18 @@ class App extends Component {
                 <div className="site">
                     <div className="site-content">
                         {/* container for site content */}
-                        <Route path="/Signin" component={Signin}/>
+                        <Route exact path="/" component={Signin}/> {/* routes to sign in by default */}
+                        <Route exact path="/Signin" component={Signin}/>
                         <Route path="/GenreSelection" component={GenreSelection}/>
                         <Route path="/ColdStartRatings" component={ColdStartRatings}/>
                         <Route path="/RegisterPage" component={RegisterPage}/>
                         <Route exact path="/LandingPage" component={LandingPage}/>
+                        {/* passes movie id parameter to information page */}
                         <Route exact path="/info/:id" render={(props) => (<MovieInfo {...props} isAuthed={true}/>)}/>
                         <Route path="/userprofile" component={UserProfile}/>
                         <Route path="/advancedsearch" component={AdvancedSearch}/>
                     </div>
+                    {/* display foote under site content */}
                     <Footer/>
                 </div>
             </Router>
