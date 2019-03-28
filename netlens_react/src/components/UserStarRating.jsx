@@ -40,9 +40,28 @@ class UserStarRating extends Component {
         if (xPos <= 0.5) {
             nextValue -= 0.5;
         }
-
         console.log('name: %s, nextValue: %s, prevValue: %s', name, nextValue, prevValue); //ADD FUNCTION TO PASS THE STAR RATING HERE
-        const rate = await fetch(`http://127.0.0.1:8000/api/rate/${this.props.tmdbid}/${this.props.userid}/${nextValue}`);
+        const rate = (
+            await fetch('http://127.0.0.1:8000/api/rate/',{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'userid': this.props.userid,
+                    'tmdbid': this.props.tmdbid,
+                    'rated': nextValue,
+                },)
+            })
+                .then(response => {
+                    return response
+                })
+                .catch((error) => {
+                    console.log(error);
+            })
+
+        );
         const newRating = await rate.json();
         this.setState({ rating_user: newRating });
     }

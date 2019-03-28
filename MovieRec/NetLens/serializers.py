@@ -2,16 +2,6 @@ from rest_framework import serializers
 from .models import Titles, Ratings, Links, Users
 
 
-class TitlesSerializer(serializers.ModelSerializer):
-    links__tmdbid = serializers.IntegerField()
-    class Meta:
-        fields = (
-            'movieid',
-            'title',
-            'genre',
-            'links__tmdbid',
-        )
-        model = Titles
 
 class GenreSerializer(serializers.ModelSerializer):
     links__tmdbid = serializers.IntegerField()
@@ -39,17 +29,7 @@ class SearchSerializer(serializers.ModelSerializer):
         )
         model = Titles
 
-class RatingSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'userid',
-            'movieid',
-            'rating',
-            'timestamp',
-        )
-        model = Ratings
-
-class UserRating(serializers.ModelSerializer):
+class UserRatingSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
             'rating',
@@ -64,9 +44,3 @@ class AverageRatingSerializer(serializers.ModelSerializer):
         )
         model = Ratings
 
-class UserLoginSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'userid',
-        )
-        model = Users
